@@ -1,0 +1,642 @@
+{
+  "repo": "https://github.com/4lexDmt/cabinet",
+  "branch": "main",
+  "raw_base": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/",
+  "zip": "https://github.com/4lexDmt/cabinet/archive/refs/heads/main.zip",
+  "codeload_zip": "https://codeload.github.com/4lexDmt/cabinet/zip/refs/heads/main",
+  "tree": "https://api.github.com/repos/4lexDmt/cabinet/git/trees/main?recursive=1",
+  "files": [
+    {
+      "path": ".cursorrules",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/.cursorrules"
+    },
+    {
+      "path": ".env.example",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/.env.example"
+    },
+    {
+      "path": ".gitignore",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/.gitignore"
+    },
+    {
+      "path": "AGENTS.md",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/AGENTS.md"
+    },
+    {
+      "path": "FETCH.md",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/FETCH.md"
+    },
+    {
+      "path": "README.md",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/README.md"
+    },
+    {
+      "path": "apps/tick-worker/Dockerfile",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/tick-worker/Dockerfile"
+    },
+    {
+      "path": "apps/tick-worker/package.json",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/tick-worker/package.json"
+    },
+    {
+      "path": "apps/tick-worker/src/loop.ts",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/tick-worker/src/loop.ts"
+    },
+    {
+      "path": "apps/tick-worker/src/main.ts",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/tick-worker/src/main.ts"
+    },
+    {
+      "path": "apps/web/app/(game)/briefing/page.tsx",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/app/%28game%29/briefing/page.tsx"
+    },
+    {
+      "path": "apps/web/app/(game)/channels/page.tsx",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/app/%28game%29/channels/page.tsx"
+    },
+    {
+      "path": "apps/web/app/(game)/chronicle/page.tsx",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/app/%28game%29/chronicle/page.tsx"
+    },
+    {
+      "path": "apps/web/app/(game)/layout.tsx",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/app/%28game%29/layout.tsx"
+    },
+    {
+      "path": "apps/web/app/(game)/ledger/page.tsx",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/app/%28game%29/ledger/page.tsx"
+    },
+    {
+      "path": "apps/web/app/(game)/map/page.tsx",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/app/%28game%29/map/page.tsx"
+    },
+    {
+      "path": "apps/web/app/(game)/nation/page.tsx",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/app/%28game%29/nation/page.tsx"
+    },
+    {
+      "path": "apps/web/app/(game)/pacts/new/page.tsx",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/app/%28game%29/pacts/new/page.tsx"
+    },
+    {
+      "path": "apps/web/app/(game)/pacts/page.tsx",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/app/%28game%29/pacts/page.tsx"
+    },
+    {
+      "path": "apps/web/app/api/matches/route.ts",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/app/api/matches/route.ts"
+    },
+    {
+      "path": "apps/web/app/api/messages/route.ts",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/app/api/messages/route.ts"
+    },
+    {
+      "path": "apps/web/app/api/orders/route.ts",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/app/api/orders/route.ts"
+    },
+    {
+      "path": "apps/web/app/api/projections/route.ts",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/app/api/projections/route.ts"
+    },
+    {
+      "path": "apps/web/app/api/session/route.ts",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/app/api/session/route.ts"
+    },
+    {
+      "path": "apps/web/app/api/tick/route.ts",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/app/api/tick/route.ts"
+    },
+    {
+      "path": "apps/web/app/globals.css",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/app/globals.css"
+    },
+    {
+      "path": "apps/web/app/join/page.tsx",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/app/join/page.tsx"
+    },
+    {
+      "path": "apps/web/app/layout.tsx",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/app/layout.tsx"
+    },
+    {
+      "path": "apps/web/app/page.tsx",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/app/page.tsx"
+    },
+    {
+      "path": "apps/web/app/tokens.css",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/app/tokens.css"
+    },
+    {
+      "path": "apps/web/components/Claim.tsx",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/components/Claim.tsx"
+    },
+    {
+      "path": "apps/web/components/DeskRail.tsx",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/components/DeskRail.tsx"
+    },
+    {
+      "path": "apps/web/components/PactComposer.tsx",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/components/PactComposer.tsx"
+    },
+    {
+      "path": "apps/web/components/RailNav.tsx",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/components/RailNav.tsx"
+    },
+    {
+      "path": "apps/web/components/channels/ChannelDesk.tsx",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/components/channels/ChannelDesk.tsx"
+    },
+    {
+      "path": "apps/web/components/map/PoliticalMap.tsx",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/components/map/PoliticalMap.tsx"
+    },
+    {
+      "path": "apps/web/components/map/TerritoryPanel.tsx",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/components/map/TerritoryPanel.tsx"
+    },
+    {
+      "path": "apps/web/components/map/TheatreMap.tsx",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/components/map/TheatreMap.tsx"
+    },
+    {
+      "path": "apps/web/components/map/TheatreStage.tsx",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/components/map/TheatreStage.tsx"
+    },
+    {
+      "path": "apps/web/components/nation/Objectives.tsx",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/components/nation/Objectives.tsx"
+    },
+    {
+      "path": "apps/web/components/nation/RelationshipBoard.tsx",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/components/nation/RelationshipBoard.tsx"
+    },
+    {
+      "path": "apps/web/components/pillars/Pillars.tsx",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/components/pillars/Pillars.tsx"
+    },
+    {
+      "path": "apps/web/components/shell/AlertStack.tsx",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/components/shell/AlertStack.tsx"
+    },
+    {
+      "path": "apps/web/components/shell/StatusLine.tsx",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/components/shell/StatusLine.tsx"
+    },
+    {
+      "path": "apps/web/components/shell/TimePresence.tsx",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/components/shell/TimePresence.tsx"
+    },
+    {
+      "path": "apps/web/lib/belief-view.ts",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/lib/belief-view.ts"
+    },
+    {
+      "path": "apps/web/lib/desk-model.ts",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/lib/desk-model.ts"
+    },
+    {
+      "path": "apps/web/lib/map-geometry.ts",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/lib/map-geometry.ts"
+    },
+    {
+      "path": "apps/web/lib/objectives.ts",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/lib/objectives.ts"
+    },
+    {
+      "path": "apps/web/lib/scenario-copy.ts",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/lib/scenario-copy.ts"
+    },
+    {
+      "path": "apps/web/lib/seat.ts",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/lib/seat.ts"
+    },
+    {
+      "path": "apps/web/lib/session.ts",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/lib/session.ts"
+    },
+    {
+      "path": "apps/web/lib/store.ts",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/lib/store.ts"
+    },
+    {
+      "path": "apps/web/lib/theatre-view.ts",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/lib/theatre-view.ts"
+    },
+    {
+      "path": "apps/web/next.config.ts",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/next.config.ts"
+    },
+    {
+      "path": "apps/web/package.json",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/package.json"
+    },
+    {
+      "path": "apps/web/public/geo/afghanistan_1979.geojson",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/public/geo/afghanistan_1979.geojson"
+    },
+    {
+      "path": "apps/web/public/geo/berlin_conference_1884.geojson",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/public/geo/berlin_conference_1884.geojson"
+    },
+    {
+      "path": "apps/web/public/geo/fragmentation_1991.geojson",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/public/geo/fragmentation_1991.geojson"
+    },
+    {
+      "path": "apps/web/public/geo/grand_alliance_1939.geojson",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/public/geo/grand_alliance_1939.geojson"
+    },
+    {
+      "path": "apps/web/public/geo/july_crisis_1914.geojson",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/public/geo/july_crisis_1914.geojson"
+    },
+    {
+      "path": "apps/web/public/geo/korea_1950.geojson",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/public/geo/korea_1950.geojson"
+    },
+    {
+      "path": "apps/web/public/geo/land.geojson",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/public/geo/land.geojson"
+    },
+    {
+      "path": "apps/web/public/geo/long_telegram_1947.geojson",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/public/geo/long_telegram_1947.geojson"
+    },
+    {
+      "path": "apps/web/public/geo/malvinas_1982.geojson",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/public/geo/malvinas_1982.geojson"
+    },
+    {
+      "path": "apps/web/public/geo/molotov_ribbentrop_1939.geojson",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/public/geo/molotov_ribbentrop_1939.geojson"
+    },
+    {
+      "path": "apps/web/public/geo/munich_1938.geojson",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/public/geo/munich_1938.geojson"
+    },
+    {
+      "path": "apps/web/public/geo/sevres_1956.geojson",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/public/geo/sevres_1956.geojson"
+    },
+    {
+      "path": "apps/web/public/geo/tanker_war_1980.geojson",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/public/geo/tanker_war_1980.geojson"
+    },
+    {
+      "path": "apps/web/public/geo/the_concept_1967.geojson",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/public/geo/the_concept_1967.geojson"
+    },
+    {
+      "path": "apps/web/public/geo/thirteen_days_1962.geojson",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/public/geo/thirteen_days_1962.geojson"
+    },
+    {
+      "path": "apps/web/public/geo/vienna_1815.geojson",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/public/geo/vienna_1815.geojson"
+    },
+    {
+      "path": "apps/web/public/geo/vietnam_1964.geojson",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/public/geo/vietnam_1964.geojson"
+    },
+    {
+      "path": "apps/web/public/maps/ATTRIBUTION.md",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/public/maps/ATTRIBUTION.md"
+    },
+    {
+      "path": "apps/web/public/maps/europe-1815-nie.jpg",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/public/maps/europe-1815-nie.jpg"
+    },
+    {
+      "path": "apps/web/public/maps/europe-1815-usma.jpg",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/public/maps/europe-1815-usma.jpg"
+    },
+    {
+      "path": "apps/web/public/maps/europe-1914-usma.jpg",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/public/maps/europe-1914-usma.jpg"
+    },
+    {
+      "path": "apps/web/public/maps/sinai-cia.jpg",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/public/maps/sinai-cia.jpg"
+    },
+    {
+      "path": "apps/web/public/maps/suez-1956-usma.jpg",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/public/maps/suez-1956-usma.jpg"
+    },
+    {
+      "path": "apps/web/tsconfig.json",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/tsconfig.json"
+    },
+    {
+      "path": "docs/01-scenario-catalog.md",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/docs/01-scenario-catalog.md"
+    },
+    {
+      "path": "docs/02-dev-plan.md",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/docs/02-dev-plan.md"
+    },
+    {
+      "path": "docs/04-cursor-instructions.md",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/docs/04-cursor-instructions.md"
+    },
+    {
+      "path": "docs/05-claude-design-core-interface.md",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/docs/05-claude-design-core-interface.md"
+    },
+    {
+      "path": "docs/handoff/SPEC.md",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/docs/handoff/SPEC.md"
+    },
+    {
+      "path": "docs/handoff/tokens.css",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/docs/handoff/tokens.css"
+    },
+    {
+      "path": "files.json",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/files.json"
+    },
+    {
+      "path": "package-lock.json",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/package-lock.json"
+    },
+    {
+      "path": "package.json",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/package.json"
+    },
+    {
+      "path": "packages/db/migrations/001_initial.sql",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/packages/db/migrations/001_initial.sql"
+    },
+    {
+      "path": "packages/db/package.json",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/packages/db/package.json"
+    },
+    {
+      "path": "packages/db/src/client.ts",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/packages/db/src/client.ts"
+    },
+    {
+      "path": "packages/db/src/index.ts",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/packages/db/src/index.ts"
+    },
+    {
+      "path": "packages/db/src/memory-store.ts",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/packages/db/src/memory-store.ts"
+    },
+    {
+      "path": "packages/db/src/postgres-store.ts",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/packages/db/src/postgres-store.ts"
+    },
+    {
+      "path": "packages/db/src/types.ts",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/packages/db/src/types.ts"
+    },
+    {
+      "path": "packages/rules/advisors/whitehall_1956.json",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/packages/rules/advisors/whitehall_1956.json"
+    },
+    {
+      "path": "packages/rules/effects/standing.json",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/packages/rules/effects/standing.json"
+    },
+    {
+      "path": "packages/rules/package.json",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/packages/rules/package.json"
+    },
+    {
+      "path": "packages/rules/src/index.ts",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/packages/rules/src/index.ts"
+    },
+    {
+      "path": "packages/rules/src/schema.ts",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/packages/rules/src/schema.ts"
+    },
+    {
+      "path": "packages/rules/test/schema.test.ts",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/packages/rules/test/schema.test.ts"
+    },
+    {
+      "path": "packages/runtime/package.json",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/packages/runtime/package.json"
+    },
+    {
+      "path": "packages/runtime/src/advance.ts",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/packages/runtime/src/advance.ts"
+    },
+    {
+      "path": "packages/runtime/src/index.ts",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/packages/runtime/src/index.ts"
+    },
+    {
+      "path": "packages/runtime/test/channels.test.ts",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/packages/runtime/test/channels.test.ts"
+    },
+    {
+      "path": "packages/scenarios/afghanistan-1979.json",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/packages/scenarios/afghanistan-1979.json"
+    },
+    {
+      "path": "packages/scenarios/berlin-conference-1884.json",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/packages/scenarios/berlin-conference-1884.json"
+    },
+    {
+      "path": "packages/scenarios/fragmentation-1991.json",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/packages/scenarios/fragmentation-1991.json"
+    },
+    {
+      "path": "packages/scenarios/grand-alliance-1939.json",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/packages/scenarios/grand-alliance-1939.json"
+    },
+    {
+      "path": "packages/scenarios/july-crisis-1914.json",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/packages/scenarios/july-crisis-1914.json"
+    },
+    {
+      "path": "packages/scenarios/korea-1950.json",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/packages/scenarios/korea-1950.json"
+    },
+    {
+      "path": "packages/scenarios/long-telegram-1947.json",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/packages/scenarios/long-telegram-1947.json"
+    },
+    {
+      "path": "packages/scenarios/malvinas-1982.json",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/packages/scenarios/malvinas-1982.json"
+    },
+    {
+      "path": "packages/scenarios/molotov-ribbentrop-1939.json",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/packages/scenarios/molotov-ribbentrop-1939.json"
+    },
+    {
+      "path": "packages/scenarios/munich-1938.json",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/packages/scenarios/munich-1938.json"
+    },
+    {
+      "path": "packages/scenarios/package.json",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/packages/scenarios/package.json"
+    },
+    {
+      "path": "packages/scenarios/sevres-1956.json",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/packages/scenarios/sevres-1956.json"
+    },
+    {
+      "path": "packages/scenarios/src/index.ts",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/packages/scenarios/src/index.ts"
+    },
+    {
+      "path": "packages/scenarios/src/load.ts",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/packages/scenarios/src/load.ts"
+    },
+    {
+      "path": "packages/scenarios/src/schema.ts",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/packages/scenarios/src/schema.ts"
+    },
+    {
+      "path": "packages/scenarios/tanker-war-1980.json",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/packages/scenarios/tanker-war-1980.json"
+    },
+    {
+      "path": "packages/scenarios/the-concept-1967.json",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/packages/scenarios/the-concept-1967.json"
+    },
+    {
+      "path": "packages/scenarios/thirteen-days-1962.json",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/packages/scenarios/thirteen-days-1962.json"
+    },
+    {
+      "path": "packages/scenarios/vienna-1815.json",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/packages/scenarios/vienna-1815.json"
+    },
+    {
+      "path": "packages/scenarios/vietnam-1964.json",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/packages/scenarios/vietnam-1964.json"
+    },
+    {
+      "path": "packages/sim/package.json",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/packages/sim/package.json"
+    },
+    {
+      "path": "packages/sim/src/assert-events.ts",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/packages/sim/src/assert-events.ts"
+    },
+    {
+      "path": "packages/sim/src/briefing/render.ts",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/packages/sim/src/briefing/render.ts"
+    },
+    {
+      "path": "packages/sim/src/context.ts",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/packages/sim/src/context.ts"
+    },
+    {
+      "path": "packages/sim/src/force.ts",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/packages/sim/src/force.ts"
+    },
+    {
+      "path": "packages/sim/src/index.ts",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/packages/sim/src/index.ts"
+    },
+    {
+      "path": "packages/sim/src/phases/01-orders.ts",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/packages/sim/src/phases/01-orders.ts"
+    },
+    {
+      "path": "packages/sim/src/phases/02-movement.ts",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/packages/sim/src/phases/02-movement.ts"
+    },
+    {
+      "path": "packages/sim/src/phases/03-combat.ts",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/packages/sim/src/phases/03-combat.ts"
+    },
+    {
+      "path": "packages/sim/src/phases/04-pacts.ts",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/packages/sim/src/phases/04-pacts.ts"
+    },
+    {
+      "path": "packages/sim/src/phases/05-effects.ts",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/packages/sim/src/phases/05-effects.ts"
+    },
+    {
+      "path": "packages/sim/src/phases/06-intel.ts",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/packages/sim/src/phases/06-intel.ts"
+    },
+    {
+      "path": "packages/sim/src/phases/07-briefings.ts",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/packages/sim/src/phases/07-briefings.ts"
+    },
+    {
+      "path": "packages/sim/src/prose.ts",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/packages/sim/src/prose.ts"
+    },
+    {
+      "path": "packages/sim/src/rng.ts",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/packages/sim/src/rng.ts"
+    },
+    {
+      "path": "packages/sim/src/serialize.ts",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/packages/sim/src/serialize.ts"
+    },
+    {
+      "path": "packages/sim/src/tick.ts",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/packages/sim/src/tick.ts"
+    },
+    {
+      "path": "packages/sim/src/types.ts",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/packages/sim/src/types.ts"
+    },
+    {
+      "path": "packages/sim/src/victory.ts",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/packages/sim/src/victory.ts"
+    },
+    {
+      "path": "packages/sim/test/belief-isolation.test.ts",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/packages/sim/test/belief-isolation.test.ts"
+    },
+    {
+      "path": "packages/sim/test/determinism.test.ts",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/packages/sim/test/determinism.test.ts"
+    },
+    {
+      "path": "packages/sim/test/effects.test.ts",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/packages/sim/test/effects.test.ts"
+    },
+    {
+      "path": "packages/sim/test/events.test.ts",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/packages/sim/test/events.test.ts"
+    },
+    {
+      "path": "packages/sim/test/hash-run.ts",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/packages/sim/test/hash-run.ts"
+    },
+    {
+      "path": "packages/sim/test/pacts.test.ts",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/packages/sim/test/pacts.test.ts"
+    },
+    {
+      "path": "packages/sim/test/scenario.test.ts",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/packages/sim/test/scenario.test.ts"
+    },
+    {
+      "path": "packages/sim/test/sequence.ts",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/packages/sim/test/sequence.ts"
+    },
+    {
+      "path": "packages/sim/tsconfig.json",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/packages/sim/tsconfig.json"
+    },
+    {
+      "path": "scripts/build-theatre-geo.mjs",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/scripts/build-theatre-geo.mjs"
+    },
+    {
+      "path": "scripts/write-catalog-scenarios.mjs",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/scripts/write-catalog-scenarios.mjs"
+    },
+    {
+      "path": "tsconfig.base.json",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/tsconfig.base.json"
+    },
+    {
+      "path": "vitest.config.ts",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/vitest.config.ts"
+    }
+  ]
+}

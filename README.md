@@ -2,6 +2,19 @@
 
 Persistent multiplayer geopolitical strategy. The interface is **read, not operated**. Combat, when it exists, resolves in the background and is reported as documents. There is no unit UI.
 
+## Raw index (allowlisted fetch)
+
+GitHub’s directory tree is JavaScript. Fetchers that only follow `github.com`, `raw.githubusercontent.com`, `api.github.com`, and `codeload.github.com` should use these URLs — they list every nested file.
+
+- https://raw.githubusercontent.com/4lexDmt/cabinet/main/FETCH.md
+- https://raw.githubusercontent.com/4lexDmt/cabinet/main/files.json
+- https://raw.githubusercontent.com/4lexDmt/cabinet/main/README.md
+- https://github.com/4lexDmt/cabinet/archive/refs/heads/main.zip
+- https://codeload.github.com/4lexDmt/cabinet/zip/refs/heads/main
+- https://api.github.com/repos/4lexDmt/cabinet/git/trees/main?recursive=1
+
+`FETCH.md` is a plain-text list of `raw.githubusercontent.com` URLs, one per source file, including Next.js `(game)` paths as `%28game%29`.
+
 This repository implements **M0 (foundation)** and **M1 (the pact loop)** from the handoff: a deterministic tick, structured pacts, standing with a full ledger, data-driven effects, and the sixteen catalog tables as config.
 
 ## Run it
