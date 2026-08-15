@@ -1,0 +1,25 @@
+{
+  "name": "cabinet",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Persistent multiplayer geopolitical strategy — read, not operated.",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "npm run dev -w @cabinet/web",
+    "dev:worker": "npm run start -w @cabinet/tick-worker",
+    "build": "npm run build -w @cabinet/web",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "devDependencies": {
+    "tsx": "^4.20.5",
+    "typescript": "^5.9.2",
+    "vitest": "^3.2.4"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

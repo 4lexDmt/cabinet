@@ -1,0 +1,444 @@
+{
+  "id": "the_concept_1967",
+  "display_name": "The Concept",
+  "duration_ticks": 1008,
+  "player_slots": 8,
+  "requires_systems": [
+    "pacts",
+    "standing",
+    "channels"
+  ],
+  "nations": [
+    {
+      "id": "il",
+      "name": "Israel",
+      "shortName": "Israel",
+      "adjective": "Israeli",
+      "standing_external": 52,
+      "standing_internal": 76,
+      "economy": 48,
+      "intelligence_capacity": 82,
+      "supply": 58,
+      "status": "sovereign",
+      "territories": [
+        "israel_home"
+      ],
+      "social_tree_unlocks": [],
+      "advisor_set": "kirya_1967"
+    },
+    {
+      "id": "eg",
+      "name": "Egypt",
+      "shortName": "Egypt",
+      "adjective": "Egyptian",
+      "standing_external": 58,
+      "standing_internal": 70,
+      "economy": 40,
+      "intelligence_capacity": 55,
+      "supply": 50,
+      "status": "sovereign",
+      "territories": [
+        "egypt_home",
+        "sinai"
+      ],
+      "social_tree_unlocks": [],
+      "advisor_set": "cairo_1967"
+    },
+    {
+      "id": "sy",
+      "name": "Syria",
+      "shortName": "Syria",
+      "adjective": "Syrian",
+      "standing_external": 44,
+      "standing_internal": 62,
+      "economy": 28,
+      "intelligence_capacity": 50,
+      "supply": 36,
+      "status": "sovereign",
+      "territories": [
+        "syria_home",
+        "golan"
+      ],
+      "social_tree_unlocks": [],
+      "advisor_set": "damascus_1967"
+    },
+    {
+      "id": "jo",
+      "name": "Jordan",
+      "shortName": "Jordan",
+      "adjective": "Jordanian",
+      "standing_external": 46,
+      "standing_internal": 58,
+      "economy": 26,
+      "intelligence_capacity": 48,
+      "supply": 32,
+      "status": "sovereign",
+      "territories": [
+        "jordan_home",
+        "west_bank"
+      ],
+      "social_tree_unlocks": [],
+      "advisor_set": "amman_1967"
+    },
+    {
+      "id": "iq",
+      "name": "Iraq",
+      "shortName": "Iraq",
+      "adjective": "Iraqi",
+      "standing_external": 48,
+      "standing_internal": 60,
+      "economy": 36,
+      "intelligence_capacity": 46,
+      "supply": 40,
+      "status": "sovereign",
+      "territories": [
+        "iraq_home"
+      ],
+      "social_tree_unlocks": [],
+      "advisor_set": "baghdad_1967"
+    },
+    {
+      "id": "su",
+      "name": "Soviet Union",
+      "shortName": "the Soviet Union",
+      "adjective": "Soviet",
+      "standing_external": 80,
+      "standing_internal": 66,
+      "economy": 78,
+      "intelligence_capacity": 86,
+      "supply": 74,
+      "status": "sovereign",
+      "territories": [
+        "soviet_home"
+      ],
+      "social_tree_unlocks": [],
+      "advisor_set": "kremlin_1967"
+    },
+    {
+      "id": "us",
+      "name": "United States",
+      "shortName": "America",
+      "adjective": "American",
+      "standing_external": 88,
+      "standing_internal": 68,
+      "economy": 96,
+      "intelligence_capacity": 90,
+      "supply": 88,
+      "status": "sovereign",
+      "territories": [
+        "united_states_home"
+      ],
+      "social_tree_unlocks": [],
+      "advisor_set": "foggy_bottom_1967"
+    },
+    {
+      "id": "fr",
+      "name": "France",
+      "shortName": "France",
+      "adjective": "French",
+      "standing_external": 70,
+      "standing_internal": 58,
+      "economy": 72,
+      "intelligence_capacity": 70,
+      "supply": 64,
+      "status": "sovereign",
+      "territories": [
+        "metropolitan_france"
+      ],
+      "social_tree_unlocks": [],
+      "advisor_set": "quai_1967"
+    }
+  ],
+  "territories": [
+    {
+      "id": "israel_home",
+      "name": "Israel",
+      "owner": "il",
+      "controller": "il",
+      "region": "levant",
+      "supplyValue": 8
+    },
+    {
+      "id": "egypt_home",
+      "name": "Egypt",
+      "owner": "eg",
+      "controller": "eg",
+      "region": "nile",
+      "supplyValue": 12
+    },
+    {
+      "id": "sinai",
+      "name": "Sinai",
+      "owner": "eg",
+      "controller": "eg",
+      "region": "nile",
+      "supplyValue": 5
+    },
+    {
+      "id": "syria_home",
+      "name": "Syria",
+      "owner": "sy",
+      "controller": "sy",
+      "region": "levant",
+      "supplyValue": 8
+    },
+    {
+      "id": "golan",
+      "name": "Golan",
+      "owner": "sy",
+      "controller": "sy",
+      "region": "levant",
+      "supplyValue": 4
+    },
+    {
+      "id": "jordan_home",
+      "name": "Jordan",
+      "owner": "jo",
+      "controller": "jo",
+      "region": "levant",
+      "supplyValue": 6
+    },
+    {
+      "id": "west_bank",
+      "name": "West Bank",
+      "owner": "jo",
+      "controller": "jo",
+      "region": "levant",
+      "supplyValue": 5
+    },
+    {
+      "id": "iraq_home",
+      "name": "Iraq",
+      "owner": "iq",
+      "controller": "iq",
+      "region": "mesopotamia",
+      "supplyValue": 9
+    },
+    {
+      "id": "soviet_home",
+      "name": "Soviet Union",
+      "owner": "su",
+      "controller": "su",
+      "region": "eurasia",
+      "supplyValue": 22
+    },
+    {
+      "id": "united_states_home",
+      "name": "United States",
+      "owner": "us",
+      "controller": "us",
+      "region": "americas",
+      "supplyValue": 24
+    },
+    {
+      "id": "metropolitan_france",
+      "name": "Metropolitan France",
+      "owner": "fr",
+      "controller": "fr",
+      "region": "europe",
+      "supplyValue": 16
+    }
+  ],
+  "formations": [
+    {
+      "id": "il-home",
+      "nationId": "il",
+      "location": "israel_home",
+      "strength": 8
+    },
+    {
+      "id": "eg-home",
+      "nationId": "eg",
+      "location": "egypt_home",
+      "strength": 7
+    },
+    {
+      "id": "sy-home",
+      "nationId": "sy",
+      "location": "syria_home",
+      "strength": 5
+    },
+    {
+      "id": "jo-home",
+      "nationId": "jo",
+      "location": "jordan_home",
+      "strength": 5
+    },
+    {
+      "id": "iq-home",
+      "nationId": "iq",
+      "location": "iraq_home",
+      "strength": 6
+    },
+    {
+      "id": "su-home",
+      "nationId": "su",
+      "location": "soviet_home",
+      "strength": 11
+    },
+    {
+      "id": "us-home",
+      "nationId": "us",
+      "location": "united_states_home",
+      "strength": 13
+    },
+    {
+      "id": "fr-home",
+      "nationId": "fr",
+      "location": "metropolitan_france",
+      "strength": 9
+    }
+  ],
+  "starting_pacts": [
+    {
+      "id": "egypt-syria",
+      "parties": [
+        "eg",
+        "sy"
+      ],
+      "type": "defense",
+      "secret": false,
+      "terms": {
+        "title": "United Arab understanding",
+        "type": "defense",
+        "secret": false,
+        "obligations": [
+          {
+            "id": "eg-no-war-sy",
+            "party": "eg",
+            "must": "not_declare_war_on",
+            "target": "sy"
+          },
+          {
+            "id": "sy-no-war-eg",
+            "party": "sy",
+            "must": "not_declare_war_on",
+            "target": "eg"
+          }
+        ]
+      }
+    },
+    {
+      "id": "su-eg",
+      "parties": [
+        "su",
+        "eg"
+      ],
+      "type": "defense",
+      "secret": false,
+      "terms": {
+        "title": "Soviet patronage",
+        "type": "defense",
+        "secret": false,
+        "obligations": [
+          {
+            "id": "su-no-war-eg",
+            "party": "su",
+            "must": "not_declare_war_on",
+            "target": "eg"
+          },
+          {
+            "id": "eg-no-war-su",
+            "party": "eg",
+            "must": "not_declare_war_on",
+            "target": "su"
+          }
+        ]
+      }
+    }
+  ],
+  "trade_routes": [],
+  "flags": {
+    "egypt_claims_victory": false
+  },
+  "victory_conditions": {
+    "il": {
+      "all_of": [
+        {
+          "status_not": "occupied"
+        },
+        {
+          "gte": [
+            "standing_external",
+            45
+          ]
+        }
+      ]
+    },
+    "eg": {
+      "all_of": [
+        {
+          "control": "territory:sinai"
+        },
+        {
+          "gte": [
+            "standing_external",
+            50
+          ]
+        }
+      ]
+    },
+    "sy": {
+      "all_of": [
+        {
+          "control": "territory:golan"
+        }
+      ]
+    },
+    "jo": {
+      "all_of": [
+        {
+          "control": "territory:west_bank"
+        },
+        {
+          "status_not": "occupied"
+        }
+      ]
+    },
+    "iq": {
+      "all_of": [
+        {
+          "gte": [
+            "standing_external",
+            40
+          ]
+        }
+      ]
+    },
+    "su": {
+      "all_of": [
+        {
+          "gte": [
+            "standing_external",
+            70
+          ]
+        }
+      ]
+    },
+    "us": {
+      "all_of": [
+        {
+          "gte": [
+            "standing_external",
+            75
+          ]
+        }
+      ]
+    },
+    "fr": {
+      "all_of": [
+        {
+          "gte": [
+            "standing_external",
+            60
+          ]
+        }
+      ]
+    }
+  },
+  "tuning": {
+    "secret_pact_leak_base_chance": 0.07,
+    "standing_penalty_on_breach": 20,
+    "cascade_depth_cap": 3
+  }
+}

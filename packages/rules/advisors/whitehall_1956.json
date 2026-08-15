@@ -1,0 +1,16 @@
+[
+  {
+    "id": "whitehall_quiet_desk",
+    "advisor_set": "whitehall_1956",
+    "when": "quiet",
+    "voice": "Cabinet Secretary",
+    "body": "The desk is in order. Three formations remain on their present stations. Nothing in file requires a decision before the next sitting."
+  },
+  {
+    "id": "whitehall_breach",
+    "advisor_set": "whitehall_1956",
+    "when": "pact.breached",
+    "voice": "Foreign Office",
+    "body": "An instrument in force has been broken. The ledger will show the standing. The question is whether we treat it as an affair of honour or of interest."
+  }
+]

@@ -1,0 +1,15 @@
+{
+  "name": "@cabinet/runtime",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "dependencies": {
+    "@cabinet/db": "*",
+    "@cabinet/rules": "*",
+    "@cabinet/scenarios": "*",
+    "@cabinet/sim": "*"
+  }
+}

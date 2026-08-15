@@ -1,0 +1,14 @@
+{
+  "name": "@cabinet/tick-worker",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "tsx src/main.ts"
+  },
+  "dependencies": {
+    "@cabinet/db": "*",
+    "@cabinet/runtime": "*",
+    "tsx": "^4.20.5"
+  }
+}

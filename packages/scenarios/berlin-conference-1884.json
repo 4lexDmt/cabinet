@@ -1,0 +1,586 @@
+{
+  "id": "berlin_conference_1884",
+  "display_name": "Effective Occupation",
+  "duration_ticks": 1512,
+  "player_slots": 13,
+  "requires_systems": [
+    "pacts",
+    "standing",
+    "channels"
+  ],
+  "nations": [
+    {
+      "id": "gb",
+      "name": "Britain",
+      "shortName": "Britain",
+      "adjective": "British",
+      "standing_external": 88,
+      "standing_internal": 70,
+      "economy": 90,
+      "intelligence_capacity": 72,
+      "supply": 84,
+      "status": "sovereign",
+      "territories": [
+        "london"
+      ],
+      "social_tree_unlocks": [],
+      "advisor_set": "whitehall_1884"
+    },
+    {
+      "id": "fr",
+      "name": "France",
+      "shortName": "France",
+      "adjective": "French",
+      "standing_external": 76,
+      "standing_internal": 58,
+      "economy": 74,
+      "intelligence_capacity": 64,
+      "supply": 70,
+      "status": "sovereign",
+      "territories": [
+        "paris"
+      ],
+      "social_tree_unlocks": [],
+      "advisor_set": "quai_1884"
+    },
+    {
+      "id": "de",
+      "name": "Germany",
+      "shortName": "Germany",
+      "adjective": "German",
+      "standing_external": 80,
+      "standing_internal": 74,
+      "economy": 78,
+      "intelligence_capacity": 66,
+      "supply": 76,
+      "status": "sovereign",
+      "territories": [
+        "berlin"
+      ],
+      "social_tree_unlocks": [],
+      "advisor_set": "berlin_1884"
+    },
+    {
+      "id": "be",
+      "name": "Belgium",
+      "shortName": "Belgium",
+      "adjective": "Belgian",
+      "standing_external": 54,
+      "standing_internal": 60,
+      "economy": 48,
+      "intelligence_capacity": 50,
+      "supply": 36,
+      "status": "sovereign",
+      "territories": [
+        "brussels"
+      ],
+      "social_tree_unlocks": [],
+      "advisor_set": "brussels_1884"
+    },
+    {
+      "id": "pt",
+      "name": "Portugal",
+      "shortName": "Portugal",
+      "adjective": "Portuguese",
+      "standing_external": 50,
+      "standing_internal": 52,
+      "economy": 36,
+      "intelligence_capacity": 40,
+      "supply": 34,
+      "status": "sovereign",
+      "territories": [
+        "lisbon"
+      ],
+      "social_tree_unlocks": [],
+      "advisor_set": "lisbon_1884"
+    },
+    {
+      "id": "it",
+      "name": "Italy",
+      "shortName": "Italy",
+      "adjective": "Italian",
+      "standing_external": 58,
+      "standing_internal": 56,
+      "economy": 44,
+      "intelligence_capacity": 46,
+      "supply": 42,
+      "status": "sovereign",
+      "territories": [
+        "rome"
+      ],
+      "social_tree_unlocks": [],
+      "advisor_set": "rome_1884"
+    },
+    {
+      "id": "es",
+      "name": "Spain",
+      "shortName": "Spain",
+      "adjective": "Spanish",
+      "standing_external": 48,
+      "standing_internal": 50,
+      "economy": 34,
+      "intelligence_capacity": 38,
+      "supply": 36,
+      "status": "sovereign",
+      "territories": [
+        "madrid"
+      ],
+      "social_tree_unlocks": [],
+      "advisor_set": "madrid_1884"
+    },
+    {
+      "id": "et",
+      "name": "Ethiopia",
+      "shortName": "Ethiopia",
+      "adjective": "Ethiopian",
+      "standing_external": 46,
+      "standing_internal": 72,
+      "economy": 24,
+      "intelligence_capacity": 48,
+      "supply": 40,
+      "status": "sovereign",
+      "territories": [
+        "addis"
+      ],
+      "social_tree_unlocks": [],
+      "advisor_set": "addis_1884"
+    },
+    {
+      "id": "as",
+      "name": "Asante",
+      "shortName": "Asante",
+      "adjective": "Asante",
+      "standing_external": 34,
+      "standing_internal": 68,
+      "economy": 16,
+      "intelligence_capacity": 44,
+      "supply": 28,
+      "status": "sovereign",
+      "territories": [
+        "kumasi"
+      ],
+      "social_tree_unlocks": [],
+      "advisor_set": "kumasi_1884"
+    },
+    {
+      "id": "sk",
+      "name": "Sokoto",
+      "shortName": "Sokoto",
+      "adjective": "Sokoto",
+      "standing_external": 36,
+      "standing_internal": 66,
+      "economy": 18,
+      "intelligence_capacity": 42,
+      "supply": 30,
+      "status": "sovereign",
+      "territories": [
+        "sokoto"
+      ],
+      "social_tree_unlocks": [],
+      "advisor_set": "sokoto_1884"
+    },
+    {
+      "id": "zu",
+      "name": "Zulu Kingdom",
+      "shortName": "the Zulu",
+      "adjective": "Zulu",
+      "standing_external": 32,
+      "standing_internal": 70,
+      "economy": 12,
+      "intelligence_capacity": 38,
+      "supply": 26,
+      "status": "sovereign",
+      "territories": [
+        "ulundi"
+      ],
+      "social_tree_unlocks": [],
+      "advisor_set": "ulundi_1884"
+    },
+    {
+      "id": "bg",
+      "name": "Buganda",
+      "shortName": "Buganda",
+      "adjective": "Buganda",
+      "standing_external": 30,
+      "standing_internal": 64,
+      "economy": 12,
+      "intelligence_capacity": 40,
+      "supply": 22,
+      "status": "sovereign",
+      "territories": [
+        "mengo"
+      ],
+      "social_tree_unlocks": [],
+      "advisor_set": "mengo_1884"
+    },
+    {
+      "id": "mg",
+      "name": "Madagascar",
+      "shortName": "Madagascar",
+      "adjective": "Malagasy",
+      "standing_external": 34,
+      "standing_internal": 60,
+      "economy": 14,
+      "intelligence_capacity": 36,
+      "supply": 24,
+      "status": "sovereign",
+      "territories": [
+        "antananarivo"
+      ],
+      "social_tree_unlocks": [],
+      "advisor_set": "antananarivo_1884"
+    }
+  ],
+  "territories": [
+    {
+      "id": "london",
+      "name": "London",
+      "owner": "gb",
+      "controller": "gb",
+      "region": "europe",
+      "supplyValue": 14
+    },
+    {
+      "id": "paris",
+      "name": "Paris",
+      "owner": "fr",
+      "controller": "fr",
+      "region": "europe",
+      "supplyValue": 12
+    },
+    {
+      "id": "berlin",
+      "name": "Berlin",
+      "owner": "de",
+      "controller": "de",
+      "region": "europe",
+      "supplyValue": 12
+    },
+    {
+      "id": "brussels",
+      "name": "Brussels",
+      "owner": "be",
+      "controller": "be",
+      "region": "europe",
+      "supplyValue": 6
+    },
+    {
+      "id": "lisbon",
+      "name": "Lisbon",
+      "owner": "pt",
+      "controller": "pt",
+      "region": "europe",
+      "supplyValue": 6
+    },
+    {
+      "id": "rome",
+      "name": "Rome",
+      "owner": "it",
+      "controller": "it",
+      "region": "europe",
+      "supplyValue": 8
+    },
+    {
+      "id": "madrid",
+      "name": "Madrid",
+      "owner": "es",
+      "controller": "es",
+      "region": "europe",
+      "supplyValue": 8
+    },
+    {
+      "id": "addis",
+      "name": "Addis Ababa",
+      "owner": "et",
+      "controller": "et",
+      "region": "africa",
+      "supplyValue": 8
+    },
+    {
+      "id": "kumasi",
+      "name": "Kumasi",
+      "owner": "as",
+      "controller": "as",
+      "region": "africa",
+      "supplyValue": 5
+    },
+    {
+      "id": "sokoto",
+      "name": "Sokoto",
+      "owner": "sk",
+      "controller": "sk",
+      "region": "africa",
+      "supplyValue": 6
+    },
+    {
+      "id": "ulundi",
+      "name": "Ulundi",
+      "owner": "zu",
+      "controller": "zu",
+      "region": "africa",
+      "supplyValue": 5
+    },
+    {
+      "id": "mengo",
+      "name": "Mengo",
+      "owner": "bg",
+      "controller": "bg",
+      "region": "africa",
+      "supplyValue": 4
+    },
+    {
+      "id": "antananarivo",
+      "name": "Antananarivo",
+      "owner": "mg",
+      "controller": "mg",
+      "region": "africa",
+      "supplyValue": 6
+    }
+  ],
+  "formations": [
+    {
+      "id": "gb-home",
+      "nationId": "gb",
+      "location": "london",
+      "strength": 12
+    },
+    {
+      "id": "fr-home",
+      "nationId": "fr",
+      "location": "paris",
+      "strength": 10
+    },
+    {
+      "id": "de-home",
+      "nationId": "de",
+      "location": "berlin",
+      "strength": 11
+    },
+    {
+      "id": "be-home",
+      "nationId": "be",
+      "location": "brussels",
+      "strength": 5
+    },
+    {
+      "id": "pt-home",
+      "nationId": "pt",
+      "location": "lisbon",
+      "strength": 5
+    },
+    {
+      "id": "it-home",
+      "nationId": "it",
+      "location": "rome",
+      "strength": 6
+    },
+    {
+      "id": "es-home",
+      "nationId": "es",
+      "location": "madrid",
+      "strength": 5
+    },
+    {
+      "id": "et-home",
+      "nationId": "et",
+      "location": "addis",
+      "strength": 6
+    },
+    {
+      "id": "as-home",
+      "nationId": "as",
+      "location": "kumasi",
+      "strength": 4
+    },
+    {
+      "id": "sk-home",
+      "nationId": "sk",
+      "location": "sokoto",
+      "strength": 4
+    },
+    {
+      "id": "zu-home",
+      "nationId": "zu",
+      "location": "ulundi",
+      "strength": 4
+    },
+    {
+      "id": "bg-home",
+      "nationId": "bg",
+      "location": "mengo",
+      "strength": 3
+    },
+    {
+      "id": "mg-home",
+      "nationId": "mg",
+      "location": "antananarivo",
+      "strength": 3
+    }
+  ],
+  "starting_pacts": [
+    {
+      "id": "sokoto-treaty",
+      "parties": [
+        "gb",
+        "sk"
+      ],
+      "type": "passage",
+      "secret": false,
+      "terms": {
+        "title": "Treaty of friendship and protection",
+        "type": "passage",
+        "secret": false,
+        "obligations": [
+          {
+            "id": "sk-passage-gb",
+            "party": "sk",
+            "must": "provide_passage",
+            "target": "gb"
+          }
+        ]
+      },
+      "private_terms": {
+        "title": "Treaty of friendship and protection",
+        "type": "tribute",
+        "secret": true,
+        "obligations": [
+          {
+            "id": "sk-tribute-gb",
+            "party": "sk",
+            "must": "pay_tribute",
+            "target": "gb"
+          }
+        ]
+      }
+    }
+  ],
+  "trade_routes": [],
+  "flags": {
+    "ethiopia_independent": true
+  },
+  "victory_conditions": {
+    "gb": {
+      "all_of": [
+        {
+          "gte": [
+            "standing_external",
+            75
+          ]
+        }
+      ]
+    },
+    "fr": {
+      "all_of": [
+        {
+          "gte": [
+            "standing_external",
+            65
+          ]
+        }
+      ]
+    },
+    "de": {
+      "all_of": [
+        {
+          "gte": [
+            "standing_external",
+            70
+          ]
+        }
+      ]
+    },
+    "be": {
+      "all_of": [
+        {
+          "gte": [
+            "standing_external",
+            50
+          ]
+        }
+      ]
+    },
+    "pt": {
+      "all_of": [
+        {
+          "gte": [
+            "standing_external",
+            45
+          ]
+        }
+      ]
+    },
+    "it": {
+      "all_of": [
+        {
+          "gte": [
+            "standing_external",
+            50
+          ]
+        }
+      ]
+    },
+    "es": {
+      "all_of": [
+        {
+          "gte": [
+            "standing_external",
+            42
+          ]
+        }
+      ]
+    },
+    "et": {
+      "all_of": [
+        {
+          "flag_eq": [
+            "ethiopia_independent",
+            true
+          ]
+        },
+        {
+          "status_not": "occupied"
+        }
+      ]
+    },
+    "as": {
+      "all_of": [
+        {
+          "status_not": "occupied"
+        }
+      ]
+    },
+    "sk": {
+      "all_of": [
+        {
+          "status_not": "occupied"
+        }
+      ]
+    },
+    "zu": {
+      "all_of": [
+        {
+          "status_not": "occupied"
+        }
+      ]
+    },
+    "bg": {
+      "all_of": [
+        {
+          "status_not": "occupied"
+        }
+      ]
+    },
+    "mg": {
+      "all_of": [
+        {
+          "status_not": "occupied"
+        }
+      ]
+    }
+  },
+  "tuning": {
+    "secret_pact_leak_base_chance": 0.05,
+    "standing_penalty_on_breach": 18,
+    "cascade_depth_cap": 3
+  }
+}

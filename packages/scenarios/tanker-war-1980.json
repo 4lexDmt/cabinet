@@ -1,0 +1,425 @@
+{
+  "id": "tanker_war_1980",
+  "display_name": "Tanker War",
+  "duration_ticks": 1512,
+  "player_slots": 8,
+  "requires_systems": [
+    "pacts",
+    "standing",
+    "channels"
+  ],
+  "nations": [
+    {
+      "id": "iq",
+      "name": "Iraq",
+      "shortName": "Iraq",
+      "adjective": "Iraqi",
+      "standing_external": 50,
+      "standing_internal": 64,
+      "economy": 44,
+      "intelligence_capacity": 52,
+      "supply": 56,
+      "status": "sovereign",
+      "territories": [
+        "baghdad"
+      ],
+      "social_tree_unlocks": [],
+      "advisor_set": "baghdad_1980"
+    },
+    {
+      "id": "ir",
+      "name": "Iran",
+      "shortName": "Iran",
+      "adjective": "Iranian",
+      "standing_external": 48,
+      "standing_internal": 58,
+      "economy": 42,
+      "intelligence_capacity": 60,
+      "supply": 54,
+      "status": "sovereign",
+      "territories": [
+        "tehran"
+      ],
+      "social_tree_unlocks": [],
+      "advisor_set": "tehran_1980"
+    },
+    {
+      "id": "us",
+      "name": "United States",
+      "shortName": "America",
+      "adjective": "American",
+      "standing_external": 90,
+      "standing_internal": 66,
+      "economy": 96,
+      "intelligence_capacity": 90,
+      "supply": 88,
+      "status": "sovereign",
+      "territories": [
+        "united_states_home"
+      ],
+      "social_tree_unlocks": [],
+      "advisor_set": "foggy_bottom_1980"
+    },
+    {
+      "id": "su",
+      "name": "Soviet Union",
+      "shortName": "the Soviet Union",
+      "adjective": "Soviet",
+      "standing_external": 80,
+      "standing_internal": 60,
+      "economy": 78,
+      "intelligence_capacity": 84,
+      "supply": 76,
+      "status": "sovereign",
+      "territories": [
+        "soviet_home"
+      ],
+      "social_tree_unlocks": [],
+      "advisor_set": "kremlin_1980"
+    },
+    {
+      "id": "fr",
+      "name": "France",
+      "shortName": "France",
+      "adjective": "French",
+      "standing_external": 72,
+      "standing_internal": 58,
+      "economy": 74,
+      "intelligence_capacity": 68,
+      "supply": 64,
+      "status": "sovereign",
+      "territories": [
+        "metropolitan_france"
+      ],
+      "social_tree_unlocks": [],
+      "advisor_set": "quai_1980"
+    },
+    {
+      "id": "kw",
+      "name": "Kuwait",
+      "shortName": "Kuwait",
+      "adjective": "Kuwaiti",
+      "standing_external": 54,
+      "standing_internal": 60,
+      "economy": 70,
+      "intelligence_capacity": 48,
+      "supply": 30,
+      "status": "sovereign",
+      "territories": [
+        "kuwait_home"
+      ],
+      "social_tree_unlocks": [],
+      "advisor_set": "kuwait_1980"
+    },
+    {
+      "id": "sa",
+      "name": "Saudi Arabia",
+      "shortName": "Saudi Arabia",
+      "adjective": "Saudi",
+      "standing_external": 74,
+      "standing_internal": 70,
+      "economy": 88,
+      "intelligence_capacity": 58,
+      "supply": 52,
+      "status": "sovereign",
+      "territories": [
+        "riyadh"
+      ],
+      "social_tree_unlocks": [],
+      "advisor_set": "riyadh_1980"
+    },
+    {
+      "id": "sy",
+      "name": "Syria",
+      "shortName": "Syria",
+      "adjective": "Syrian",
+      "standing_external": 46,
+      "standing_internal": 56,
+      "economy": 30,
+      "intelligence_capacity": 54,
+      "supply": 36,
+      "status": "sovereign",
+      "territories": [
+        "damascus"
+      ],
+      "social_tree_unlocks": [],
+      "advisor_set": "damascus_1980"
+    }
+  ],
+  "territories": [
+    {
+      "id": "baghdad",
+      "name": "Baghdad",
+      "owner": "iq",
+      "controller": "iq",
+      "region": "mesopotamia",
+      "supplyValue": 10
+    },
+    {
+      "id": "tehran",
+      "name": "Tehran",
+      "owner": "ir",
+      "controller": "ir",
+      "region": "gulf",
+      "supplyValue": 12
+    },
+    {
+      "id": "united_states_home",
+      "name": "United States",
+      "owner": "us",
+      "controller": "us",
+      "region": "americas",
+      "supplyValue": 24
+    },
+    {
+      "id": "soviet_home",
+      "name": "Soviet Union",
+      "owner": "su",
+      "controller": "su",
+      "region": "eurasia",
+      "supplyValue": 22
+    },
+    {
+      "id": "metropolitan_france",
+      "name": "Metropolitan France",
+      "owner": "fr",
+      "controller": "fr",
+      "region": "europe",
+      "supplyValue": 16
+    },
+    {
+      "id": "kuwait_home",
+      "name": "Kuwait",
+      "owner": "kw",
+      "controller": "kw",
+      "region": "gulf",
+      "supplyValue": 8
+    },
+    {
+      "id": "riyadh",
+      "name": "Riyadh",
+      "owner": "sa",
+      "controller": "sa",
+      "region": "gulf",
+      "supplyValue": 12
+    },
+    {
+      "id": "damascus",
+      "name": "Damascus",
+      "owner": "sy",
+      "controller": "sy",
+      "region": "levant",
+      "supplyValue": 8
+    }
+  ],
+  "formations": [
+    {
+      "id": "iq-home",
+      "nationId": "iq",
+      "location": "baghdad",
+      "strength": 8
+    },
+    {
+      "id": "ir-home",
+      "nationId": "ir",
+      "location": "tehran",
+      "strength": 8
+    },
+    {
+      "id": "us-home",
+      "nationId": "us",
+      "location": "united_states_home",
+      "strength": 13
+    },
+    {
+      "id": "su-home",
+      "nationId": "su",
+      "location": "soviet_home",
+      "strength": 11
+    },
+    {
+      "id": "fr-home",
+      "nationId": "fr",
+      "location": "metropolitan_france",
+      "strength": 9
+    },
+    {
+      "id": "kw-home",
+      "nationId": "kw",
+      "location": "kuwait_home",
+      "strength": 4
+    },
+    {
+      "id": "sa-home",
+      "nationId": "sa",
+      "location": "riyadh",
+      "strength": 7
+    },
+    {
+      "id": "sy-home",
+      "nationId": "sy",
+      "location": "damascus",
+      "strength": 5
+    }
+  ],
+  "starting_pacts": [
+    {
+      "id": "us-sa",
+      "parties": [
+        "us",
+        "sa"
+      ],
+      "type": "defense",
+      "secret": false,
+      "terms": {
+        "title": "Gulf security understanding",
+        "type": "defense",
+        "secret": false,
+        "obligations": [
+          {
+            "id": "us-no-war-sa",
+            "party": "us",
+            "must": "not_declare_war_on",
+            "target": "sa"
+          },
+          {
+            "id": "sa-no-war-us",
+            "party": "sa",
+            "must": "not_declare_war_on",
+            "target": "us"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sy-ir",
+      "parties": [
+        "sy",
+        "ir"
+      ],
+      "type": "defense",
+      "secret": false,
+      "terms": {
+        "title": "Damascus–Tehran alignment",
+        "type": "defense",
+        "secret": false,
+        "obligations": [
+          {
+            "id": "sy-no-war-ir",
+            "party": "sy",
+            "must": "not_declare_war_on",
+            "target": "ir"
+          },
+          {
+            "id": "ir-no-war-sy",
+            "party": "ir",
+            "must": "not_declare_war_on",
+            "target": "sy"
+          }
+        ]
+      }
+    }
+  ],
+  "trade_routes": [
+    {
+      "id": "gulf-oil",
+      "from": "sa",
+      "to": "us",
+      "open": true
+    }
+  ],
+  "flags": {},
+  "victory_conditions": {
+    "iq": {
+      "all_of": [
+        {
+          "gte": [
+            "standing_external",
+            48
+          ]
+        },
+        {
+          "status_not": "occupied"
+        }
+      ]
+    },
+    "ir": {
+      "all_of": [
+        {
+          "gte": [
+            "standing_external",
+            48
+          ]
+        },
+        {
+          "status_not": "occupied"
+        }
+      ]
+    },
+    "us": {
+      "all_of": [
+        {
+          "gte": [
+            "standing_external",
+            75
+          ]
+        }
+      ]
+    },
+    "su": {
+      "all_of": [
+        {
+          "gte": [
+            "standing_external",
+            70
+          ]
+        }
+      ]
+    },
+    "fr": {
+      "all_of": [
+        {
+          "gte": [
+            "standing_external",
+            60
+          ]
+        }
+      ]
+    },
+    "kw": {
+      "all_of": [
+        {
+          "status_not": "occupied"
+        }
+      ]
+    },
+    "sa": {
+      "all_of": [
+        {
+          "status_not": "occupied"
+        },
+        {
+          "gte": [
+            "standing_external",
+            65
+          ]
+        }
+      ]
+    },
+    "sy": {
+      "all_of": [
+        {
+          "gte": [
+            "standing_external",
+            42
+          ]
+        }
+      ]
+    }
+  },
+  "tuning": {
+    "secret_pact_leak_base_chance": 0.1,
+    "standing_penalty_on_breach": 20,
+    "cascade_depth_cap": 4
+  }
+}

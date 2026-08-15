@@ -1,0 +1,436 @@
+{
+  "id": "munich_1938",
+  "display_name": "The Guarantee",
+  "duration_ticks": 720,
+  "player_slots": 8,
+  "requires_systems": [
+    "pacts",
+    "standing",
+    "channels"
+  ],
+  "nations": [
+    {
+      "id": "de",
+      "name": "Germany",
+      "shortName": "Germany",
+      "adjective": "German",
+      "standing_external": 62,
+      "standing_internal": 80,
+      "economy": 70,
+      "intelligence_capacity": 68,
+      "supply": 72,
+      "status": "sovereign",
+      "territories": [
+        "berlin"
+      ],
+      "social_tree_unlocks": [],
+      "advisor_set": "wilhelmstrasse_1938"
+    },
+    {
+      "id": "gb",
+      "name": "Britain",
+      "shortName": "Britain",
+      "adjective": "British",
+      "standing_external": 78,
+      "standing_internal": 60,
+      "economy": 80,
+      "intelligence_capacity": 70,
+      "supply": 76,
+      "status": "sovereign",
+      "territories": [
+        "london"
+      ],
+      "social_tree_unlocks": [],
+      "advisor_set": "whitehall_1938"
+    },
+    {
+      "id": "fr",
+      "name": "France",
+      "shortName": "France",
+      "adjective": "French",
+      "standing_external": 70,
+      "standing_internal": 52,
+      "economy": 68,
+      "intelligence_capacity": 62,
+      "supply": 64,
+      "status": "sovereign",
+      "territories": [
+        "paris"
+      ],
+      "social_tree_unlocks": [],
+      "advisor_set": "quai_1938"
+    },
+    {
+      "id": "cz",
+      "name": "Czechoslovakia",
+      "shortName": "Czechoslovakia",
+      "adjective": "Czechoslovak",
+      "standing_external": 48,
+      "standing_internal": 64,
+      "economy": 50,
+      "intelligence_capacity": 58,
+      "supply": 46,
+      "status": "sovereign",
+      "territories": [
+        "prague",
+        "sudetenland"
+      ],
+      "social_tree_unlocks": [],
+      "advisor_set": "prague_1938"
+    },
+    {
+      "id": "it",
+      "name": "Italy",
+      "shortName": "Italy",
+      "adjective": "Italian",
+      "standing_external": 55,
+      "standing_internal": 62,
+      "economy": 48,
+      "intelligence_capacity": 50,
+      "supply": 50,
+      "status": "sovereign",
+      "territories": [
+        "rome"
+      ],
+      "social_tree_unlocks": [],
+      "advisor_set": "rome_1938"
+    },
+    {
+      "id": "su",
+      "name": "Soviet Union",
+      "shortName": "the Soviet Union",
+      "adjective": "Soviet",
+      "standing_external": 58,
+      "standing_internal": 70,
+      "economy": 60,
+      "intelligence_capacity": 72,
+      "supply": 68,
+      "status": "sovereign",
+      "territories": [
+        "moscow"
+      ],
+      "social_tree_unlocks": [],
+      "advisor_set": "kremlin_1938"
+    },
+    {
+      "id": "pl",
+      "name": "Poland",
+      "shortName": "Poland",
+      "adjective": "Polish",
+      "standing_external": 42,
+      "standing_internal": 58,
+      "economy": 32,
+      "intelligence_capacity": 40,
+      "supply": 36,
+      "status": "sovereign",
+      "territories": [
+        "warsaw"
+      ],
+      "social_tree_unlocks": [],
+      "advisor_set": "warsaw_1938"
+    },
+    {
+      "id": "hu",
+      "name": "Hungary",
+      "shortName": "Hungary",
+      "adjective": "Hungarian",
+      "standing_external": 38,
+      "standing_internal": 52,
+      "economy": 28,
+      "intelligence_capacity": 36,
+      "supply": 30,
+      "status": "sovereign",
+      "territories": [
+        "budapest"
+      ],
+      "social_tree_unlocks": [],
+      "advisor_set": "budapest_1938"
+    }
+  ],
+  "territories": [
+    {
+      "id": "berlin",
+      "name": "Berlin",
+      "owner": "de",
+      "controller": "de",
+      "region": "europe",
+      "supplyValue": 12
+    },
+    {
+      "id": "london",
+      "name": "London",
+      "owner": "gb",
+      "controller": "gb",
+      "region": "europe",
+      "supplyValue": 12
+    },
+    {
+      "id": "paris",
+      "name": "Paris",
+      "owner": "fr",
+      "controller": "fr",
+      "region": "europe",
+      "supplyValue": 11
+    },
+    {
+      "id": "prague",
+      "name": "Prague",
+      "owner": "cz",
+      "controller": "cz",
+      "region": "europe",
+      "supplyValue": 8
+    },
+    {
+      "id": "sudetenland",
+      "name": "Sudetenland",
+      "owner": "cz",
+      "controller": "cz",
+      "region": "europe",
+      "supplyValue": 6
+    },
+    {
+      "id": "rome",
+      "name": "Rome",
+      "owner": "it",
+      "controller": "it",
+      "region": "europe",
+      "supplyValue": 8
+    },
+    {
+      "id": "moscow",
+      "name": "Moscow",
+      "owner": "su",
+      "controller": "su",
+      "region": "europe",
+      "supplyValue": 12
+    },
+    {
+      "id": "warsaw",
+      "name": "Warsaw",
+      "owner": "pl",
+      "controller": "pl",
+      "region": "europe",
+      "supplyValue": 7
+    },
+    {
+      "id": "budapest",
+      "name": "Budapest",
+      "owner": "hu",
+      "controller": "hu",
+      "region": "europe",
+      "supplyValue": 5
+    }
+  ],
+  "formations": [
+    {
+      "id": "de-home",
+      "nationId": "de",
+      "location": "berlin",
+      "strength": 10
+    },
+    {
+      "id": "gb-home",
+      "nationId": "gb",
+      "location": "london",
+      "strength": 11
+    },
+    {
+      "id": "fr-home",
+      "nationId": "fr",
+      "location": "paris",
+      "strength": 9
+    },
+    {
+      "id": "cz-home",
+      "nationId": "cz",
+      "location": "prague",
+      "strength": 7
+    },
+    {
+      "id": "it-home",
+      "nationId": "it",
+      "location": "rome",
+      "strength": 7
+    },
+    {
+      "id": "su-home",
+      "nationId": "su",
+      "location": "moscow",
+      "strength": 10
+    },
+    {
+      "id": "pl-home",
+      "nationId": "pl",
+      "location": "warsaw",
+      "strength": 5
+    },
+    {
+      "id": "hu-home",
+      "nationId": "hu",
+      "location": "budapest",
+      "strength": 4
+    }
+  ],
+  "starting_pacts": [
+    {
+      "id": "franco-czech",
+      "parties": [
+        "fr",
+        "cz"
+      ],
+      "type": "defense",
+      "secret": false,
+      "terms": {
+        "title": "Franco-Czechoslovak alliance",
+        "type": "defense",
+        "secret": false,
+        "obligations": [
+          {
+            "id": "fr-no-war-cz",
+            "party": "fr",
+            "must": "not_declare_war_on",
+            "target": "cz"
+          },
+          {
+            "id": "cz-no-war-fr",
+            "party": "cz",
+            "must": "not_declare_war_on",
+            "target": "fr"
+          }
+        ]
+      }
+    },
+    {
+      "id": "franco-soviet",
+      "parties": [
+        "fr",
+        "su"
+      ],
+      "type": "defense",
+      "secret": false,
+      "terms": {
+        "title": "Franco-Soviet pact",
+        "type": "defense",
+        "secret": false,
+        "obligations": [
+          {
+            "id": "fr-no-war-su",
+            "party": "fr",
+            "must": "not_declare_war_on",
+            "target": "su"
+          },
+          {
+            "id": "su-no-war-fr",
+            "party": "su",
+            "must": "not_declare_war_on",
+            "target": "fr"
+          }
+        ]
+      }
+    }
+  ],
+  "trade_routes": [],
+  "flags": {
+    "sudeten_ceded": false,
+    "general_war": false
+  },
+  "victory_conditions": {
+    "de": {
+      "all_of": [
+        {
+          "control": "territory:sudetenland"
+        },
+        {
+          "flag_eq": [
+            "general_war",
+            false
+          ]
+        }
+      ]
+    },
+    "gb": {
+      "all_of": [
+        {
+          "flag_eq": [
+            "general_war",
+            false
+          ]
+        },
+        {
+          "gte": [
+            "standing_external",
+            70
+          ]
+        }
+      ]
+    },
+    "fr": {
+      "all_of": [
+        {
+          "flag_eq": [
+            "general_war",
+            false
+          ]
+        },
+        {
+          "gte": [
+            "standing_external",
+            65
+          ]
+        }
+      ]
+    },
+    "cz": {
+      "all_of": [
+        {
+          "control": "territory:sudetenland"
+        },
+        {
+          "status_not": "occupied"
+        }
+      ]
+    },
+    "su": {
+      "all_of": [
+        {
+          "gte": [
+            "standing_external",
+            55
+          ]
+        }
+      ]
+    },
+    "it": {
+      "all_of": [
+        {
+          "gte": [
+            "standing_external",
+            50
+          ]
+        }
+      ]
+    },
+    "pl": {
+      "all_of": [
+        {
+          "status_not": "occupied"
+        }
+      ]
+    },
+    "hu": {
+      "all_of": [
+        {
+          "gte": [
+            "standing_external",
+            40
+          ]
+        }
+      ]
+    }
+  },
+  "tuning": {
+    "secret_pact_leak_base_chance": 0.06,
+    "standing_penalty_on_breach": 24,
+    "cascade_depth_cap": 3
+  }
+}

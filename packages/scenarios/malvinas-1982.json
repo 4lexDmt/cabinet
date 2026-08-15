@@ -1,0 +1,345 @@
+{
+  "id": "malvinas_1982",
+  "display_name": "Malvinas",
+  "duration_ticks": 504,
+  "player_slots": 6,
+  "requires_systems": [
+    "pacts",
+    "standing",
+    "channels"
+  ],
+  "nations": [
+    {
+      "id": "uk",
+      "name": "United Kingdom",
+      "shortName": "Britain",
+      "adjective": "British",
+      "standing_external": 76,
+      "standing_internal": 52,
+      "economy": 78,
+      "intelligence_capacity": 80,
+      "supply": 74,
+      "status": "sovereign",
+      "territories": [
+        "home_isles",
+        "falklands"
+      ],
+      "social_tree_unlocks": [],
+      "advisor_set": "whitehall_1982"
+    },
+    {
+      "id": "ar",
+      "name": "Argentina",
+      "shortName": "Argentina",
+      "adjective": "Argentine",
+      "standing_external": 48,
+      "standing_internal": 28,
+      "economy": 36,
+      "intelligence_capacity": 50,
+      "supply": 44,
+      "status": "sovereign",
+      "territories": [
+        "buenos_aires"
+      ],
+      "social_tree_unlocks": [],
+      "advisor_set": "casa_rosada_1982"
+    },
+    {
+      "id": "us",
+      "name": "United States",
+      "shortName": "America",
+      "adjective": "American",
+      "standing_external": 90,
+      "standing_internal": 66,
+      "economy": 96,
+      "intelligence_capacity": 88,
+      "supply": 90,
+      "status": "sovereign",
+      "territories": [
+        "united_states_home"
+      ],
+      "social_tree_unlocks": [],
+      "advisor_set": "foggy_bottom_1982"
+    },
+    {
+      "id": "cl",
+      "name": "Chile",
+      "shortName": "Chile",
+      "adjective": "Chilean",
+      "standing_external": 50,
+      "standing_internal": 54,
+      "economy": 34,
+      "intelligence_capacity": 62,
+      "supply": 36,
+      "status": "sovereign",
+      "territories": [
+        "santiago"
+      ],
+      "social_tree_unlocks": [],
+      "advisor_set": "santiago_1982"
+    },
+    {
+      "id": "fr",
+      "name": "France",
+      "shortName": "France",
+      "adjective": "French",
+      "standing_external": 72,
+      "standing_internal": 60,
+      "economy": 74,
+      "intelligence_capacity": 70,
+      "supply": 66,
+      "status": "sovereign",
+      "territories": [
+        "metropolitan_france"
+      ],
+      "social_tree_unlocks": [],
+      "advisor_set": "quai_1982"
+    },
+    {
+      "id": "su",
+      "name": "Soviet Union",
+      "shortName": "the Soviet Union",
+      "adjective": "Soviet",
+      "standing_external": 78,
+      "standing_internal": 58,
+      "economy": 76,
+      "intelligence_capacity": 84,
+      "supply": 72,
+      "status": "sovereign",
+      "territories": [
+        "soviet_home"
+      ],
+      "social_tree_unlocks": [],
+      "advisor_set": "kremlin_1982"
+    }
+  ],
+  "territories": [
+    {
+      "id": "home_isles",
+      "name": "Home Isles",
+      "owner": "uk",
+      "controller": "uk",
+      "region": "europe",
+      "supplyValue": 18
+    },
+    {
+      "id": "falklands",
+      "name": "the Falklands",
+      "owner": "uk",
+      "controller": "uk",
+      "region": "south_atlantic",
+      "supplyValue": 3
+    },
+    {
+      "id": "buenos_aires",
+      "name": "Buenos Aires",
+      "owner": "ar",
+      "controller": "ar",
+      "region": "americas",
+      "supplyValue": 12
+    },
+    {
+      "id": "united_states_home",
+      "name": "United States",
+      "owner": "us",
+      "controller": "us",
+      "region": "americas",
+      "supplyValue": 24
+    },
+    {
+      "id": "santiago",
+      "name": "Santiago",
+      "owner": "cl",
+      "controller": "cl",
+      "region": "americas",
+      "supplyValue": 8
+    },
+    {
+      "id": "metropolitan_france",
+      "name": "Metropolitan France",
+      "owner": "fr",
+      "controller": "fr",
+      "region": "europe",
+      "supplyValue": 16
+    },
+    {
+      "id": "soviet_home",
+      "name": "Soviet Union",
+      "owner": "su",
+      "controller": "su",
+      "region": "eurasia",
+      "supplyValue": 22
+    }
+  ],
+  "formations": [
+    {
+      "id": "uk-home",
+      "nationId": "uk",
+      "location": "home_isles",
+      "strength": 11
+    },
+    {
+      "id": "ar-home",
+      "nationId": "ar",
+      "location": "buenos_aires",
+      "strength": 6
+    },
+    {
+      "id": "us-home",
+      "nationId": "us",
+      "location": "united_states_home",
+      "strength": 13
+    },
+    {
+      "id": "cl-home",
+      "nationId": "cl",
+      "location": "santiago",
+      "strength": 5
+    },
+    {
+      "id": "fr-home",
+      "nationId": "fr",
+      "location": "metropolitan_france",
+      "strength": 9
+    },
+    {
+      "id": "su-home",
+      "nationId": "su",
+      "location": "soviet_home",
+      "strength": 10
+    }
+  ],
+  "starting_pacts": [
+    {
+      "id": "nato-uk-us",
+      "parties": [
+        "uk",
+        "us"
+      ],
+      "type": "defense",
+      "secret": false,
+      "terms": {
+        "title": "NATO",
+        "type": "defense",
+        "secret": false,
+        "obligations": [
+          {
+            "id": "uk-no-war-us",
+            "party": "uk",
+            "must": "not_declare_war_on",
+            "target": "us"
+          },
+          {
+            "id": "us-no-war-uk",
+            "party": "us",
+            "must": "not_declare_war_on",
+            "target": "uk"
+          }
+        ]
+      }
+    },
+    {
+      "id": "rio-us-ar",
+      "parties": [
+        "us",
+        "ar"
+      ],
+      "type": "defense",
+      "secret": false,
+      "terms": {
+        "title": "Rio Pact",
+        "type": "defense",
+        "secret": false,
+        "obligations": [
+          {
+            "id": "us-no-war-ar",
+            "party": "us",
+            "must": "not_declare_war_on",
+            "target": "ar"
+          },
+          {
+            "id": "ar-no-war-us",
+            "party": "ar",
+            "must": "not_declare_war_on",
+            "target": "us"
+          }
+        ]
+      }
+    }
+  ],
+  "trade_routes": [],
+  "flags": {},
+  "victory_conditions": {
+    "uk": {
+      "all_of": [
+        {
+          "control": "territory:falklands"
+        },
+        {
+          "gte": [
+            "standing_internal",
+            50
+          ]
+        }
+      ]
+    },
+    "ar": {
+      "all_of": [
+        {
+          "control": "territory:falklands"
+        },
+        {
+          "gte": [
+            "standing_internal",
+            40
+          ]
+        }
+      ]
+    },
+    "us": {
+      "all_of": [
+        {
+          "gte": [
+            "standing_external",
+            75
+          ]
+        }
+      ]
+    },
+    "cl": {
+      "all_of": [
+        {
+          "gte": [
+            "standing_external",
+            48
+          ]
+        }
+      ]
+    },
+    "fr": {
+      "all_of": [
+        {
+          "gte": [
+            "standing_external",
+            60
+          ]
+        }
+      ]
+    },
+    "su": {
+      "all_of": [
+        {
+          "gte": [
+            "standing_external",
+            70
+          ]
+        }
+      ]
+    }
+  },
+  "tuning": {
+    "secret_pact_leak_base_chance": 0.05,
+    "standing_penalty_on_breach": 18,
+    "cascade_depth_cap": 3
+  }
+}

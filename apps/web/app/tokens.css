@@ -1,0 +1,320 @@
+/* ============================================================
+   CABINET — CORE DESIGN TOKENS
+   Persistent multiplayer geopolitical strategy game.
+   Document-first. Uncertainty visible. Restraint over spectacle.
+
+   These are the canonical values. The HTML comps in /screens
+   use literal values that match this file exactly; when porting,
+   replace literals with these custom properties.
+   ============================================================ */
+
+:root {
+  /* ---------- TYPE FAMILIES ----------
+     All OFL / open-source. Loaded from Google Fonts.
+     serif  — briefings, despatches, body. The workhorse.
+     sans   — condensed. Labels, data, table headers, furniture.
+     mono   — cables, telemetry, coordinates, machine output. */
+  --font-serif: var(--font-serif-next), "Source Serif 4", "Source Serif Pro", Georgia, serif;
+  --font-sans: var(--font-sans-next), "Archivo Narrow", "Arial Narrow", sans-serif;
+  --font-mono: var(--font-mono-next), "IBM Plex Mono", "Courier New", monospace;
+
+  /* ---------- TYPE SCALE ----------
+     Ratio 1.2 minor third off a 16px body. Briefing text is 17px
+     because it is read at length; nothing informational sits below 11px. */
+  --t-classification: 11px;  /* sans, 700, tracked +0.14em, uppercase */
+  --t-micro: 12px;           /* sans/mono, furniture, source lines */
+  --t-label: 13px;           /* sans, 600, tracked +0.08em, uppercase */
+  --t-caption: 14px;         /* serif italic, annotation */
+  --t-body: 17px;            /* serif, 400, line-height 1.62 */
+  --t-lede: 19px;            /* serif, 400, line-height 1.55 */
+  --t-h4: 15px;              /* sans, 700, uppercase, tracked */
+  --t-h3: 21px;              /* serif, 600 */
+  --t-h2: 27px;              /* serif, 600 */
+  --t-h1: 36px;              /* serif, 600, tight */
+  --t-display: 52px;         /* serif, 600, -0.02em — masthead only */
+
+  --lh-tight: 1.14;
+  --lh-heading: 1.22;
+  --lh-body: 1.62;
+  --lh-data: 1.35;
+
+  --track-classification: 0.14em;
+  --track-label: 0.08em;
+  --track-display: -0.02em;
+
+  /* ---------- NEUTRALS: DESK ----------
+     The surface the papers sit on. Cold, matte, never black. */
+  --desk-deep: #16181B;      /* app background, deepest */
+  --desk: #1E2226;           /* primary desk surface */
+  --desk-raised: #262B30;    /* rails, sidebars, chrome */
+  --desk-edge: #33383E;      /* hairline on dark */
+  --desk-ink: #C9CCCF;       /* text ON desk */
+  --desk-ink-dim: #7E858C;   /* secondary text ON desk */
+
+  /* ---------- NEUTRALS: PAPER ----------
+     Three stocks. Buff = primary document. Carbon = copies and
+     duplicates. Cold = machine output, telemetry, tables. */
+  --paper: #E7E3D9;          /* buff — briefings, pacts, reports */
+  --paper-carbon: #DAD6CB;   /* second stock — carbon copies, insets */
+  --paper-cold: #E1E3E2;     /* cold grey — telemetry, ledgers, tables */
+  --paper-edge: #C6C0B0;     /* the physical edge of a sheet */
+
+  /* ---------- INK ---------- */
+  --ink: #1C1F23;            /* primary text on paper */
+  --ink-2: #4C5158;          /* secondary text, deck copy */
+  --ink-3: #7B8087;          /* tertiary, annotation, metadata */
+  --ink-faint: #A3A69F;      /* disabled, placeholder, ghost rules */
+
+  /* ---------- RULES ---------- */
+  --rule: #B4AE9E;           /* structural rule on paper */
+  --rule-fine: #CBC5B6;      /* hairline, table interior */
+  --rule-heavy: #6E6A5F;     /* section terminator, letterpress weight */
+
+  /* ---------- REDACTION ---------- */
+  --redaction: #15171A;      /* solid bar — content removed */
+  --redaction-edge: #2A2D31; /* the bar's slight print halo */
+
+  /* ---------- SEMANTIC ACCENTS ----------
+     Four only. Muted, institutional, matched in chroma so no
+     single accent shouts. Never used as fills for large areas. */
+  --alliance: #2C5A66;       /* pacts, bonds, guarantees, aligned */
+  --alliance-wash: #DDE4E5;  /* tint on paper */
+  --hostility: #8C332A;      /* oxide red — threat, breach of peace */
+  --hostility-wash: #EFDFDB;
+  --uncertainty: #8A6D24;    /* ochre — unconfirmed, contested */
+  --uncertainty-wash: #EAE3CE;
+  --breach: #6E3A5E;         /* plum — obligation broken, leak, betrayal */
+  --breach-wash: #E7DDE4;
+
+  /* ---------- CONFIDENCE ----------
+     Four states. Analyst annotation, never a meter.
+     Each state pairs a colour, a glyph, and a rule treatment. */
+  --conf-confirmed: #1C1F23;      /* full ink. Observed directly. */
+  --conf-probable: #4C5158;       /* ink-2. Corroborated, not observed. */
+  --conf-unverified: #8A6D24;     /* ochre. Single uncorroborated source. */
+  --conf-planted: #6E3A5E;        /* plum. Assessed as deliberately fed. */
+
+  --conf-glyph-confirmed: "■";
+  --conf-glyph-probable: "◧";
+  --conf-glyph-unverified: "□";
+  --conf-glyph-planted: "⧅";
+
+  /* ---------- SPACING ----------
+     4px base. Document margins are generous — this is a reading
+     interface, not a dense dashboard. */
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-5: 24px;
+  --sp-6: 32px;
+  --sp-7: 48px;
+  --sp-8: 64px;
+  --sp-9: 96px;
+
+  /* ---------- MEASURE ----------
+     Briefing text must never exceed ~72ch or it stops reading
+     like a document and starts reading like a webpage. */
+  --measure-body: 68ch;
+  --measure-narrow: 46ch;
+  --sheet-width: 780px;      /* a single document sheet */
+  --sheet-wide: 1080px;      /* a spread / dual-column instrument */
+
+  /* ---------- GEOMETRY ----------
+     Paper does not have rounded corners. Radius exists only for
+     controls the player touches. */
+  --radius-none: 0;
+  --radius-control: 2px;
+  --border-hair: 1px;
+  --border-structural: 2px;
+  --border-terminator: 3px;
+
+  /* ---------- ELEVATION ----------
+     Papers cast a shadow because they are physically on a desk.
+     Nothing glows. Shadows are neutral and short. */
+  --lift-sheet: 0 1px 0 rgba(0,0,0,.30), 0 12px 28px -12px rgba(0,0,0,.55);
+  --lift-inset: 0 1px 0 rgba(0,0,0,.18);
+  --lift-none: none;
+
+  /* ---------- GRID ----------
+     The layout grid never changes across scenarios.
+     Scenarios re-skin palette, type pairing, and document
+     furniture only. */
+  --grid-columns: 12;
+  --grid-gutter: 24px;
+  --grid-margin: 48px;
+  --rail-width: 264px;       /* left navigation / desk rail */
+  --margin-notes: 220px;     /* right annotation column */
+}
+
+/* ============================================================
+   SCENARIO SKIN CONTRACT
+   A scenario overrides ONLY the variables below. If a scenario
+   needs to change anything else, the core system is wrong.
+   Example: S-01 SÈVRES (Suez 1956).
+   ============================================================ */
+
+[data-scenario="sevres-1956"] {
+  --font-serif: "EB Garamond", Georgia, serif;
+  --font-sans: "Oswald", "Arial Narrow", sans-serif;
+  --font-mono: "Courier Prime", "Courier New", monospace;
+
+  --paper: #E6DCC3;          /* Foreign Office buff folder */
+  --paper-carbon: #D8CEB6;
+  --paper-cold: #DEDDD2;
+  --paper-edge: #C0B393;
+
+  --alliance: #2A4E7A;       /* canal blue */
+  --hostility: #722622;      /* oxblood */
+  --uncertainty: #8A6A1C;
+  --breach: #5E3350;
+
+  --desk: #23211C;
+  --desk-deep: #1A1815;
+  --desk-raised: #2C2922;
+}
+
+[data-scenario="vienna-1815"] {
+  --paper: #E4DFD4;
+  --paper-carbon: #D6D1C6;
+  --paper-cold: #DEDDD8;
+  --paper-edge: #C4BDB0;
+  --alliance: #2C4A52;
+  --hostility: #6B2E28;
+  --uncertainty: #7A6840;
+  --breach: #5A3A48;
+  --desk: #1C1E22;
+  --desk-deep: #14161A;
+  --desk-raised: #262830;
+}
+
+[data-scenario="july-crisis-1914"] {
+  --paper: #E6E0D4;
+  --paper-carbon: #D8D2C6;
+  --paper-cold: #E0DFD8;
+  --paper-edge: #C6BFAF;
+  --alliance: #2A4A3E;
+  --hostility: #7A2C28;
+  --uncertainty: #8A6A24;
+  --breach: #5E3348;
+  --desk: #1A1C1B;
+  --desk-deep: #121413;
+  --desk-raised: #242826;
+}
+
+[data-scenario="thirteen-days-1962"] {
+  --paper: #E2E4E0;
+  --paper-carbon: #D4D6D2;
+  --paper-cold: #DCE0E2;
+  --paper-edge: #B8BDB8;
+  --alliance: #2A4A5C;
+  --hostility: #7A2E2A;
+  --uncertainty: #7A6A28;
+  --breach: #5A3A58;
+  --desk: #1A1E22;
+  --desk-deep: #101418;
+  --desk-raised: #242A30;
+}
+
+[data-scenario="munich-1938"],
+[data-scenario="molotov-ribbentrop-1939"],
+[data-scenario="grand-alliance-1939"] {
+  --paper: #E8E0D2;
+  --paper-carbon: #DAD2C4;
+  --paper-cold: #E0DCD4;
+  --paper-edge: #C4B8A4;
+  --alliance: #2C4A42;
+  --hostility: #7A2C24;
+  --uncertainty: #8A6A20;
+  --breach: #5E3340;
+  --desk: #1C1A18;
+  --desk-deep: #141210;
+  --desk-raised: #2A2622;
+}
+
+[data-scenario="vietnam-1964"],
+[data-scenario="korea-1950"],
+[data-scenario="long-telegram-1947"] {
+  --paper: #E1E3DE;
+  --paper-carbon: #D3D5D0;
+  --paper-cold: #DCE0DC;
+  --paper-edge: #B8BDB6;
+  --alliance: #2A4E4A;
+  --hostility: #6E2C28;
+  --uncertainty: #7A6828;
+  --breach: #4E3A48;
+  --desk: #181C1A;
+  --desk-deep: #101412;
+  --desk-raised: #222826;
+}
+
+[data-scenario="afghanistan-1979"],
+[data-scenario="tanker-war-1980"] {
+  --paper: #E8DFD0;
+  --paper-carbon: #D8CFC0;
+  --paper-cold: #E2DCD0;
+  --paper-edge: #C4B49A;
+  --alliance: #3A4A3C;
+  --hostility: #7A3A24;
+  --uncertainty: #8A6E28;
+  --breach: #5A3A32;
+  --desk: #1E1A16;
+  --desk-deep: #16120E;
+  --desk-raised: #2A2420;
+}
+
+[data-scenario="the-concept-1967"] {
+  --paper: #E6DCC3;
+  --paper-carbon: #D8CEB6;
+  --paper-cold: #DEDDD2;
+  --paper-edge: #C0B393;
+  --alliance: #2A4E7A;
+  --hostility: #722622;
+  --uncertainty: #8A6A1C;
+  --breach: #5E3350;
+  --desk: #23211C;
+  --desk-deep: #1A1815;
+  --desk-raised: #2C2922;
+}
+
+[data-scenario="malvinas-1982"] {
+  --paper: #E0E4E6;
+  --paper-carbon: #D2D6D8;
+  --paper-cold: #DCE2E4;
+  --paper-edge: #B4BCC0;
+  --alliance: #2A4A62;
+  --hostility: #6E3228;
+  --uncertainty: #7A6A32;
+  --breach: #4A3A52;
+  --desk: #161A1E;
+  --desk-deep: #101418;
+  --desk-raised: #222830;
+}
+
+[data-scenario="berlin-conference-1884"] {
+  --paper: #E6E0D4;
+  --paper-carbon: #D8D2C6;
+  --paper-cold: #DEDDD6;
+  --paper-edge: #C4BDB0;
+  --alliance: #2C4A52;
+  --hostility: #6B2E28;
+  --uncertainty: #7A6840;
+  --breach: #5A3A48;
+  --desk: #1C1A16;
+  --desk-deep: #14120E;
+  --desk-raised: #28241E;
+}
+
+[data-scenario="fragmentation-1991"] {
+  --paper: #E6E4DE;
+  --paper-carbon: #D8D6D0;
+  --paper-cold: #E0E0DC;
+  --paper-edge: #C0BEB6;
+  --alliance: #3A4A58;
+  --hostility: #6A322C;
+  --uncertainty: #7A6A30;
+  --breach: #5A3A48;
+  --desk: #1A1C1E;
+  --desk-deep: #121416;
+  --desk-raised: #26282A;
+}

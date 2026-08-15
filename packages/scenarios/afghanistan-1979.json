@@ -1,0 +1,442 @@
+{
+  "id": "afghanistan_1979",
+  "display_name": "The Bleeding Wound",
+  "duration_ticks": 2016,
+  "player_slots": 9,
+  "requires_systems": [
+    "pacts",
+    "standing",
+    "channels"
+  ],
+  "nations": [
+    {
+      "id": "su",
+      "name": "Soviet Union",
+      "shortName": "the Soviet Union",
+      "adjective": "Soviet",
+      "standing_external": 80,
+      "standing_internal": 58,
+      "economy": 82,
+      "intelligence_capacity": 84,
+      "supply": 80,
+      "status": "sovereign",
+      "territories": [
+        "soviet_home"
+      ],
+      "social_tree_unlocks": [],
+      "advisor_set": "kremlin_1979"
+    },
+    {
+      "id": "dra",
+      "name": "DRA",
+      "shortName": "Kabul",
+      "adjective": "DRA",
+      "standing_external": 28,
+      "standing_internal": 36,
+      "economy": 16,
+      "intelligence_capacity": 40,
+      "supply": 22,
+      "status": "client",
+      "territories": [
+        "kabul"
+      ],
+      "social_tree_unlocks": [],
+      "advisor_set": "kabul_1979"
+    },
+    {
+      "id": "hiz",
+      "name": "Hezb-e Islami",
+      "shortName": "Hekmatyar",
+      "adjective": "Hezb",
+      "standing_external": 22,
+      "standing_internal": 60,
+      "economy": 8,
+      "intelligence_capacity": 48,
+      "supply": 18,
+      "status": "sovereign",
+      "territories": [
+        "nangarhar"
+      ],
+      "social_tree_unlocks": [],
+      "advisor_set": "hiz_1979"
+    },
+    {
+      "id": "jam",
+      "name": "Jamiat-e Islami",
+      "shortName": "Jamiat",
+      "adjective": "Jamiat",
+      "standing_external": 24,
+      "standing_internal": 62,
+      "economy": 8,
+      "intelligence_capacity": 50,
+      "supply": 18,
+      "status": "sovereign",
+      "territories": [
+        "panjshir"
+      ],
+      "social_tree_unlocks": [],
+      "advisor_set": "jam_1979"
+    },
+    {
+      "id": "har",
+      "name": "Harakat",
+      "shortName": "Harakat",
+      "adjective": "Harakat",
+      "standing_external": 20,
+      "standing_internal": 58,
+      "economy": 6,
+      "intelligence_capacity": 42,
+      "supply": 16,
+      "status": "sovereign",
+      "territories": [
+        "paktia"
+      ],
+      "social_tree_unlocks": [],
+      "advisor_set": "har_1979"
+    },
+    {
+      "id": "pk",
+      "name": "Pakistan",
+      "shortName": "Pakistan",
+      "adjective": "Pakistani",
+      "standing_external": 48,
+      "standing_internal": 55,
+      "economy": 32,
+      "intelligence_capacity": 78,
+      "supply": 40,
+      "status": "sovereign",
+      "territories": [
+        "islamabad"
+      ],
+      "social_tree_unlocks": [
+        "covert_operations"
+      ],
+      "advisor_set": "isi_1979"
+    },
+    {
+      "id": "us",
+      "name": "United States",
+      "shortName": "America",
+      "adjective": "American",
+      "standing_external": 88,
+      "standing_internal": 64,
+      "economy": 96,
+      "intelligence_capacity": 90,
+      "supply": 88,
+      "status": "sovereign",
+      "territories": [
+        "united_states_home"
+      ],
+      "social_tree_unlocks": [
+        "patronage"
+      ],
+      "advisor_set": "langley_1979"
+    },
+    {
+      "id": "sa",
+      "name": "Saudi Arabia",
+      "shortName": "Saudi Arabia",
+      "adjective": "Saudi",
+      "standing_external": 70,
+      "standing_internal": 72,
+      "economy": 80,
+      "intelligence_capacity": 55,
+      "supply": 50,
+      "status": "sovereign",
+      "territories": [
+        "riyadh"
+      ],
+      "social_tree_unlocks": [
+        "patronage"
+      ],
+      "advisor_set": "riyadh_1979"
+    },
+    {
+      "id": "ir",
+      "name": "Iran",
+      "shortName": "Iran",
+      "adjective": "Iranian",
+      "standing_external": 50,
+      "standing_internal": 60,
+      "economy": 40,
+      "intelligence_capacity": 62,
+      "supply": 44,
+      "status": "sovereign",
+      "territories": [
+        "tehran"
+      ],
+      "social_tree_unlocks": [],
+      "advisor_set": "tehran_1979"
+    }
+  ],
+  "territories": [
+    {
+      "id": "soviet_home",
+      "name": "Soviet Union",
+      "owner": "su",
+      "controller": "su",
+      "region": "eurasia",
+      "supplyValue": 22
+    },
+    {
+      "id": "kabul",
+      "name": "Kabul",
+      "owner": "dra",
+      "controller": "dra",
+      "region": "hindu_kush",
+      "supplyValue": 8
+    },
+    {
+      "id": "nangarhar",
+      "name": "Nangarhar",
+      "owner": "hiz",
+      "controller": "hiz",
+      "region": "hindu_kush",
+      "supplyValue": 5
+    },
+    {
+      "id": "panjshir",
+      "name": "Panjshir",
+      "owner": "jam",
+      "controller": "jam",
+      "region": "hindu_kush",
+      "supplyValue": 5
+    },
+    {
+      "id": "paktia",
+      "name": "Paktia",
+      "owner": "har",
+      "controller": "har",
+      "region": "hindu_kush",
+      "supplyValue": 4
+    },
+    {
+      "id": "islamabad",
+      "name": "Islamabad",
+      "owner": "pk",
+      "controller": "pk",
+      "region": "south_asia",
+      "supplyValue": 10
+    },
+    {
+      "id": "united_states_home",
+      "name": "United States",
+      "owner": "us",
+      "controller": "us",
+      "region": "americas",
+      "supplyValue": 24
+    },
+    {
+      "id": "riyadh",
+      "name": "Riyadh",
+      "owner": "sa",
+      "controller": "sa",
+      "region": "gulf",
+      "supplyValue": 12
+    },
+    {
+      "id": "tehran",
+      "name": "Tehran",
+      "owner": "ir",
+      "controller": "ir",
+      "region": "gulf",
+      "supplyValue": 10
+    }
+  ],
+  "formations": [
+    {
+      "id": "su-home",
+      "nationId": "su",
+      "location": "soviet_home",
+      "strength": 11
+    },
+    {
+      "id": "dra-home",
+      "nationId": "dra",
+      "location": "kabul",
+      "strength": 3
+    },
+    {
+      "id": "hiz-home",
+      "nationId": "hiz",
+      "location": "nangarhar",
+      "strength": 3
+    },
+    {
+      "id": "jam-home",
+      "nationId": "jam",
+      "location": "panjshir",
+      "strength": 3
+    },
+    {
+      "id": "har-home",
+      "nationId": "har",
+      "location": "paktia",
+      "strength": 3
+    },
+    {
+      "id": "pk-home",
+      "nationId": "pk",
+      "location": "islamabad",
+      "strength": 6
+    },
+    {
+      "id": "us-home",
+      "nationId": "us",
+      "location": "united_states_home",
+      "strength": 13
+    },
+    {
+      "id": "sa-home",
+      "nationId": "sa",
+      "location": "riyadh",
+      "strength": 7
+    },
+    {
+      "id": "ir-home",
+      "nationId": "ir",
+      "location": "tehran",
+      "strength": 6
+    }
+  ],
+  "starting_pacts": [
+    {
+      "id": "su-dra",
+      "parties": [
+        "su",
+        "dra"
+      ],
+      "type": "defense",
+      "secret": false,
+      "terms": {
+        "title": "Treaty of friendship",
+        "type": "defense",
+        "secret": false,
+        "obligations": [
+          {
+            "id": "su-no-war-dra",
+            "party": "su",
+            "must": "not_declare_war_on",
+            "target": "dra"
+          },
+          {
+            "id": "dra-no-war-su",
+            "party": "dra",
+            "must": "not_declare_war_on",
+            "target": "su"
+          }
+        ]
+      }
+    }
+  ],
+  "trade_routes": [],
+  "flags": {
+    "dra_self_sustaining": false
+  },
+  "victory_conditions": {
+    "su": {
+      "all_of": [
+        {
+          "flag_eq": [
+            "dra_self_sustaining",
+            true
+          ]
+        },
+        {
+          "gte": [
+            "standing_internal",
+            50
+          ]
+        }
+      ]
+    },
+    "dra": {
+      "all_of": [
+        {
+          "status_not": "occupied"
+        },
+        {
+          "flag_eq": [
+            "dra_self_sustaining",
+            true
+          ]
+        }
+      ]
+    },
+    "hiz": {
+      "all_of": [
+        {
+          "gte": [
+            "standing_external",
+            30
+          ]
+        }
+      ]
+    },
+    "jam": {
+      "all_of": [
+        {
+          "gte": [
+            "standing_external",
+            30
+          ]
+        }
+      ]
+    },
+    "har": {
+      "all_of": [
+        {
+          "gte": [
+            "standing_external",
+            28
+          ]
+        }
+      ]
+    },
+    "pk": {
+      "all_of": [
+        {
+          "gte": [
+            "standing_external",
+            50
+          ]
+        }
+      ]
+    },
+    "us": {
+      "all_of": [
+        {
+          "lte": [
+            "su.standing_internal",
+            50
+          ]
+        }
+      ]
+    },
+    "sa": {
+      "all_of": [
+        {
+          "lte": [
+            "su.standing_internal",
+            50
+          ]
+        }
+      ]
+    },
+    "ir": {
+      "all_of": [
+        {
+          "gte": [
+            "standing_external",
+            45
+          ]
+        }
+      ]
+    }
+  },
+  "tuning": {
+    "secret_pact_leak_base_chance": 0.06,
+    "standing_penalty_on_breach": 16,
+    "cascade_depth_cap": 3
+  }
+}

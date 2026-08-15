@@ -1,0 +1,773 @@
+{
+  "id": "grand_alliance_1939",
+  "display_name": "Grand Alliance",
+  "duration_ticks": 3024,
+  "player_slots": 15,
+  "requires_systems": [
+    "pacts",
+    "standing",
+    "channels"
+  ],
+  "nations": [
+    {
+      "id": "de",
+      "name": "Germany",
+      "shortName": "Germany",
+      "adjective": "German",
+      "standing_external": 78,
+      "standing_internal": 80,
+      "economy": 80,
+      "intelligence_capacity": 72,
+      "supply": 84,
+      "status": "sovereign",
+      "territories": [
+        "berlin"
+      ],
+      "social_tree_unlocks": [],
+      "advisor_set": "wilhelmstrasse_1939"
+    },
+    {
+      "id": "it",
+      "name": "Italy",
+      "shortName": "Italy",
+      "adjective": "Italian",
+      "standing_external": 58,
+      "standing_internal": 64,
+      "economy": 50,
+      "intelligence_capacity": 52,
+      "supply": 54,
+      "status": "sovereign",
+      "territories": [
+        "rome"
+      ],
+      "social_tree_unlocks": [],
+      "advisor_set": "rome_1939"
+    },
+    {
+      "id": "jp",
+      "name": "Japan",
+      "shortName": "Japan",
+      "adjective": "Japanese",
+      "standing_external": 66,
+      "standing_internal": 70,
+      "economy": 60,
+      "intelligence_capacity": 64,
+      "supply": 72,
+      "status": "sovereign",
+      "territories": [
+        "tokyo"
+      ],
+      "social_tree_unlocks": [],
+      "advisor_set": "tokyo_1939"
+    },
+    {
+      "id": "uk",
+      "name": "United Kingdom",
+      "shortName": "Britain",
+      "adjective": "British",
+      "standing_external": 82,
+      "standing_internal": 62,
+      "economy": 86,
+      "intelligence_capacity": 76,
+      "supply": 82,
+      "status": "sovereign",
+      "territories": [
+        "london"
+      ],
+      "social_tree_unlocks": [],
+      "advisor_set": "whitehall_1939"
+    },
+    {
+      "id": "fr",
+      "name": "France",
+      "shortName": "France",
+      "adjective": "French",
+      "standing_external": 74,
+      "standing_internal": 52,
+      "economy": 72,
+      "intelligence_capacity": 64,
+      "supply": 70,
+      "status": "sovereign",
+      "territories": [
+        "paris"
+      ],
+      "social_tree_unlocks": [],
+      "advisor_set": "quai_1939"
+    },
+    {
+      "id": "su",
+      "name": "Soviet Union",
+      "shortName": "the Soviet Union",
+      "adjective": "Soviet",
+      "standing_external": 70,
+      "standing_internal": 68,
+      "economy": 66,
+      "intelligence_capacity": 78,
+      "supply": 80,
+      "status": "sovereign",
+      "territories": [
+        "moscow"
+      ],
+      "social_tree_unlocks": [],
+      "advisor_set": "kremlin_1939"
+    },
+    {
+      "id": "us",
+      "name": "United States",
+      "shortName": "America",
+      "adjective": "American",
+      "standing_external": 86,
+      "standing_internal": 64,
+      "economy": 96,
+      "intelligence_capacity": 80,
+      "supply": 88,
+      "status": "sovereign",
+      "territories": [
+        "united_states_home"
+      ],
+      "social_tree_unlocks": [],
+      "advisor_set": "foggy_bottom_1939"
+    },
+    {
+      "id": "cn",
+      "name": "China",
+      "shortName": "China",
+      "adjective": "Chinese",
+      "standing_external": 40,
+      "standing_internal": 48,
+      "economy": 24,
+      "intelligence_capacity": 50,
+      "supply": 36,
+      "status": "sovereign",
+      "territories": [
+        "chongqing"
+      ],
+      "social_tree_unlocks": [],
+      "advisor_set": "chongqing_1939"
+    },
+    {
+      "id": "pl",
+      "name": "Poland",
+      "shortName": "Poland",
+      "adjective": "Polish",
+      "standing_external": 42,
+      "standing_internal": 58,
+      "economy": 32,
+      "intelligence_capacity": 44,
+      "supply": 40,
+      "status": "sovereign",
+      "territories": [
+        "warsaw"
+      ],
+      "social_tree_unlocks": [],
+      "advisor_set": "warsaw_1939"
+    },
+    {
+      "id": "fi",
+      "name": "Finland",
+      "shortName": "Finland",
+      "adjective": "Finnish",
+      "standing_external": 48,
+      "standing_internal": 66,
+      "economy": 30,
+      "intelligence_capacity": 46,
+      "supply": 34,
+      "status": "sovereign",
+      "territories": [
+        "helsinki"
+      ],
+      "social_tree_unlocks": [],
+      "advisor_set": "helsinki_1939"
+    },
+    {
+      "id": "hu",
+      "name": "Hungary",
+      "shortName": "Hungary",
+      "adjective": "Hungarian",
+      "standing_external": 44,
+      "standing_internal": 56,
+      "economy": 28,
+      "intelligence_capacity": 40,
+      "supply": 32,
+      "status": "sovereign",
+      "territories": [
+        "budapest"
+      ],
+      "social_tree_unlocks": [],
+      "advisor_set": "budapest_1939"
+    },
+    {
+      "id": "ro",
+      "name": "Romania",
+      "shortName": "Romania",
+      "adjective": "Romanian",
+      "standing_external": 46,
+      "standing_internal": 52,
+      "economy": 34,
+      "intelligence_capacity": 42,
+      "supply": 36,
+      "status": "sovereign",
+      "territories": [
+        "bucharest"
+      ],
+      "social_tree_unlocks": [],
+      "advisor_set": "bucharest_1939"
+    },
+    {
+      "id": "yu",
+      "name": "Yugoslavia",
+      "shortName": "Yugoslavia",
+      "adjective": "Yugoslav",
+      "standing_external": 44,
+      "standing_internal": 50,
+      "economy": 30,
+      "intelligence_capacity": 44,
+      "supply": 34,
+      "status": "sovereign",
+      "territories": [
+        "belgrade"
+      ],
+      "social_tree_unlocks": [],
+      "advisor_set": "belgrade_1939"
+    },
+    {
+      "id": "es",
+      "name": "Spain",
+      "shortName": "Spain",
+      "adjective": "Spanish",
+      "standing_external": 40,
+      "standing_internal": 44,
+      "economy": 22,
+      "intelligence_capacity": 40,
+      "supply": 28,
+      "status": "sovereign",
+      "territories": [
+        "madrid"
+      ],
+      "social_tree_unlocks": [],
+      "advisor_set": "madrid_1939"
+    },
+    {
+      "id": "se",
+      "name": "Sweden",
+      "shortName": "Sweden",
+      "adjective": "Swedish",
+      "standing_external": 56,
+      "standing_internal": 70,
+      "economy": 48,
+      "intelligence_capacity": 50,
+      "supply": 40,
+      "status": "sovereign",
+      "territories": [
+        "stockholm"
+      ],
+      "social_tree_unlocks": [],
+      "advisor_set": "stockholm_1939"
+    }
+  ],
+  "territories": [
+    {
+      "id": "berlin",
+      "name": "Berlin",
+      "owner": "de",
+      "controller": "de",
+      "region": "europe",
+      "supplyValue": 14
+    },
+    {
+      "id": "rome",
+      "name": "Rome",
+      "owner": "it",
+      "controller": "it",
+      "region": "europe",
+      "supplyValue": 10
+    },
+    {
+      "id": "tokyo",
+      "name": "Tokyo",
+      "owner": "jp",
+      "controller": "jp",
+      "region": "asia",
+      "supplyValue": 12
+    },
+    {
+      "id": "london",
+      "name": "London",
+      "owner": "uk",
+      "controller": "uk",
+      "region": "europe",
+      "supplyValue": 14
+    },
+    {
+      "id": "paris",
+      "name": "Paris",
+      "owner": "fr",
+      "controller": "fr",
+      "region": "europe",
+      "supplyValue": 12
+    },
+    {
+      "id": "moscow",
+      "name": "Moscow",
+      "owner": "su",
+      "controller": "su",
+      "region": "europe",
+      "supplyValue": 16
+    },
+    {
+      "id": "united_states_home",
+      "name": "United States",
+      "owner": "us",
+      "controller": "us",
+      "region": "americas",
+      "supplyValue": 24
+    },
+    {
+      "id": "chongqing",
+      "name": "Chongqing",
+      "owner": "cn",
+      "controller": "cn",
+      "region": "asia",
+      "supplyValue": 10
+    },
+    {
+      "id": "warsaw",
+      "name": "Warsaw",
+      "owner": "pl",
+      "controller": "pl",
+      "region": "europe",
+      "supplyValue": 8
+    },
+    {
+      "id": "helsinki",
+      "name": "Helsinki",
+      "owner": "fi",
+      "controller": "fi",
+      "region": "europe",
+      "supplyValue": 6
+    },
+    {
+      "id": "budapest",
+      "name": "Budapest",
+      "owner": "hu",
+      "controller": "hu",
+      "region": "europe",
+      "supplyValue": 6
+    },
+    {
+      "id": "bucharest",
+      "name": "Bucharest",
+      "owner": "ro",
+      "controller": "ro",
+      "region": "europe",
+      "supplyValue": 7
+    },
+    {
+      "id": "belgrade",
+      "name": "Belgrade",
+      "owner": "yu",
+      "controller": "yu",
+      "region": "europe",
+      "supplyValue": 6
+    },
+    {
+      "id": "madrid",
+      "name": "Madrid",
+      "owner": "es",
+      "controller": "es",
+      "region": "europe",
+      "supplyValue": 8
+    },
+    {
+      "id": "stockholm",
+      "name": "Stockholm",
+      "owner": "se",
+      "controller": "se",
+      "region": "europe",
+      "supplyValue": 6
+    }
+  ],
+  "formations": [
+    {
+      "id": "de-home",
+      "nationId": "de",
+      "location": "berlin",
+      "strength": 12
+    },
+    {
+      "id": "it-home",
+      "nationId": "it",
+      "location": "rome",
+      "strength": 8
+    },
+    {
+      "id": "jp-home",
+      "nationId": "jp",
+      "location": "tokyo",
+      "strength": 10
+    },
+    {
+      "id": "uk-home",
+      "nationId": "uk",
+      "location": "london",
+      "strength": 12
+    },
+    {
+      "id": "fr-home",
+      "nationId": "fr",
+      "location": "paris",
+      "strength": 10
+    },
+    {
+      "id": "su-home",
+      "nationId": "su",
+      "location": "moscow",
+      "strength": 11
+    },
+    {
+      "id": "us-home",
+      "nationId": "us",
+      "location": "united_states_home",
+      "strength": 13
+    },
+    {
+      "id": "cn-home",
+      "nationId": "cn",
+      "location": "chongqing",
+      "strength": 5
+    },
+    {
+      "id": "pl-home",
+      "nationId": "pl",
+      "location": "warsaw",
+      "strength": 6
+    },
+    {
+      "id": "fi-home",
+      "nationId": "fi",
+      "location": "helsinki",
+      "strength": 5
+    },
+    {
+      "id": "hu-home",
+      "nationId": "hu",
+      "location": "budapest",
+      "strength": 5
+    },
+    {
+      "id": "ro-home",
+      "nationId": "ro",
+      "location": "bucharest",
+      "strength": 5
+    },
+    {
+      "id": "yu-home",
+      "nationId": "yu",
+      "location": "belgrade",
+      "strength": 5
+    },
+    {
+      "id": "es-home",
+      "nationId": "es",
+      "location": "madrid",
+      "strength": 4
+    },
+    {
+      "id": "se-home",
+      "nationId": "se",
+      "location": "stockholm",
+      "strength": 6
+    }
+  ],
+  "starting_pacts": [
+    {
+      "id": "pact-of-steel",
+      "parties": [
+        "de",
+        "it"
+      ],
+      "type": "defense",
+      "secret": false,
+      "terms": {
+        "title": "Pact of Steel",
+        "type": "defense",
+        "secret": false,
+        "obligations": [
+          {
+            "id": "de-no-war-it",
+            "party": "de",
+            "must": "not_declare_war_on",
+            "target": "it"
+          },
+          {
+            "id": "it-no-war-de",
+            "party": "it",
+            "must": "not_declare_war_on",
+            "target": "de"
+          }
+        ]
+      }
+    },
+    {
+      "id": "molotov-public",
+      "parties": [
+        "de",
+        "su"
+      ],
+      "type": "non_aggression",
+      "secret": false,
+      "terms": {
+        "title": "German–Soviet non-aggression",
+        "type": "non_aggression",
+        "secret": false,
+        "obligations": [
+          {
+            "id": "de-no-war-su",
+            "party": "de",
+            "must": "not_declare_war_on",
+            "target": "su"
+          },
+          {
+            "id": "su-no-war-de",
+            "party": "su",
+            "must": "not_declare_war_on",
+            "target": "de"
+          }
+        ]
+      },
+      "private_terms": {
+        "title": "Secret protocol",
+        "type": "custom",
+        "secret": true,
+        "obligations": [
+          {
+            "id": "de-no-war-su-priv",
+            "party": "de",
+            "must": "not_declare_war_on",
+            "target": "su"
+          },
+          {
+            "id": "su-no-war-de-priv",
+            "party": "su",
+            "must": "not_declare_war_on",
+            "target": "de"
+          }
+        ]
+      }
+    },
+    {
+      "id": "allied-guarantee",
+      "parties": [
+        "uk",
+        "pl"
+      ],
+      "type": "defense",
+      "secret": false,
+      "terms": {
+        "title": "Guarantee of Poland",
+        "type": "defense",
+        "secret": false,
+        "obligations": [
+          {
+            "id": "uk-no-war-pl",
+            "party": "uk",
+            "must": "not_declare_war_on",
+            "target": "pl"
+          },
+          {
+            "id": "pl-no-war-uk",
+            "party": "pl",
+            "must": "not_declare_war_on",
+            "target": "uk"
+          }
+        ]
+      }
+    },
+    {
+      "id": "franco-polish",
+      "parties": [
+        "fr",
+        "pl"
+      ],
+      "type": "defense",
+      "secret": false,
+      "terms": {
+        "title": "Franco-Polish alliance",
+        "type": "defense",
+        "secret": false,
+        "obligations": [
+          {
+            "id": "fr-no-war-pl",
+            "party": "fr",
+            "must": "not_declare_war_on",
+            "target": "pl"
+          },
+          {
+            "id": "pl-no-war-fr",
+            "party": "pl",
+            "must": "not_declare_war_on",
+            "target": "fr"
+          }
+        ]
+      }
+    }
+  ],
+  "trade_routes": [],
+  "flags": {
+    "general_war": false
+  },
+  "victory_conditions": {
+    "de": {
+      "all_of": [
+        {
+          "gte": [
+            "standing_external",
+            60
+          ]
+        }
+      ]
+    },
+    "it": {
+      "all_of": [
+        {
+          "gte": [
+            "standing_external",
+            40
+          ]
+        }
+      ]
+    },
+    "jp": {
+      "all_of": [
+        {
+          "gte": [
+            "standing_external",
+            40
+          ]
+        }
+      ]
+    },
+    "uk": {
+      "all_of": [
+        {
+          "gte": [
+            "standing_external",
+            60
+          ]
+        }
+      ]
+    },
+    "fr": {
+      "all_of": [
+        {
+          "gte": [
+            "standing_external",
+            40
+          ]
+        }
+      ]
+    },
+    "su": {
+      "all_of": [
+        {
+          "gte": [
+            "standing_external",
+            60
+          ]
+        }
+      ]
+    },
+    "us": {
+      "all_of": [
+        {
+          "gte": [
+            "standing_external",
+            60
+          ]
+        }
+      ]
+    },
+    "cn": {
+      "all_of": [
+        {
+          "gte": [
+            "standing_external",
+            40
+          ]
+        }
+      ]
+    },
+    "pl": {
+      "all_of": [
+        {
+          "status_not": "occupied"
+        }
+      ]
+    },
+    "fi": {
+      "all_of": [
+        {
+          "gte": [
+            "standing_external",
+            40
+          ]
+        }
+      ]
+    },
+    "hu": {
+      "all_of": [
+        {
+          "gte": [
+            "standing_external",
+            40
+          ]
+        }
+      ]
+    },
+    "ro": {
+      "all_of": [
+        {
+          "gte": [
+            "standing_external",
+            40
+          ]
+        }
+      ]
+    },
+    "yu": {
+      "all_of": [
+        {
+          "gte": [
+            "standing_external",
+            40
+          ]
+        }
+      ]
+    },
+    "es": {
+      "all_of": [
+        {
+          "gte": [
+            "standing_external",
+            40
+          ]
+        }
+      ]
+    },
+    "se": {
+      "all_of": [
+        {
+          "gte": [
+            "standing_external",
+            40
+          ]
+        }
+      ]
+    }
+  },
+  "tuning": {
+    "secret_pact_leak_base_chance": 0.07,
+    "standing_penalty_on_breach": 24,
+    "cascade_depth_cap": 3
+  }
+}

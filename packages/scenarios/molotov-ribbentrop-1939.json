@@ -1,0 +1,373 @@
+{
+  "id": "molotov_ribbentrop_1939",
+  "display_name": "The Secret Protocol",
+  "duration_ticks": 720,
+  "player_slots": 6,
+  "requires_systems": [
+    "pacts",
+    "standing",
+    "channels"
+  ],
+  "nations": [
+    {
+      "id": "de",
+      "name": "Germany",
+      "shortName": "Germany",
+      "adjective": "German",
+      "standing_external": 74,
+      "standing_internal": 78,
+      "economy": 76,
+      "intelligence_capacity": 70,
+      "supply": 78,
+      "status": "sovereign",
+      "territories": [
+        "berlin"
+      ],
+      "social_tree_unlocks": [],
+      "advisor_set": "wilhelmstrasse_1939"
+    },
+    {
+      "id": "su",
+      "name": "Soviet Union",
+      "shortName": "the Soviet Union",
+      "adjective": "Soviet",
+      "standing_external": 66,
+      "standing_internal": 72,
+      "economy": 64,
+      "intelligence_capacity": 80,
+      "supply": 74,
+      "status": "sovereign",
+      "territories": [
+        "moscow"
+      ],
+      "social_tree_unlocks": [],
+      "advisor_set": "kremlin_1939"
+    },
+    {
+      "id": "pl",
+      "name": "Poland",
+      "shortName": "Poland",
+      "adjective": "Polish",
+      "standing_external": 40,
+      "standing_internal": 62,
+      "economy": 34,
+      "intelligence_capacity": 42,
+      "supply": 40,
+      "status": "sovereign",
+      "territories": [
+        "warsaw"
+      ],
+      "social_tree_unlocks": [],
+      "advisor_set": "warsaw_1939"
+    },
+    {
+      "id": "gb",
+      "name": "Britain",
+      "shortName": "Britain",
+      "adjective": "British",
+      "standing_external": 80,
+      "standing_internal": 58,
+      "economy": 84,
+      "intelligence_capacity": 72,
+      "supply": 80,
+      "status": "sovereign",
+      "territories": [
+        "london"
+      ],
+      "social_tree_unlocks": [],
+      "advisor_set": "whitehall_1939"
+    },
+    {
+      "id": "fr",
+      "name": "France",
+      "shortName": "France",
+      "adjective": "French",
+      "standing_external": 72,
+      "standing_internal": 50,
+      "economy": 70,
+      "intelligence_capacity": 60,
+      "supply": 66,
+      "status": "sovereign",
+      "territories": [
+        "paris"
+      ],
+      "social_tree_unlocks": [],
+      "advisor_set": "quai_1939"
+    },
+    {
+      "id": "jp",
+      "name": "Japan",
+      "shortName": "Japan",
+      "adjective": "Japanese",
+      "standing_external": 60,
+      "standing_internal": 64,
+      "economy": 58,
+      "intelligence_capacity": 62,
+      "supply": 70,
+      "status": "sovereign",
+      "territories": [
+        "tokyo"
+      ],
+      "social_tree_unlocks": [],
+      "advisor_set": "tokyo_1939"
+    }
+  ],
+  "territories": [
+    {
+      "id": "berlin",
+      "name": "Berlin",
+      "owner": "de",
+      "controller": "de",
+      "region": "europe",
+      "supplyValue": 12
+    },
+    {
+      "id": "moscow",
+      "name": "Moscow",
+      "owner": "su",
+      "controller": "su",
+      "region": "europe",
+      "supplyValue": 14
+    },
+    {
+      "id": "warsaw",
+      "name": "Warsaw",
+      "owner": "pl",
+      "controller": "pl",
+      "region": "europe",
+      "supplyValue": 8
+    },
+    {
+      "id": "london",
+      "name": "London",
+      "owner": "gb",
+      "controller": "gb",
+      "region": "europe",
+      "supplyValue": 12
+    },
+    {
+      "id": "paris",
+      "name": "Paris",
+      "owner": "fr",
+      "controller": "fr",
+      "region": "europe",
+      "supplyValue": 11
+    },
+    {
+      "id": "tokyo",
+      "name": "Tokyo",
+      "owner": "jp",
+      "controller": "jp",
+      "region": "asia",
+      "supplyValue": 12
+    }
+  ],
+  "formations": [
+    {
+      "id": "de-home",
+      "nationId": "de",
+      "location": "berlin",
+      "strength": 11
+    },
+    {
+      "id": "su-home",
+      "nationId": "su",
+      "location": "moscow",
+      "strength": 11
+    },
+    {
+      "id": "pl-home",
+      "nationId": "pl",
+      "location": "warsaw",
+      "strength": 6
+    },
+    {
+      "id": "gb-home",
+      "nationId": "gb",
+      "location": "london",
+      "strength": 11
+    },
+    {
+      "id": "fr-home",
+      "nationId": "fr",
+      "location": "paris",
+      "strength": 9
+    },
+    {
+      "id": "jp-home",
+      "nationId": "jp",
+      "location": "tokyo",
+      "strength": 10
+    }
+  ],
+  "starting_pacts": [
+    {
+      "id": "anti-comintern",
+      "parties": [
+        "de",
+        "jp"
+      ],
+      "type": "defense",
+      "secret": false,
+      "terms": {
+        "title": "Anti-Comintern Pact",
+        "type": "defense",
+        "secret": false,
+        "obligations": [
+          {
+            "id": "de-no-war-jp",
+            "party": "de",
+            "must": "not_declare_war_on",
+            "target": "jp"
+          },
+          {
+            "id": "jp-no-war-de",
+            "party": "jp",
+            "must": "not_declare_war_on",
+            "target": "de"
+          }
+        ]
+      }
+    },
+    {
+      "id": "polish-guarantee",
+      "parties": [
+        "gb",
+        "pl"
+      ],
+      "type": "defense",
+      "secret": false,
+      "terms": {
+        "title": "British guarantee of Poland",
+        "type": "defense",
+        "secret": false,
+        "obligations": [
+          {
+            "id": "gb-no-war-pl",
+            "party": "gb",
+            "must": "not_declare_war_on",
+            "target": "pl"
+          },
+          {
+            "id": "pl-no-war-gb",
+            "party": "pl",
+            "must": "not_declare_war_on",
+            "target": "gb"
+          }
+        ]
+      }
+    },
+    {
+      "id": "franco-polish",
+      "parties": [
+        "fr",
+        "pl"
+      ],
+      "type": "defense",
+      "secret": false,
+      "terms": {
+        "title": "Franco-Polish alliance",
+        "type": "defense",
+        "secret": false,
+        "obligations": [
+          {
+            "id": "fr-no-war-pl",
+            "party": "fr",
+            "must": "not_declare_war_on",
+            "target": "pl"
+          },
+          {
+            "id": "pl-no-war-fr",
+            "party": "pl",
+            "must": "not_declare_war_on",
+            "target": "fr"
+          }
+        ]
+      }
+    }
+  ],
+  "trade_routes": [],
+  "flags": {
+    "poland_isolated": false,
+    "secret_protocol": false
+  },
+  "victory_conditions": {
+    "de": {
+      "all_of": [
+        {
+          "flag_eq": [
+            "poland_isolated",
+            true
+          ]
+        },
+        {
+          "gte": [
+            "standing_external",
+            60
+          ]
+        }
+      ]
+    },
+    "su": {
+      "all_of": [
+        {
+          "gte": [
+            "standing_external",
+            55
+          ]
+        },
+        {
+          "status_not": "occupied"
+        }
+      ]
+    },
+    "pl": {
+      "all_of": [
+        {
+          "status_not": "occupied"
+        },
+        {
+          "gte": [
+            "standing_external",
+            35
+          ]
+        }
+      ]
+    },
+    "gb": {
+      "all_of": [
+        {
+          "gte": [
+            "standing_external",
+            70
+          ]
+        }
+      ]
+    },
+    "fr": {
+      "all_of": [
+        {
+          "gte": [
+            "standing_external",
+            60
+          ]
+        }
+      ]
+    },
+    "jp": {
+      "all_of": [
+        {
+          "gte": [
+            "standing_external",
+            55
+          ]
+        }
+      ]
+    }
+  },
+  "tuning": {
+    "secret_pact_leak_base_chance": 0.09,
+    "standing_penalty_on_breach": 26,
+    "cascade_depth_cap": 3
+  }
+}

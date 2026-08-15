@@ -1,0 +1,46 @@
+[
+  {
+    "id": "pact_breach_external_standing",
+    "trigger": "pact.breached",
+    "effects": [
+      {
+        "target": { "nation": "event.actor_id", "field": "standing_external" },
+        "delta": -25
+      }
+    ],
+    "emits": ["standing.changed"]
+  },
+  {
+    "id": "pact_renounced_external_standing",
+    "trigger": "pact.broken",
+    "effects": [
+      {
+        "target": { "nation": "event.actor_id", "field": "standing_external" },
+        "delta": -18
+      }
+    ],
+    "emits": ["standing.changed"]
+  },
+  {
+    "id": "war_declared_internal",
+    "trigger": "war.declared",
+    "effects": [
+      {
+        "target": { "nation": "event.actor_id", "field": "standing_internal" },
+        "delta": 4
+      }
+    ],
+    "emits": ["standing.changed"]
+  },
+  {
+    "id": "secret_leak_signatory_standing",
+    "trigger": "pact.leaked",
+    "effects": [
+      {
+        "target": { "nation": "event.subject", "field": "standing_external" },
+        "delta": -8
+      }
+    ],
+    "emits": ["standing.changed"]
+  }
+]

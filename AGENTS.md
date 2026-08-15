@@ -1,0 +1,84 @@
+# PROJECT CONTEXT
+
+Persistent multiplayer geopolitical strategy game. The core loop is social:
+players negotiate, form binding agreements, deceive each other, and betray
+each other. Combat resolves in the background from stats and is reported as
+written documents. There is NO unit micromanagement anywhere.
+
+## Non-negotiable architectural rules
+
+1. DETERMINISM. The tick worker is a single long-lived process with seeded
+   RNG and strictly ordered resolution. Same seed + same orders MUST produce
+   byte-identical state. Never introduce concurrency into tick resolution.
+   Never use Math.random() in simulation code — use the injected seeded RNG.
+   Never use Date.now() in simulation code — use the tick number.
+
+2. SERVER AUTHORITY. Clients submit ORDERS. Clients never mutate state.
+   Any client-supplied value is untrusted input.
+
+3. WORLD TRUTH vs BELIEF ARE SEPARATE. `world_state` is authoritative truth.
+   `belief_state[nation_id]` is what each nation THINKS is true and may be
+   FALSE. Advisors and briefings read ONLY from belief_state. There must be
+   zero code paths from advisor rendering to world truth. This is enforced by
+   test and is the single most important invariant in the codebase.
+
+4. PACTS ARE STRUCTURED DATA, NOT TEXT. Agreements are objects with
+   machine-evaluable terms. If the pact evaluator can't check it, it isn't a
+   pact — it's just chat. Betrayal detection depends entirely on this.
+
+5. EVERY STATE MUTATION EMITS AN ATTRIBUTED EVENT. No silent changes. A player
+   must always be able to open a ledger and see exactly why a value moved.
+   Unexplained numbers destroy trust in the simulation, and this is a game
+   about trust.
+
+6. EVENT LOG IS APPEND-ONLY. Never update or delete rows in `event`. All
+   narrative output (after-action reports, briefings, chronicles) is a
+   PROJECTION over the event log filtered by the reader's belief state.
+
+7. FORCE IS DERIVED. Never set a nation's `force` directly. It is computed
+   from economy, standing, and supply. This is the design made literal.
+
+8. SCENARIOS ARE CONFIG, NOT CODE. Adding a scenario must require zero engine
+   changes. If a scenario needs bespoke logic, the abstraction is wrong — fix
+   the abstraction, don't special-case the scenario.
+
+9. HONESTY RULE. A player's own after-action reports and internal stats are
+   TRUTHFUL BUT FRAMED — emphasis and ordering differ per side, facts never
+   do. Only intelligence ABOUT OTHERS may be false. If the UI lies to a
+   player, they stop trusting the interface instead of the other players and
+   the social game dies.
+
+10. ADVISORS SPEAK AT CABINET SCALE. "Three formations massing at the
+    frontier." Never "your operative Ivan infiltrated the ministry."
+    Personal-scale espionage in a strategic-vantage game is a known failure
+    mode. No advisor template may reference individual agents.
+
+## Stack
+
+- TypeScript everywhere, strict mode
+- Postgres via Supabase (jsonb for terms/effects/payloads)
+- Next.js App Router on Vercel — API routes + client
+- Tick worker: standalone Node process on Railway or Fly. NOT serverless.
+- Realtime: Supabase Realtime for event and briefing push
+- Queue: Postgres table with SELECT ... FOR UPDATE SKIP LOCKED
+- Tests: Vitest. Determinism tests are mandatory and run in CI.
+
+## Conventions
+
+- Simulation code is PURE: (state, orders, seed) => (newState, events).
+  No I/O, no clock, no randomness outside the injected RNG.
+- Persistence lives at the edges. The simulation never touches the DB.
+- Effect rules, advisor templates, and scenarios are DATA (JSON), loaded and
+  validated at runtime with Zod. Never hardcode game rules in TypeScript.
+- All money/standing/economy values are integers. No floats in game state.
+- Name things after the domain: `pact`, `breach`, `briefing`, `standing`,
+  `belief`, `formation`. Not `contract`, `violation`, `notification`.
+
+## Never do
+
+- Never put simulation logic in an API route or React component
+- Never read world_state from advisor or briefing code
+- Never let delegation/standing-orders break a pact or declare war —
+  those must be human acts or betrayal loses its moral weight
+- Never add unit micromanagement UI
+- Never resolve combat in a single tick — engagements span multiple ticks

@@ -1,0 +1,453 @@
+{
+  "id": "fragmentation_1991",
+  "display_name": "Fragmentation",
+  "duration_ticks": 2016,
+  "player_slots": 10,
+  "requires_systems": [
+    "pacts",
+    "standing",
+    "channels"
+  ],
+  "nations": [
+    {
+      "id": "rs",
+      "name": "Serbia",
+      "shortName": "Serbia",
+      "adjective": "Serbian",
+      "standing_external": 48,
+      "standing_internal": 32,
+      "economy": 36,
+      "intelligence_capacity": 52,
+      "supply": 44,
+      "status": "sovereign",
+      "territories": [
+        "belgrade"
+      ],
+      "social_tree_unlocks": [],
+      "advisor_set": "belgrade_1991"
+    },
+    {
+      "id": "hr",
+      "name": "Croatia",
+      "shortName": "Croatia",
+      "adjective": "Croatian",
+      "standing_external": 42,
+      "standing_internal": 58,
+      "economy": 28,
+      "intelligence_capacity": 48,
+      "supply": 32,
+      "status": "sovereign",
+      "territories": [
+        "zagreb"
+      ],
+      "social_tree_unlocks": [],
+      "advisor_set": "zagreb_1991"
+    },
+    {
+      "id": "ba",
+      "name": "Bosnia",
+      "shortName": "Bosnia",
+      "adjective": "Bosnian",
+      "standing_external": 30,
+      "standing_internal": 28,
+      "economy": 18,
+      "intelligence_capacity": 40,
+      "supply": 22,
+      "status": "sovereign",
+      "territories": [
+        "sarajevo"
+      ],
+      "social_tree_unlocks": [],
+      "advisor_set": "sarajevo_1991"
+    },
+    {
+      "id": "si",
+      "name": "Slovenia",
+      "shortName": "Slovenia",
+      "adjective": "Slovene",
+      "standing_external": 40,
+      "standing_internal": 62,
+      "economy": 26,
+      "intelligence_capacity": 44,
+      "supply": 24,
+      "status": "sovereign",
+      "territories": [
+        "ljubljana"
+      ],
+      "social_tree_unlocks": [],
+      "advisor_set": "ljubljana_1991"
+    },
+    {
+      "id": "mk",
+      "name": "Macedonia",
+      "shortName": "Macedonia",
+      "adjective": "Macedonian",
+      "standing_external": 32,
+      "standing_internal": 50,
+      "economy": 16,
+      "intelligence_capacity": 36,
+      "supply": 20,
+      "status": "sovereign",
+      "territories": [
+        "skopje"
+      ],
+      "social_tree_unlocks": [],
+      "advisor_set": "skopje_1991"
+    },
+    {
+      "id": "xk",
+      "name": "Kosovo",
+      "shortName": "Kosovo",
+      "adjective": "Kosovar",
+      "standing_external": 22,
+      "standing_internal": 40,
+      "economy": 8,
+      "intelligence_capacity": 34,
+      "supply": 12,
+      "status": "rump",
+      "territories": [
+        "pristina"
+      ],
+      "social_tree_unlocks": [],
+      "advisor_set": "pristina_1991"
+    },
+    {
+      "id": "eu",
+      "name": "European Community",
+      "shortName": "the Community",
+      "adjective": "European",
+      "standing_external": 70,
+      "standing_internal": 58,
+      "economy": 80,
+      "intelligence_capacity": 62,
+      "supply": 40,
+      "status": "sovereign",
+      "territories": [
+        "brussels"
+      ],
+      "social_tree_unlocks": [],
+      "advisor_set": "brussels_1991"
+    },
+    {
+      "id": "us",
+      "name": "United States",
+      "shortName": "America",
+      "adjective": "American",
+      "standing_external": 90,
+      "standing_internal": 64,
+      "economy": 96,
+      "intelligence_capacity": 88,
+      "supply": 88,
+      "status": "sovereign",
+      "territories": [
+        "united_states_home"
+      ],
+      "social_tree_unlocks": [],
+      "advisor_set": "foggy_bottom_1991"
+    },
+    {
+      "id": "ru",
+      "name": "Russia",
+      "shortName": "Russia",
+      "adjective": "Russian",
+      "standing_external": 62,
+      "standing_internal": 40,
+      "economy": 48,
+      "intelligence_capacity": 72,
+      "supply": 60,
+      "status": "sovereign",
+      "territories": [
+        "moscow"
+      ],
+      "social_tree_unlocks": [],
+      "advisor_set": "moscow_1991"
+    },
+    {
+      "id": "un",
+      "name": "United Nations",
+      "shortName": "the United Nations",
+      "adjective": "UN",
+      "standing_external": 64,
+      "standing_internal": 66,
+      "economy": 24,
+      "intelligence_capacity": 58,
+      "supply": 10,
+      "status": "sovereign",
+      "territories": [
+        "un_hq"
+      ],
+      "social_tree_unlocks": [],
+      "advisor_set": "un_1991"
+    }
+  ],
+  "territories": [
+    {
+      "id": "belgrade",
+      "name": "Belgrade",
+      "owner": "rs",
+      "controller": "rs",
+      "region": "balkans",
+      "supplyValue": 8
+    },
+    {
+      "id": "zagreb",
+      "name": "Zagreb",
+      "owner": "hr",
+      "controller": "hr",
+      "region": "balkans",
+      "supplyValue": 6
+    },
+    {
+      "id": "sarajevo",
+      "name": "Sarajevo",
+      "owner": "ba",
+      "controller": "ba",
+      "region": "balkans",
+      "supplyValue": 5
+    },
+    {
+      "id": "ljubljana",
+      "name": "Ljubljana",
+      "owner": "si",
+      "controller": "si",
+      "region": "balkans",
+      "supplyValue": 4
+    },
+    {
+      "id": "skopje",
+      "name": "Skopje",
+      "owner": "mk",
+      "controller": "mk",
+      "region": "balkans",
+      "supplyValue": 4
+    },
+    {
+      "id": "pristina",
+      "name": "Pristina",
+      "owner": "xk",
+      "controller": "xk",
+      "region": "balkans",
+      "supplyValue": 3
+    },
+    {
+      "id": "brussels",
+      "name": "Brussels",
+      "owner": "eu",
+      "controller": "eu",
+      "region": "europe",
+      "supplyValue": 8
+    },
+    {
+      "id": "united_states_home",
+      "name": "United States",
+      "owner": "us",
+      "controller": "us",
+      "region": "americas",
+      "supplyValue": 24
+    },
+    {
+      "id": "moscow",
+      "name": "Moscow",
+      "owner": "ru",
+      "controller": "ru",
+      "region": "europe",
+      "supplyValue": 16
+    },
+    {
+      "id": "un_hq",
+      "name": "Headquarters",
+      "owner": "un",
+      "controller": "un",
+      "region": "americas",
+      "supplyValue": 2
+    }
+  ],
+  "formations": [
+    {
+      "id": "rs-home",
+      "nationId": "rs",
+      "location": "belgrade",
+      "strength": 6
+    },
+    {
+      "id": "hr-home",
+      "nationId": "hr",
+      "location": "zagreb",
+      "strength": 5
+    },
+    {
+      "id": "ba-home",
+      "nationId": "ba",
+      "location": "sarajevo",
+      "strength": 3
+    },
+    {
+      "id": "si-home",
+      "nationId": "si",
+      "location": "ljubljana",
+      "strength": 3
+    },
+    {
+      "id": "mk-home",
+      "nationId": "mk",
+      "location": "skopje",
+      "strength": 3
+    },
+    {
+      "id": "xk-home",
+      "nationId": "xk",
+      "location": "pristina",
+      "strength": 3
+    },
+    {
+      "id": "eu-home",
+      "nationId": "eu",
+      "location": "brussels",
+      "strength": 6
+    },
+    {
+      "id": "us-home",
+      "nationId": "us",
+      "location": "united_states_home",
+      "strength": 13
+    },
+    {
+      "id": "ru-home",
+      "nationId": "ru",
+      "location": "moscow",
+      "strength": 9
+    },
+    {
+      "id": "un-home",
+      "nationId": "un",
+      "location": "un_hq",
+      "strength": 3
+    }
+  ],
+  "starting_pacts": [],
+  "trade_routes": [],
+  "flags": {
+    "recognized_slovenia": false,
+    "recognized_croatia": false,
+    "intervention_threshold": false
+  },
+  "victory_conditions": {
+    "rs": {
+      "all_of": [
+        {
+          "gte": [
+            "standing_internal",
+            40
+          ]
+        },
+        {
+          "status_not": "occupied"
+        }
+      ]
+    },
+    "hr": {
+      "all_of": [
+        {
+          "flag_eq": [
+            "recognized_croatia",
+            true
+          ]
+        },
+        {
+          "status_not": "occupied"
+        }
+      ]
+    },
+    "ba": {
+      "all_of": [
+        {
+          "status_not": "occupied"
+        },
+        {
+          "gte": [
+            "standing_internal",
+            30
+          ]
+        }
+      ]
+    },
+    "si": {
+      "all_of": [
+        {
+          "flag_eq": [
+            "recognized_slovenia",
+            true
+          ]
+        }
+      ]
+    },
+    "mk": {
+      "all_of": [
+        {
+          "status_not": "occupied"
+        }
+      ]
+    },
+    "xk": {
+      "all_of": [
+        {
+          "gte": [
+            "standing_external",
+            25
+          ]
+        }
+      ]
+    },
+    "eu": {
+      "all_of": [
+        {
+          "flag_eq": [
+            "intervention_threshold",
+            false
+          ]
+        },
+        {
+          "gte": [
+            "standing_external",
+            60
+          ]
+        }
+      ]
+    },
+    "us": {
+      "all_of": [
+        {
+          "gte": [
+            "standing_external",
+            75
+          ]
+        }
+      ]
+    },
+    "ru": {
+      "all_of": [
+        {
+          "gte": [
+            "standing_external",
+            50
+          ]
+        }
+      ]
+    },
+    "un": {
+      "all_of": [
+        {
+          "flag_eq": [
+            "intervention_threshold",
+            false
+          ]
+        }
+      ]
+    }
+  },
+  "tuning": {
+    "secret_pact_leak_base_chance": 0.05,
+    "standing_penalty_on_breach": 20,
+    "cascade_depth_cap": 3
+  }
+}

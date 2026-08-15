@@ -1,0 +1,341 @@
+{
+  "id": "thirteen_days_1962",
+  "display_name": "Thirteen Days",
+  "duration_ticks": 480,
+  "player_slots": 5,
+  "requires_systems": [
+    "pacts",
+    "standing",
+    "channels"
+  ],
+  "nations": [
+    {
+      "id": "us",
+      "name": "United States",
+      "shortName": "America",
+      "adjective": "American",
+      "standing_external": 90,
+      "standing_internal": 74,
+      "economy": 98,
+      "intelligence_capacity": 92,
+      "supply": 90,
+      "status": "sovereign",
+      "territories": [
+        "united_states_home",
+        "jupiter_sites"
+      ],
+      "social_tree_unlocks": [
+        "patronage"
+      ],
+      "advisor_set": "excomm_1962"
+    },
+    {
+      "id": "su",
+      "name": "Soviet Union",
+      "shortName": "the Soviet Union",
+      "adjective": "Soviet",
+      "standing_external": 82,
+      "standing_internal": 68,
+      "economy": 78,
+      "intelligence_capacity": 88,
+      "supply": 80,
+      "status": "sovereign",
+      "territories": [
+        "soviet_home",
+        "cuba_missiles"
+      ],
+      "social_tree_unlocks": [],
+      "advisor_set": "kremlin_1962"
+    },
+    {
+      "id": "cu",
+      "name": "Cuba",
+      "shortName": "Cuba",
+      "adjective": "Cuban",
+      "standing_external": 40,
+      "standing_internal": 78,
+      "economy": 22,
+      "intelligence_capacity": 48,
+      "supply": 28,
+      "status": "client",
+      "territories": [
+        "cuba_home"
+      ],
+      "social_tree_unlocks": [],
+      "advisor_set": "havana_1962"
+    },
+    {
+      "id": "tr",
+      "name": "Turkey",
+      "shortName": "Turkey",
+      "adjective": "Turkish",
+      "standing_external": 52,
+      "standing_internal": 58,
+      "economy": 36,
+      "intelligence_capacity": 44,
+      "supply": 40,
+      "status": "client",
+      "territories": [
+        "turkey_home"
+      ],
+      "social_tree_unlocks": [],
+      "advisor_set": "ankara_1962"
+    },
+    {
+      "id": "un",
+      "name": "United Nations",
+      "shortName": "the Secretariat",
+      "adjective": "UN",
+      "standing_external": 60,
+      "standing_internal": 70,
+      "economy": 20,
+      "intelligence_capacity": 55,
+      "supply": 8,
+      "status": "sovereign",
+      "territories": [
+        "un_hq"
+      ],
+      "social_tree_unlocks": [],
+      "advisor_set": "un_1962"
+    }
+  ],
+  "territories": [
+    {
+      "id": "united_states_home",
+      "name": "United States",
+      "owner": "us",
+      "controller": "us",
+      "region": "americas",
+      "supplyValue": 24
+    },
+    {
+      "id": "jupiter_sites",
+      "name": "Jupiter sites",
+      "owner": "us",
+      "controller": "us",
+      "region": "anatolia",
+      "supplyValue": 4
+    },
+    {
+      "id": "soviet_home",
+      "name": "Soviet Union",
+      "owner": "su",
+      "controller": "su",
+      "region": "eurasia",
+      "supplyValue": 22
+    },
+    {
+      "id": "cuba_missiles",
+      "name": "Missile sites",
+      "owner": "su",
+      "controller": "su",
+      "region": "caribbean",
+      "supplyValue": 6
+    },
+    {
+      "id": "cuba_home",
+      "name": "Cuba",
+      "owner": "cu",
+      "controller": "cu",
+      "region": "caribbean",
+      "supplyValue": 8
+    },
+    {
+      "id": "turkey_home",
+      "name": "Turkey",
+      "owner": "tr",
+      "controller": "tr",
+      "region": "anatolia",
+      "supplyValue": 10
+    },
+    {
+      "id": "un_hq",
+      "name": "Headquarters",
+      "owner": "un",
+      "controller": "un",
+      "region": "americas",
+      "supplyValue": 2
+    }
+  ],
+  "formations": [
+    {
+      "id": "us-home",
+      "nationId": "us",
+      "location": "united_states_home",
+      "strength": 13
+    },
+    {
+      "id": "su-home",
+      "nationId": "su",
+      "location": "soviet_home",
+      "strength": 11
+    },
+    {
+      "id": "cu-home",
+      "nationId": "cu",
+      "location": "cuba_home",
+      "strength": 4
+    },
+    {
+      "id": "tr-home",
+      "nationId": "tr",
+      "location": "turkey_home",
+      "strength": 6
+    },
+    {
+      "id": "un-home",
+      "nationId": "un",
+      "location": "un_hq",
+      "strength": 3
+    }
+  ],
+  "starting_pacts": [
+    {
+      "id": "nato-us-tr",
+      "parties": [
+        "us",
+        "tr"
+      ],
+      "type": "defense",
+      "secret": false,
+      "terms": {
+        "title": "NATO guarantee",
+        "type": "defense",
+        "secret": false,
+        "obligations": [
+          {
+            "id": "us-no-war-tr",
+            "party": "us",
+            "must": "not_declare_war_on",
+            "target": "tr"
+          },
+          {
+            "id": "tr-no-war-us",
+            "party": "tr",
+            "must": "not_declare_war_on",
+            "target": "us"
+          }
+        ]
+      }
+    },
+    {
+      "id": "su-cu-cover",
+      "parties": [
+        "su",
+        "cu"
+      ],
+      "type": "defense",
+      "secret": true,
+      "terms": {
+        "title": "Cover for the island",
+        "type": "defense",
+        "secret": true,
+        "obligations": [
+          {
+            "id": "su-no-war-cu",
+            "party": "su",
+            "must": "not_declare_war_on",
+            "target": "cu"
+          },
+          {
+            "id": "cu-no-war-su",
+            "party": "cu",
+            "must": "not_declare_war_on",
+            "target": "su"
+          }
+        ]
+      }
+    }
+  ],
+  "trade_routes": [],
+  "flags": {
+    "missiles_in_cuba": true,
+    "jupiters_in_turkey": true,
+    "cuba_guaranteed": false,
+    "public_concession": false
+  },
+  "victory_conditions": {
+    "us": {
+      "all_of": [
+        {
+          "gte": [
+            "standing_internal",
+            60
+          ]
+        },
+        {
+          "flag_eq": [
+            "missiles_in_cuba",
+            false
+          ]
+        },
+        {
+          "flag_eq": [
+            "public_concession",
+            false
+          ]
+        }
+      ]
+    },
+    "su": {
+      "all_of": [
+        {
+          "flag_eq": [
+            "cuba_guaranteed",
+            true
+          ]
+        },
+        {
+          "flag_eq": [
+            "jupiters_in_turkey",
+            false
+          ]
+        }
+      ]
+    },
+    "cu": {
+      "all_of": [
+        {
+          "flag_eq": [
+            "cuba_guaranteed",
+            true
+          ]
+        },
+        {
+          "status_not": "occupied"
+        }
+      ]
+    },
+    "tr": {
+      "all_of": [
+        {
+          "gte": [
+            "standing_external",
+            45
+          ]
+        }
+      ]
+    },
+    "un": {
+      "all_of": [
+        {
+          "flag_eq": [
+            "missiles_in_cuba",
+            false
+          ]
+        },
+        {
+          "flag_eq": [
+            "public_concession",
+            false
+          ]
+        }
+      ]
+    }
+  },
+  "tuning": {
+    "secret_pact_leak_base_chance": 0.07,
+    "standing_penalty_on_breach": 22,
+    "cascade_depth_cap": 3
+  }
+}

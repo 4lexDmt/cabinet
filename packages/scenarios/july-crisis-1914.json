@@ -1,0 +1,54 @@
+{
+  "id": "july_crisis_1914",
+  "display_name": "The Blank Cheque",
+  "duration_ticks": 720,
+  "player_slots": 7,
+  "requires_systems": ["pacts", "standing", "channels"],
+  "nations": [
+    { "id": "ah", "name": "Austria-Hungary", "shortName": "Austria-Hungary", "adjective": "Austro-Hungarian", "standing_external": 60, "standing_internal": 48, "economy": 55, "intelligence_capacity": 50, "supply": 58, "status": "sovereign", "territories": ["vienna"], "social_tree_unlocks": [], "advisor_set": "ballhausplatz_1914" },
+    { "id": "de", "name": "Germany", "shortName": "Germany", "adjective": "German", "standing_external": 74, "standing_internal": 70, "economy": 82, "intelligence_capacity": 72, "supply": 80, "status": "sovereign", "territories": ["berlin"], "social_tree_unlocks": [], "advisor_set": "wilhelmstrasse_1914" },
+    { "id": "ru", "name": "Russia", "shortName": "Russia", "adjective": "Russian", "standing_external": 68, "standing_internal": 52, "economy": 60, "intelligence_capacity": 58, "supply": 70, "status": "sovereign", "territories": ["petersburg"], "social_tree_unlocks": [], "advisor_set": "stavka_1914" },
+    { "id": "fr", "name": "France", "shortName": "France", "adjective": "French", "standing_external": 70, "standing_internal": 60, "economy": 72, "intelligence_capacity": 65, "supply": 68, "status": "sovereign", "territories": ["paris"], "social_tree_unlocks": [], "advisor_set": "quai_1914" },
+    { "id": "gb", "name": "Britain", "shortName": "Britain", "adjective": "British", "standing_external": 80, "standing_internal": 62, "economy": 88, "intelligence_capacity": 78, "supply": 84, "status": "sovereign", "territories": ["london"], "social_tree_unlocks": [], "advisor_set": "whitehall_1914" },
+    { "id": "rs", "name": "Serbia", "shortName": "Serbia", "adjective": "Serbian", "standing_external": 36, "standing_internal": 74, "economy": 22, "intelligence_capacity": 40, "supply": 30, "status": "sovereign", "territories": ["belgrade"], "social_tree_unlocks": [], "advisor_set": "belgrade_1914" },
+    { "id": "ot", "name": "Ottoman Empire", "shortName": "the Porte", "adjective": "Ottoman", "standing_external": 40, "standing_internal": 44, "economy": 28, "intelligence_capacity": 45, "supply": 35, "status": "sovereign", "territories": ["constantinople"], "social_tree_unlocks": [], "advisor_set": "sublime_porte_1914" }
+  ],
+  "territories": [
+    { "id": "vienna", "name": "Vienna", "owner": "ah", "controller": "ah", "region": "europe", "supplyValue": 8 },
+    { "id": "berlin", "name": "Berlin", "owner": "de", "controller": "de", "region": "europe", "supplyValue": 12 },
+    { "id": "petersburg", "name": "St Petersburg", "owner": "ru", "controller": "ru", "region": "europe", "supplyValue": 10 },
+    { "id": "paris", "name": "Paris", "owner": "fr", "controller": "fr", "region": "europe", "supplyValue": 11 },
+    { "id": "london", "name": "London", "owner": "gb", "controller": "gb", "region": "europe", "supplyValue": 12 },
+    { "id": "belgrade", "name": "Belgrade", "owner": "rs", "controller": "rs", "region": "europe", "supplyValue": 4 },
+    { "id": "constantinople", "name": "Constantinople", "owner": "ot", "controller": "ot", "region": "med", "supplyValue": 7 }
+  ],
+  "formations": [],
+  "starting_pacts": [
+    {
+      "id": "blank-cheque",
+      "parties": ["de", "ah"],
+      "type": "defense",
+      "secret": false,
+      "terms": {
+        "title": "The Blank Cheque",
+        "type": "defense",
+        "secret": false,
+        "obligations": [
+          { "id": "de-no-war-ah", "party": "de", "must": "not_declare_war_on", "target": "ah" },
+          { "id": "ah-no-war-de", "party": "ah", "must": "not_declare_war_on", "target": "de" }
+        ]
+      }
+    }
+  ],
+  "trade_routes": [],
+  "flags": { "mobilization_ah": false },
+  "victory_conditions": {
+    "gb": { "all_of": [{ "status_not": "occupied" }] },
+    "rs": { "status_not": "occupied" }
+  },
+  "tuning": {
+    "secret_pact_leak_base_chance": 0.05,
+    "standing_penalty_on_breach": 22,
+    "cascade_depth_cap": 3
+  }
+}

@@ -1,0 +1,490 @@
+{
+  "id": "vietnam_1964",
+  "display_name": "Attrition",
+  "duration_ticks": 2016,
+  "player_slots": 9,
+  "requires_systems": [
+    "pacts",
+    "standing",
+    "channels"
+  ],
+  "nations": [
+    {
+      "id": "us",
+      "name": "United States",
+      "shortName": "America",
+      "adjective": "American",
+      "standing_external": 86,
+      "standing_internal": 62,
+      "economy": 96,
+      "intelligence_capacity": 88,
+      "supply": 90,
+      "status": "sovereign",
+      "territories": [
+        "united_states_home"
+      ],
+      "social_tree_unlocks": [],
+      "advisor_set": "foggy_bottom_1964"
+    },
+    {
+      "id": "drv",
+      "name": "North Vietnam",
+      "shortName": "the DRV",
+      "adjective": "North Vietnamese",
+      "standing_external": 44,
+      "standing_internal": 82,
+      "economy": 28,
+      "intelligence_capacity": 60,
+      "supply": 40,
+      "status": "sovereign",
+      "territories": [
+        "hanoi"
+      ],
+      "social_tree_unlocks": [],
+      "advisor_set": "hanoi_1964"
+    },
+    {
+      "id": "nlf",
+      "name": "NLF",
+      "shortName": "the Front",
+      "adjective": "NLF",
+      "standing_external": 28,
+      "standing_internal": 70,
+      "economy": 12,
+      "intelligence_capacity": 64,
+      "supply": 22,
+      "status": "rump",
+      "territories": [
+        "rural_south"
+      ],
+      "social_tree_unlocks": [],
+      "advisor_set": "nlf_1964"
+    },
+    {
+      "id": "rvn",
+      "name": "South Vietnam",
+      "shortName": "the RVN",
+      "adjective": "South Vietnamese",
+      "standing_external": 36,
+      "standing_internal": 42,
+      "economy": 30,
+      "intelligence_capacity": 48,
+      "supply": 34,
+      "status": "client",
+      "territories": [
+        "saigon"
+      ],
+      "social_tree_unlocks": [],
+      "advisor_set": "saigon_1964"
+    },
+    {
+      "id": "su",
+      "name": "Soviet Union",
+      "shortName": "the Soviet Union",
+      "adjective": "Soviet",
+      "standing_external": 78,
+      "standing_internal": 66,
+      "economy": 80,
+      "intelligence_capacity": 86,
+      "supply": 76,
+      "status": "sovereign",
+      "territories": [
+        "soviet_home"
+      ],
+      "social_tree_unlocks": [
+        "patronage"
+      ],
+      "advisor_set": "kremlin_1964"
+    },
+    {
+      "id": "cn",
+      "name": "China",
+      "shortName": "China",
+      "adjective": "Chinese",
+      "standing_external": 70,
+      "standing_internal": 72,
+      "economy": 48,
+      "intelligence_capacity": 70,
+      "supply": 60,
+      "status": "sovereign",
+      "territories": [
+        "beijing"
+      ],
+      "social_tree_unlocks": [
+        "patronage"
+      ],
+      "advisor_set": "beijing_1964"
+    },
+    {
+      "id": "kh",
+      "name": "Cambodia",
+      "shortName": "Cambodia",
+      "adjective": "Cambodian",
+      "standing_external": 40,
+      "standing_internal": 55,
+      "economy": 18,
+      "intelligence_capacity": 40,
+      "supply": 20,
+      "status": "sovereign",
+      "territories": [
+        "phnom_penh"
+      ],
+      "social_tree_unlocks": [],
+      "advisor_set": "phnom_penh_1964"
+    },
+    {
+      "id": "la",
+      "name": "Laos",
+      "shortName": "Laos",
+      "adjective": "Lao",
+      "standing_external": 32,
+      "standing_internal": 48,
+      "economy": 14,
+      "intelligence_capacity": 36,
+      "supply": 16,
+      "status": "sovereign",
+      "territories": [
+        "vientiane"
+      ],
+      "social_tree_unlocks": [],
+      "advisor_set": "vientiane_1964"
+    },
+    {
+      "id": "au",
+      "name": "Australia",
+      "shortName": "Australia",
+      "adjective": "Australian",
+      "standing_external": 64,
+      "standing_internal": 68,
+      "economy": 58,
+      "intelligence_capacity": 52,
+      "supply": 50,
+      "status": "sovereign",
+      "territories": [
+        "canberra"
+      ],
+      "social_tree_unlocks": [],
+      "advisor_set": "canberra_1964"
+    }
+  ],
+  "territories": [
+    {
+      "id": "united_states_home",
+      "name": "United States",
+      "owner": "us",
+      "controller": "us",
+      "region": "americas",
+      "supplyValue": 24
+    },
+    {
+      "id": "hanoi",
+      "name": "Hanoi",
+      "owner": "drv",
+      "controller": "drv",
+      "region": "indochina",
+      "supplyValue": 10
+    },
+    {
+      "id": "rural_south",
+      "name": "The southern countryside",
+      "owner": "nlf",
+      "controller": "nlf",
+      "region": "indochina",
+      "supplyValue": 6
+    },
+    {
+      "id": "saigon",
+      "name": "Saigon",
+      "owner": "rvn",
+      "controller": "rvn",
+      "region": "indochina",
+      "supplyValue": 8
+    },
+    {
+      "id": "soviet_home",
+      "name": "Soviet Union",
+      "owner": "su",
+      "controller": "su",
+      "region": "eurasia",
+      "supplyValue": 22
+    },
+    {
+      "id": "beijing",
+      "name": "Beijing",
+      "owner": "cn",
+      "controller": "cn",
+      "region": "asia",
+      "supplyValue": 16
+    },
+    {
+      "id": "phnom_penh",
+      "name": "Phnom Penh",
+      "owner": "kh",
+      "controller": "kh",
+      "region": "indochina",
+      "supplyValue": 5
+    },
+    {
+      "id": "vientiane",
+      "name": "Vientiane",
+      "owner": "la",
+      "controller": "la",
+      "region": "indochina",
+      "supplyValue": 4
+    },
+    {
+      "id": "canberra",
+      "name": "Canberra",
+      "owner": "au",
+      "controller": "au",
+      "region": "pacific",
+      "supplyValue": 10
+    }
+  ],
+  "formations": [
+    {
+      "id": "us-home",
+      "nationId": "us",
+      "location": "united_states_home",
+      "strength": 13
+    },
+    {
+      "id": "drv-home",
+      "nationId": "drv",
+      "location": "hanoi",
+      "strength": 6
+    },
+    {
+      "id": "nlf-home",
+      "nationId": "nlf",
+      "location": "rural_south",
+      "strength": 3
+    },
+    {
+      "id": "rvn-home",
+      "nationId": "rvn",
+      "location": "saigon",
+      "strength": 5
+    },
+    {
+      "id": "su-home",
+      "nationId": "su",
+      "location": "soviet_home",
+      "strength": 11
+    },
+    {
+      "id": "cn-home",
+      "nationId": "cn",
+      "location": "beijing",
+      "strength": 9
+    },
+    {
+      "id": "kh-home",
+      "nationId": "kh",
+      "location": "phnom_penh",
+      "strength": 3
+    },
+    {
+      "id": "la-home",
+      "nationId": "la",
+      "location": "vientiane",
+      "strength": 3
+    },
+    {
+      "id": "au-home",
+      "nationId": "au",
+      "location": "canberra",
+      "strength": 7
+    }
+  ],
+  "starting_pacts": [
+    {
+      "id": "us-rvn",
+      "parties": [
+        "us",
+        "rvn"
+      ],
+      "type": "defense",
+      "secret": false,
+      "terms": {
+        "title": "SEATO cover",
+        "type": "defense",
+        "secret": false,
+        "obligations": [
+          {
+            "id": "us-no-war-rvn",
+            "party": "us",
+            "must": "not_declare_war_on",
+            "target": "rvn"
+          },
+          {
+            "id": "rvn-no-war-us",
+            "party": "rvn",
+            "must": "not_declare_war_on",
+            "target": "us"
+          }
+        ]
+      }
+    },
+    {
+      "id": "us-au",
+      "parties": [
+        "us",
+        "au"
+      ],
+      "type": "defense",
+      "secret": false,
+      "terms": {
+        "title": "ANZUS",
+        "type": "defense",
+        "secret": false,
+        "obligations": [
+          {
+            "id": "us-no-war-au",
+            "party": "us",
+            "must": "not_declare_war_on",
+            "target": "au"
+          },
+          {
+            "id": "au-no-war-us",
+            "party": "au",
+            "must": "not_declare_war_on",
+            "target": "us"
+          }
+        ]
+      }
+    },
+    {
+      "id": "su-drv",
+      "parties": [
+        "su",
+        "drv"
+      ],
+      "type": "defense",
+      "secret": false,
+      "terms": {
+        "title": "Soviet aid understanding",
+        "type": "defense",
+        "secret": false,
+        "obligations": [
+          {
+            "id": "su-no-war-drv",
+            "party": "su",
+            "must": "not_declare_war_on",
+            "target": "drv"
+          },
+          {
+            "id": "drv-no-war-su",
+            "party": "drv",
+            "must": "not_declare_war_on",
+            "target": "su"
+          }
+        ]
+      }
+    }
+  ],
+  "trade_routes": [],
+  "flags": {
+    "rvn_independent": true
+  },
+  "victory_conditions": {
+    "us": {
+      "all_of": [
+        {
+          "flag_eq": [
+            "rvn_independent",
+            true
+          ]
+        },
+        {
+          "gte": [
+            "standing_internal",
+            50
+          ]
+        }
+      ]
+    },
+    "drv": {
+      "all_of": [
+        {
+          "lte": [
+            "us.standing_internal",
+            45
+          ]
+        }
+      ]
+    },
+    "nlf": {
+      "all_of": [
+        {
+          "lte": [
+            "us.standing_internal",
+            45
+          ]
+        }
+      ]
+    },
+    "rvn": {
+      "all_of": [
+        {
+          "flag_eq": [
+            "rvn_independent",
+            true
+          ]
+        },
+        {
+          "status_not": "occupied"
+        }
+      ]
+    },
+    "su": {
+      "all_of": [
+        {
+          "gte": [
+            "standing_external",
+            70
+          ]
+        }
+      ]
+    },
+    "cn": {
+      "all_of": [
+        {
+          "gte": [
+            "standing_external",
+            65
+          ]
+        }
+      ]
+    },
+    "kh": {
+      "all_of": [
+        {
+          "status_not": "occupied"
+        }
+      ]
+    },
+    "la": {
+      "all_of": [
+        {
+          "status_not": "occupied"
+        }
+      ]
+    },
+    "au": {
+      "all_of": [
+        {
+          "gte": [
+            "standing_external",
+            55
+          ]
+        }
+      ]
+    }
+  },
+  "tuning": {
+    "secret_pact_leak_base_chance": 0.05,
+    "standing_penalty_on_breach": 18,
+    "cascade_depth_cap": 3
+  }
+}
