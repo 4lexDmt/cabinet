@@ -10,9 +10,11 @@
 import {
   REGISTERS,
   conicConformal,
+  projectionFor,
   recommendProjection,
   type BBox,
   type Projection,
+  type ProjectionKind,
   type ZoomRegister,
 } from "@cabinet/geo";
 
@@ -28,7 +30,7 @@ export interface SheetConfig {
   /** What this sheet is for. Shown under the frame, not as a tooltip. */
   brief: string;
   /** Explicit projection override; otherwise the frame chooses. */
-  projection?: { parallels: [number, number]; lon0: number };
+  projection?: { kind?: ProjectionKind; parallels?: [number, number]; lon0?: number };
 }
 
 export const SHEETS: SheetConfig[] = [
@@ -41,6 +43,15 @@ export const SHEETS: SheetConfig[] = [
     parties: ["CN", "RU", "IN", "PK", "IL", "PS", "MA", "AR", "GB", "TR", "GR", "UA"],
     brief:
       "Every boundary on earth, and 72 segments where at least one government reads the line differently from everyone else.",
+    // Mercator rather than the frame's own recommendation. A plate carrée
+    // world draws a degree of longitude the same width at 60° as at the
+    // equator, so every northern country comes out smeared sideways and
+    // squashed flat. Mercator is conformal: it lies about area — declared in
+    // the title block — but keeps each country the shape it actually is,
+    // which is the shape readers know. It also makes the maritime zones
+    // honest, because a circle of sea stays a circle under a conformal
+    // projection and the distance field is isotropic.
+    projection: { kind: "mercator" },
   },
   {
     id: "kashmir",
@@ -114,8 +125,11 @@ export function registerOf(sheet: SheetConfig): ZoomRegister {
 }
 
 export function projectionOf(sheet: SheetConfig): Projection {
-  if (sheet.projection) {
-    return conicConformal(sheet.projection.parallels, sheet.projection.lon0);
+  const declared = sheet.projection;
+  if (!declared) return recommendProjection(sheet.bbox);
+  if (declared.kind) {
+    return projectionFor(declared.kind, { parallels: declared.parallels, lon0: declared.lon0 });
   }
+  if (declared.parallels) return conicConformal(declared.parallels, declared.lon0 ?? 0);
   return recommendProjection(sheet.bbox);
 }
