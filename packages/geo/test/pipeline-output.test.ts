@@ -213,7 +213,7 @@ describe("territory manifest", () => {
     const scenariosDir = join(repoRoot, "packages", "scenarios");
     const missing: Record<string, string[]> = {};
     const extra: Record<string, number> = {};
-    for (const file of readdirSync(scenariosDir).filter((name) => name.endsWith(".json"))) {
+    for (const file of readdirSync(scenariosDir).filter((name) => name.endsWith(".json") && name !== "package.json")) {
       const raw = JSON.parse(readFileSync(join(scenariosDir, file), "utf8")) as {
         id: string;
         territories: Array<{ id: string }>;

@@ -30,7 +30,7 @@ const scenariosDir = join(repoRoot, "packages", "scenarios");
 
 function catalogGeo(): Array<{ id: string; file: string; geo: ScenarioGeoConfig }> {
   const out: Array<{ id: string; file: string; geo: ScenarioGeoConfig }> = [];
-  for (const file of readdirSync(scenariosDir).filter((name) => name.endsWith(".json")).sort()) {
+  for (const file of readdirSync(scenariosDir).filter((name) => name.endsWith(".json") && name !== "package.json").sort()) {
     const raw = JSON.parse(readFileSync(join(scenariosDir, file), "utf8")) as {
       id: string;
       geo?: unknown;
