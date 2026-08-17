@@ -26,13 +26,16 @@ import {
   buildMaritimeField,
   densify,
   emphasise,
+  emphasiseZone,
   fitBounds,
   geometryPath,
   kmPerPixel,
   project,
   readBoundary,
+  unproject,
   viewportBounds,
-  zoneLadderPaths,
+  zoneBands,
+  zoneLimitPath,
   type BBox,
   type BoundaryClass,
   type LonLat,
@@ -124,13 +127,26 @@ interface Camera {
   y: number;
 }
 
-const HOME: Camera = { k: 1, x: 0, y: 0 };
+/**
+ * How far in a reader may go past the sheet's own minimum framing. Beyond
+ * roughly this the 1:50m geometry is being enlarged past what it knows, and
+ * the coastline starts reading as the polygon it is.
+ */
+const ZOOM_RANGE = 24;
 
-// A reader can zoom in as far as the register allows, but never out past the
-// sheet's own home framing — the same way a slippy map stops at world zoom 0
-// rather than showing the frame repeat into empty space.
-const MIN_ZOOM_K = 1;
-const MAX_ZOOM_K = 48;
+/**
+ * The reference frame the maritime zones are computed in.
+ *
+ * Deliberately NOT the viewport. Zones are built from a raster distance field,
+ * so their fidelity is set by how many cells cover the sheet — compute them
+ * against a phone's viewport and a 200-mile limit is barely a cell wide, while
+ * a 12-mile one is a fraction of one. Fixing the frame to the sheet instead of
+ * the device means a phone and a desktop get the same zones, computed once, and
+ * the camera transform scales them like any other geometry.
+ */
+const MARITIME_REFERENCE_WIDTH = 1600;
+/** Grid cells to spend on the reference frame. Cost is roughly linear in this. */
+const MARITIME_REFERENCE_CELLS = 56_000;
 
 export function Sheet(props: SheetProps) {
   const {
@@ -169,7 +185,6 @@ export function Sheet(props: SheetProps) {
 
   const frame = useMemo(() => viewportBounds(baseViewport), [baseViewport]);
   const kmPerPx = useMemo(() => kmPerPixel(baseViewport), [baseViewport]);
-  const pixelsPerNm = 1.852 / kmPerPx;
 
   // The sheet's own extent in the fixed projection's pixel space, so
   // panning/zooming can be kept from ever revealing empty canvas past its
@@ -182,9 +197,27 @@ export function Sheet(props: SheetProps) {
     return { x0: Math.min(...xs), x1: Math.max(...xs), y0: Math.min(...ys), y1: Math.max(...ys) };
   }, [projector, sheet.bbox]);
 
+  /**
+   * The floor on zoom: the scale at which the sheet still covers the whole
+   * viewport, in both axes.
+   *
+   * `fitBounds` fits the sheet *inside* the frame, which on a tall phone leaves
+   * the world as a strip with empty sea above and below it. A slippy map does
+   * not do that — it never lets you see past the edge of the world — so the
+   * floor is the covering scale, not the containing one, and the reader pans
+   * along the long axis instead of zooming out into nothing.
+   */
+  const minK = useMemo(() => {
+    const spanX = Math.max(sheetRect.x1 - sheetRect.x0, 1e-9);
+    const spanY = Math.max(sheetRect.y1 - sheetRect.y0, 1e-9);
+    return Math.max(width / spanX, height / spanY);
+  }, [sheetRect, width, height]);
+
+  const clampK = useCallback((k: number) => Math.min(minK * ZOOM_RANGE, Math.max(minK, k)), [minK]);
+
   const clampCamera = useCallback(
     (cam: Camera): Camera => {
-      const k = Math.min(MAX_ZOOM_K, Math.max(MIN_ZOOM_K, cam.k));
+      const k = clampK(cam.k);
       const { x0, x1, y0, y1 } = sheetRect;
       const mapW = (x1 - x0) * k;
       const mapH = (y1 - y0) * k;
@@ -192,28 +225,44 @@ export function Sheet(props: SheetProps) {
       const y = mapH <= height ? (height - mapH) / 2 - y0 * k : Math.min(-y0 * k, Math.max(height - y1 * k, cam.y));
       return { k, x, y };
     },
-    [sheetRect, width, height],
+    [clampK, sheetRect, width, height],
   );
 
-  // The reader's own pan/zoom over the sheet. Reset whenever a different
-  // sheet is chosen, so switching sheets always re-homes to its own frame.
-  const [camera, setCamera] = useState<Camera>(HOME);
-  useEffect(() => setCamera(HOME), [sheet.id]);
-  // Re-clamp on resize: a camera that was valid at one viewport size can
-  // otherwise leave the sheet short of covering a newly larger one.
-  useEffect(() => setCamera((c) => clampCamera(c)), [clampCamera]);
+  /** The minimum framing, centred. Where a sheet opens, and where it re-homes. */
+  const homeCamera = useMemo(
+    (): Camera =>
+      clampCamera({
+        k: minK,
+        x: (width - (sheetRect.x1 - sheetRect.x0) * minK) / 2 - sheetRect.x0 * minK,
+        y: (height - (sheetRect.y1 - sheetRect.y0) * minK) / 2 - sheetRect.y0 * minK,
+      }),
+    [clampCamera, minK, sheetRect, width, height],
+  );
+
+  // What the reader has done to the camera, or null if they have not touched
+  // it. Kept separate from the framing itself so that a resize re-frames
+  // rather than resets: an untouched sheet re-homes to the new viewport, and
+  // a sheet the reader has zoomed keeps that zoom, re-clamped to fit.
+  const [moved, setMoved] = useState<Camera | null>(null);
+  useEffect(() => setMoved(null), [sheet.id]);
+  const camera = moved ? clampCamera(moved) : homeCamera;
 
   const fromScreen = useCallback((cam: Camera, p: Point): Point => [(p[0] - cam.x) / cam.k, (p[1] - cam.y) / cam.k], []);
 
   const zoomAt = useCallback(
     (screenPoint: Point, factor: number) => {
-      setCamera((cam) => {
+      setMoved((current) => {
+        const cam = current ? clampCamera(current) : homeCamera;
         const anchor = fromScreen(cam, screenPoint);
-        const k = cam.k * factor;
+        // Clamp the scale BEFORE deriving the offset from it. Deriving first
+        // and clamping after leaves an offset computed for a scale the camera
+        // never reaches, which the bounds then pull to the nearest edge — so
+        // scrolling out at minimum zoom would walk the sheet into a corner.
+        const k = clampK(cam.k * factor);
         return clampCamera({ k, x: screenPoint[0] - anchor[0] * k, y: screenPoint[1] - anchor[1] * k });
       });
     },
-    [fromScreen, clampCamera],
+    [fromScreen, clampCamera, clampK, homeCamera],
   );
 
   // ── pointer interaction: drag to pan, pinch to zoom, wheel to zoom ────────
@@ -257,15 +306,15 @@ export function Sheet(props: SheetProps) {
     const pts = [...pointers.current.values()];
     if (g.kind === "pan" && pts.length === 1) {
       const point = pts[0]!;
-      setCamera(clampCamera({ k: g.k, x: point[0] - g.anchor[0] * g.k, y: point[1] - g.anchor[1] * g.k }));
+      setMoved(clampCamera({ k: g.k, x: point[0] - g.anchor[0] * g.k, y: point[1] - g.anchor[1] * g.k }));
     } else if (g.kind === "pinch" && pts.length >= 2 && g.dist) {
       const [a, b] = pts;
       const mid: Point = [(a![0] + b![0]) / 2, (a![1] + b![1]) / 2];
       const dist = Math.hypot(a![0] - b![0], a![1] - b![1]);
-      const k = g.k * (dist / g.dist);
-      setCamera(clampCamera({ k, x: mid[0] - g.anchor[0] * k, y: mid[1] - g.anchor[1] * k }));
+      const k = clampK(g.k * (dist / g.dist));
+      setMoved(clampCamera({ k, x: mid[0] - g.anchor[0] * k, y: mid[1] - g.anchor[1] * k }));
     }
-  }, [clampCamera]);
+  }, [clampCamera, clampK]);
 
   useEffect(() => {
     const onMove = (e: PointerEvent) => {
@@ -397,32 +446,54 @@ export function Sheet(props: SheetProps) {
 
   // ── maritime, computed by equidistance ────────────────────────────────────
   //
-  // This is a per-pixel nearest-coastline search over the whole sheet — the
-  // single most expensive computation on this page. It depends only on the
-  // fixed projector above, never the live camera, so it runs once per
-  // sheet/layer load rather than on every pan/zoom frame.
+  // Built in a reference frame fixed to the sheet rather than to the viewport,
+  // for the reason given at MARITIME_REFERENCE_WIDTH, and drawn as two limit
+  // lines rather than per-state bands.
   //
-  // Deliberately not computing median lines or the high-seas polygon here:
-  // the equidistant field already makes every state's band mutually
-  // exclusive with its neighbours (that is the whole point of computing
-  // zones from one distance field rather than tracing them), so a band's own
-  // edge already sits exactly on the median. Drawing that same line a second
-  // time would cost one `medianLinePath` scan per PAIR of coastal states —
-  // 26,796 pairs at world scale — for a purely decorative overlay this view
-  // doesn't need.
+  // Two limit lines, not 232 ladders: the field is equidistant, so each
+  // state's zone already stops where its neighbour's begins and the boundary
+  // between them is implicit in the geometry. One isoline per limit therefore
+  // says everything a per-state pass would, at two marching-squares passes
+  // instead of several hundred.
+  const maritimeReference = useMemo(() => {
+    const [w, s, e, n] = sheet.bbox;
+    // Square probe first: its scale is set by the sheet's longer axis, which
+    // gives the sheet's own aspect without needing the projection's internals.
+    const probe = fitBounds(projection, sheet.bbox, MARITIME_REFERENCE_WIDTH, MARITIME_REFERENCE_WIDTH);
+    const corners = [
+      project(probe, [w, s]),
+      project(probe, [w, n]),
+      project(probe, [e, s]),
+      project(probe, [e, n]),
+    ];
+    const xs = corners.map((c) => c[0]);
+    const ys = corners.map((c) => c[1]);
+    const spanX = Math.max(...xs) - Math.min(...xs);
+    const spanY = Math.max(...ys) - Math.min(...ys);
+    const refWidth = Math.max(64, Math.round(spanX));
+    const refHeight = Math.max(64, Math.round(spanY));
+    return {
+      viewport: fitBounds(projection, sheet.bbox, refWidth, refHeight),
+      width: refWidth,
+      height: refHeight,
+      cellSize: Math.max(2, Math.round(Math.sqrt((refWidth * refHeight) / MARITIME_REFERENCE_CELLS))),
+    };
+  }, [projection, sheet.bbox]);
+
   const maritime = useMemo(() => {
     if (!showMaritime || !layers.countries) return null;
-    const cellSize = width > 1100 ? 5 : 4;
+    const { viewport: ref, width: refWidth, height: refHeight, cellSize } = maritimeReference;
+    const toRef: Projector = (lonLat: LonLat) => project(ref, lonLat);
+
     const rings: Point[][] = [];
     const coasts: Array<{ id: string; points: Point[] }> = [];
     for (const feature of layers.countries.features) {
-      if (!inFrame(feature)) continue;
       const iso = String(feature.properties.iso_a3 ?? "");
       const projected: Point[][] = [];
       const walk = (node: unknown, depth: number): void => {
         if (!Array.isArray(node)) return;
         if (depth === 1) {
-          projected.push((node as LonLat[]).map((p) => projector(p)));
+          projected.push((node as LonLat[]).map((p) => toRef(p)));
           return;
         }
         for (const child of node) walk(child, depth - 1);
@@ -437,13 +508,45 @@ export function Sheet(props: SheetProps) {
       if (points.length > 4) coasts.push({ id: iso, points });
     }
     if (coasts.length === 0) return null;
-    const field = buildMaritimeField({ width, height, cellSize, coasts, landRings: rings });
-    const bands = coasts.map((coast, index) => ({
-      id: coast.id,
-      ladder: zoneLadderPaths(field, index, pixelsPerNm, era),
-    }));
-    return { bands };
-  }, [showMaritime, layers.countries, inFrame, projector, width, height, pixelsPerNm, era]);
+
+    const field = buildMaritimeField({
+      width: refWidth,
+      height: refHeight,
+      cellSize,
+      coasts,
+      landRings: rings,
+    });
+
+    // A conformal projection's scale grows away from the equator, so a fixed
+    // number of pixels is a shorter distance on the ground the further north
+    // it sits. Correcting per row is what keeps a 200-mile limit 200 miles
+    // wide off Norway as well as off Somalia.
+    const equatorial: Viewport = { ...ref, center: [ref.center[0], 0] };
+    const refPixelsPerNm = 1.852 / kmPerPixel(equatorial);
+    const rowGround: number[] = [];
+    for (let row = 0; row < Math.ceil(refHeight / cellSize); row++) {
+      const [, lat] = unproject(ref, [refWidth / 2, (row + 0.5) * cellSize]);
+      rowGround.push(Math.cos(Math.max(-85, Math.min(85, lat)) * (Math.PI / 180)));
+    }
+    const groundScale = (row: number) => rowGround[row] ?? 1;
+
+    const limits: Array<{ zone: "territorial" | "eez"; path: string }> = [];
+    for (const band of zoneBands(era)) {
+      if (band.zone !== "territorial" && band.zone !== "eez") continue;
+      const outerNm = band.outerNm ?? band.innerNm;
+      const path = zoneLimitPath(field, outerNm * refPixelsPerNm, groundScale);
+      if (path) limits.push({ zone: band.zone, path });
+    }
+
+    // Reference space to base space is one uniform affine step, because both
+    // are the same projection at different scales.
+    const ratio = baseViewport.scale / ref.scale;
+    const transform = `translate(${baseViewport.translate[0] - ref.translate[0] * ratio},${
+      baseViewport.translate[1] - ref.translate[1] * ratio
+    }) scale(${ratio})`;
+
+    return { limits, transform };
+  }, [showMaritime, layers.countries, maritimeReference, baseViewport, era]);
 
   const graticule = useMemo(
     () => graticulePath(frame, projector, pickGraticuleStep(frame[2] - frame[0])),
@@ -520,30 +623,32 @@ export function Sheet(props: SheetProps) {
           ) : null}
 
           {maritime ? (
-            <g className="maritime">
-              {maritime.bands.map(({ id, ladder }) =>
-                ladder
-                  .filter(({ band }) => band.zone === "territorial" || band.zone === "eez")
-                  .map(({ band, path }) => {
-                    const ink = ZONE_INK[band.zone];
-                    return (
-                      <g key={`${id}-${band.zone}`}>
-                        {demoted.has("maritime") || !ink.fill ? null : (
-                          <path d={path} fill={ink.fill} />
-                        )}
-                        <path
-                          d={path}
-                          fill="none"
-                          stroke={ink.stroke ?? "none"}
-                          strokeWidth={ink.strokeWidth ?? undefined}
-                          strokeDasharray={ink.dash ?? undefined}
-                          opacity={ink.opacity}
-                          vectorEffect="non-scaling-stroke"
-                        />
-                      </g>
-                    );
-                  }),
-              )}
+            <g className="maritime" transform={maritime.transform}>
+              {/* Widest limit first, so the territorial sea reads over the EEZ
+                  rather than under it. */}
+              {[...maritime.limits].reverse().map(({ zone, path }) => {
+                // Line-only means the limits ARE the subject here, so they are
+                // carried at full strength rather than as a wash's outline.
+                const ink = demoted.has("maritime")
+                  ? emphasiseZone(ZONE_INK[zone])
+                  : ZONE_INK[zone];
+                return (
+                  <g key={zone}>
+                    {demoted.has("maritime") || !ink.fill ? null : (
+                      <path d={path} fill={ink.fill} fillRule="evenodd" />
+                    )}
+                    <path
+                      d={path}
+                      fill="none"
+                      stroke={ink.stroke ?? "none"}
+                      strokeWidth={ink.strokeWidth ?? undefined}
+                      strokeDasharray={ink.dash ?? undefined}
+                      opacity={ink.opacity}
+                      vectorEffect="non-scaling-stroke"
+                    />
+                  </g>
+                );
+              })}
             </g>
           ) : null}
 
