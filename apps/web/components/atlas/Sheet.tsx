@@ -10,7 +10,8 @@
  * two states' zones meet, the line that appears is a genuine median.
  */
 
-import { useEffect, useMemo } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import type { MouseEvent as ReactMouseEvent, PointerEvent as ReactPointerEvent, WheelEvent as ReactWheelEvent } from "react";
 import {
   BOUNDARY_INK,
   NEUTRAL_OBSERVER,
@@ -28,8 +29,10 @@ import {
   placeFrom,
   project,
   readBoundary,
+  unproject,
   viewportBounds,
   zoneLadderPaths,
+  zoomOf,
   type BBox,
   type BoundaryClass,
   type LonLat,
@@ -111,6 +114,33 @@ interface DrawnBoundary {
   pair: [string | null, string | null];
 }
 
+/**
+ * A sheet is a printed frame — fixed content, fixed register — but a reader
+ * is never pinned to the frame's own centre and scale. The camera is a
+ * separate, interactive lens over the same fixed geometry: it never changes
+ * what the register says (tiers, label budget, min_zoom), only how much of
+ * the sheet's own extent is currently in view.
+ */
+interface Camera {
+  center: LonLat;
+  /** Multiplier over the sheet's home (`fitBounds`) scale. */
+  k: number;
+}
+
+const MIN_ZOOM_K = 0.4;
+const MAX_ZOOM_K = 48;
+const clampZoomK = (k: number) => Math.min(MAX_ZOOM_K, Math.max(MIN_ZOOM_K, k));
+
+function deriveViewport(projection: Projection, base: Viewport, width: number, height: number, camera: Camera): Viewport {
+  const scale = base.scale * camera.k;
+  const [px, py] = projection.forward(camera.center);
+  const translate: Point = [width / 2 - px * scale, height / 2 + py * scale];
+  const viewport: Viewport = { ...base, width, height, scale, translate, center: camera.center };
+  viewport.zoom = zoomOf(projection, scale, camera.center);
+  viewport.bounds = viewportBounds(viewport);
+  return viewport;
+}
+
 export function Sheet(props: SheetProps) {
   const {
     sheet,
@@ -133,9 +163,19 @@ export function Sheet(props: SheetProps) {
   const showPhysical = active.includes("physical");
   const showDispute = active.includes("dispute");
 
-  const viewport: Viewport = useMemo(
+  const baseViewport: Viewport = useMemo(
     () => fitBounds(projection, sheet.bbox, width, height, { padding: 26 }),
     [projection, sheet.bbox, width, height],
+  );
+
+  // The reader's own pan/zoom over the sheet. Reset whenever a different
+  // sheet is chosen, so switching sheets always re-homes to its own frame.
+  const [camera, setCamera] = useState<Camera | null>(null);
+  useEffect(() => setCamera(null), [sheet.id]);
+
+  const viewport: Viewport = useMemo(
+    () => (camera ? deriveViewport(projection, baseViewport, width, height, camera) : baseViewport),
+    [projection, baseViewport, width, height, camera],
   );
 
   const projector: Projector = useMemo(
@@ -146,6 +186,109 @@ export function Sheet(props: SheetProps) {
   const frame = useMemo(() => viewportBounds(viewport), [viewport]);
   const kmPerPx = useMemo(() => kmPerPixel(viewport), [viewport]);
   const pixelsPerNm = 1.852 / kmPerPx;
+  const atHome = camera === null;
+
+  const setFromTranslateScale = useCallback(
+    (translate: Point, scale: number, k: number) => {
+      const centerPlane: Point = [(width / 2 - translate[0]) / scale, (translate[1] - height / 2) / scale];
+      setCamera({ center: projection.inverse(centerPlane), k: clampZoomK(k) });
+    },
+    [projection, width, height],
+  );
+
+  const zoomAt = useCallback(
+    (screenPoint: Point, factor: number) => {
+      const currentK = camera?.k ?? 1;
+      const anchor = unproject(viewport, screenPoint);
+      const newK = clampZoomK(currentK * factor);
+      const newScale = baseViewport.scale * newK;
+      const [ax, ay] = projection.forward(anchor);
+      const translate: Point = [screenPoint[0] - ax * newScale, screenPoint[1] + ay * newScale];
+      setFromTranslateScale(translate, newScale, newK);
+    },
+    [camera, viewport, baseViewport.scale, projection, setFromTranslateScale],
+  );
+
+  // ── pointer interaction: drag to pan, pinch to zoom, wheel to zoom ────────
+  const pointers = useRef(new Map<number, Point>());
+  const gesture = useRef<{ kind: "pan" | "pinch"; anchor: LonLat; k: number; dist?: number } | null>(null);
+  const dragged = useRef(false);
+  const moveAccum = useRef(0);
+
+  const pointFromEvent = (e: { clientX: number; clientY: number; currentTarget: SVGSVGElement }): Point => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    return [e.clientX - rect.left, e.clientY - rect.top];
+  };
+
+  const beginGesture = useCallback(() => {
+    const pts = [...pointers.current.values()];
+    if (pts.length === 1) {
+      gesture.current = { kind: "pan", anchor: unproject(viewport, pts[0]!), k: camera?.k ?? 1 };
+    } else if (pts.length >= 2) {
+      const [a, b] = pts;
+      const mid: Point = [(a![0] + b![0]) / 2, (a![1] + b![1]) / 2];
+      const dist = Math.hypot(a![0] - b![0], a![1] - b![1]);
+      gesture.current = { kind: "pinch", anchor: unproject(viewport, mid), k: camera?.k ?? 1, dist };
+    } else {
+      gesture.current = null;
+    }
+  }, [viewport, camera]);
+
+  const onPointerDown = (e: ReactPointerEvent<SVGSVGElement>) => {
+    e.currentTarget.setPointerCapture(e.pointerId);
+    if (pointers.current.size === 0) {
+      dragged.current = false;
+      moveAccum.current = 0;
+    }
+    pointers.current.set(e.pointerId, pointFromEvent(e));
+    beginGesture();
+  };
+
+  const onPointerMove = (e: ReactPointerEvent<SVGSVGElement>) => {
+    if (!pointers.current.has(e.pointerId)) return;
+    const previous = pointers.current.get(e.pointerId)!;
+    const next = pointFromEvent(e);
+    moveAccum.current += Math.hypot(next[0] - previous[0], next[1] - previous[1]);
+    if (moveAccum.current > 6) dragged.current = true;
+    pointers.current.set(e.pointerId, next);
+    const g = gesture.current;
+    if (!g) return;
+    const pts = [...pointers.current.values()];
+    if (g.kind === "pan" && pts.length === 1) {
+      const scale = baseViewport.scale * g.k;
+      const [ax, ay] = projection.forward(g.anchor);
+      const point = pts[0]!;
+      setFromTranslateScale([point[0] - ax * scale, point[1] + ay * scale], scale, g.k);
+    } else if (g.kind === "pinch" && pts.length >= 2 && g.dist) {
+      const [a, b] = pts;
+      const mid: Point = [(a![0] + b![0]) / 2, (a![1] + b![1]) / 2];
+      const dist = Math.hypot(a![0] - b![0], a![1] - b![1]);
+      const newK = clampZoomK(g.k * (dist / g.dist));
+      const scale = baseViewport.scale * newK;
+      const [ax, ay] = projection.forward(g.anchor);
+      setFromTranslateScale([mid[0] - ax * scale, mid[1] + ay * scale], scale, newK);
+    }
+  };
+
+  const endPointer = (e: ReactPointerEvent<SVGSVGElement>) => {
+    pointers.current.delete(e.pointerId);
+    if (pointers.current.size > 0) beginGesture();
+    else gesture.current = null;
+  };
+
+  const onWheel = (e: ReactWheelEvent<SVGSVGElement>) => {
+    e.preventDefault();
+    zoomAt(pointFromEvent(e), Math.exp(-e.deltaY * 0.0018));
+  };
+
+  const onDoubleClick = (e: ReactMouseEvent<SVGSVGElement>) => {
+    zoomAt(pointFromEvent(e), 1.8);
+  };
+
+  const selectUnlessDragged = (iso3: string) => {
+    if (dragged.current) return;
+    onSelect(iso3 === selected ? null : iso3);
+  };
 
   const inFrame = useMemo(
     () => (feature: LoadedFeature) =>
@@ -325,12 +468,20 @@ export function Sheet(props: SheetProps) {
   };
 
   return (
+    <>
     <svg
       className="sheet"
       width={width}
       height={height}
       role="img"
-      aria-label={`${sheet.label}, drawn from the ${observer === NEUTRAL_OBSERVER ? "disinterested" : observer} reading`}
+      aria-label={`${sheet.label}, drawn from the ${observer === NEUTRAL_OBSERVER ? "disinterested" : observer} reading. Scroll or pinch to zoom, drag to pan.`}
+      onPointerDown={onPointerDown}
+      onPointerMove={onPointerMove}
+      onPointerUp={endPointer}
+      onPointerCancel={endPointer}
+      onPointerLeave={endPointer}
+      onWheel={onWheel}
+      onDoubleClick={onDoubleClick}
     >
       <defs>
         <pattern id="p-blind" width="7" height="7" patternUnits="userSpaceOnUse">
@@ -417,7 +568,7 @@ export function Sheet(props: SheetProps) {
               key={country.iso3 || country.name}
               d={country.path}
               fill={fillFor(country.iso3)}
-              onClick={() => onSelect(country.iso3 === selected ? null : country.iso3)}
+              onClick={() => selectUnlessDragged(country.iso3)}
               style={{ cursor: "pointer" }}
             >
               <title>{country.name}</title>
@@ -559,5 +710,17 @@ export function Sheet(props: SheetProps) {
       <rect x={6} y={6} width={width - 12} height={height - 12} fill="none" stroke="var(--ink)" strokeWidth="var(--w-line)" />
       <rect x={10} y={10} width={width - 20} height={height - 20} fill="none" stroke="var(--ink-4)" strokeWidth="var(--w-hair)" />
     </svg>
+    <div className="atlas-zoomctl" role="group" aria-label="Zoom and pan controls">
+      <button type="button" aria-label="Zoom in" onClick={() => zoomAt([width / 2, height / 2], 1.6)}>
+        +
+      </button>
+      <button type="button" aria-label="Zoom out" onClick={() => zoomAt([width / 2, height / 2], 1 / 1.6)}>
+        −
+      </button>
+      <button type="button" aria-label="Reset view to this sheet's frame" disabled={atHome} onClick={() => setCamera(null)}>
+        ⟲
+      </button>
+    </div>
+    </>
   );
 }
