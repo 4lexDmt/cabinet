@@ -1,0 +1,190 @@
+{
+  "$comment": "Every source records url, version, retrieval date, license and the attribution text that must ship with anything derived from it. The pipeline FAILS if any license field is empty. Attribution here is a legal obligation, not a nicety: several sources are ODbL with share-alike.",
+  "retrieved": "2026-08-17",
+  "sources": [
+    {
+      "id": "ne_10m_admin_0_boundary_lines_land",
+      "layer": "boundaries",
+      "url": "https://raw.githubusercontent.com/nvkelso/natural-earth-vector/v5.1.2/geojson/ne_10m_admin_0_boundary_lines_land.geojson",
+      "version": "Natural Earth 5.1.2, 10m cultural",
+      "license": "public-domain",
+      "attribution": "Natural Earth. Free vector and raster map data @ naturalearthdata.com.",
+      "attribution_required": false,
+      "note": "Carries the 33 FCLASS_* point-of-view fields. This is the working source for the perspective mechanic today; Overture division_boundary carries an equivalent `perspectives` property but as of early 2026 the schema existed while the data was sparse. Check before migrating."
+    },
+    {
+      "id": "ne_50m_admin_0_countries",
+      "layer": "countries",
+      "url": "https://raw.githubusercontent.com/nvkelso/natural-earth-vector/v5.1.2/geojson/ne_50m_admin_0_countries.geojson",
+      "version": "Natural Earth 5.1.2, 50m cultural",
+      "license": "public-domain",
+      "attribution": "Natural Earth. Free vector and raster map data @ naturalearthdata.com.",
+      "attribution_required": false
+    },
+    {
+      "id": "ne_110m_admin_0_countries",
+      "layer": "countries_low",
+      "url": "https://raw.githubusercontent.com/nvkelso/natural-earth-vector/v5.1.2/geojson/ne_110m_admin_0_countries.geojson",
+      "version": "Natural Earth 5.1.2, 110m cultural",
+      "license": "public-domain",
+      "attribution": "Natural Earth. Free vector and raster map data @ naturalearthdata.com.",
+      "attribution_required": false
+    },
+    {
+      "id": "ne_50m_populated_places",
+      "layer": "places",
+      "url": "https://raw.githubusercontent.com/nvkelso/natural-earth-vector/v5.1.2/geojson/ne_50m_populated_places.geojson",
+      "version": "Natural Earth 5.1.2, 50m cultural",
+      "license": "public-domain",
+      "attribution": "Natural Earth. Free vector and raster map data @ naturalearthdata.com.",
+      "attribution_required": false,
+      "note": "SCALERANK / LABELRANK / min_zoom / min_label solve decluttering in the data. Do not reinvent it. The ranking is editorial, not population-driven, and that is the point."
+    },
+    {
+      "id": "ne_50m_coastline",
+      "layer": "coastline",
+      "url": "https://raw.githubusercontent.com/nvkelso/natural-earth-vector/v5.1.2/geojson/ne_50m_coastline.geojson",
+      "version": "Natural Earth 5.1.2, 50m physical",
+      "license": "public-domain",
+      "attribution": "Natural Earth. Free vector and raster map data @ naturalearthdata.com.",
+      "attribution_required": false
+    },
+    {
+      "id": "ne_50m_ocean",
+      "layer": "ocean",
+      "url": "https://raw.githubusercontent.com/nvkelso/natural-earth-vector/v5.1.2/geojson/ne_50m_ocean.geojson",
+      "version": "Natural Earth 5.1.2, 50m physical",
+      "license": "public-domain",
+      "attribution": "Natural Earth. Free vector and raster map data @ naturalearthdata.com.",
+      "attribution_required": false
+    },
+    {
+      "id": "ne_50m_lakes",
+      "layer": "lakes",
+      "url": "https://raw.githubusercontent.com/nvkelso/natural-earth-vector/v5.1.2/geojson/ne_50m_lakes.geojson",
+      "version": "Natural Earth 5.1.2, 50m physical",
+      "license": "public-domain",
+      "attribution": "Natural Earth. Free vector and raster map data @ naturalearthdata.com.",
+      "attribution_required": false
+    },
+    {
+      "id": "ne_50m_rivers_lake_centerlines",
+      "layer": "rivers",
+      "url": "https://raw.githubusercontent.com/nvkelso/natural-earth-vector/v5.1.2/geojson/ne_50m_rivers_lake_centerlines.geojson",
+      "version": "Natural Earth 5.1.2, 50m physical",
+      "license": "public-domain",
+      "attribution": "Natural Earth. Free vector and raster map data @ naturalearthdata.com.",
+      "attribution_required": false,
+      "note": "scalerank and strokeweight are pre-curated for width. Use them."
+    },
+    {
+      "id": "ne_10m_bathymetry_K_200",
+      "layer": "bathymetry",
+      "url": "https://raw.githubusercontent.com/nvkelso/natural-earth-vector/v5.1.2/geojson/ne_10m_bathymetry_K_200.geojson",
+      "version": "Natural Earth 5.1.2, 10m physical",
+      "license": "public-domain",
+      "attribution": "Natural Earth. Free vector and raster map data @ naturalearthdata.com.",
+      "attribution_required": false,
+      "note": "200m shelf break only. Depth banding suits the cold institutional palette; deeper bands are available and unused at theatre zoom."
+    },
+    {
+      "id": "marineregions_eez_v12",
+      "layer": "maritime_eez",
+      "url": "https://www.marineregions.org/download_file.php?name=World_EEZ_v12_20231025_LR.zip",
+      "version": "v12, 2023-10-25, low resolution (Visvalingam, 10% retention)",
+      "license": "CC-BY-4.0",
+      "attribution": "Flanders Marine Institute (2023). Maritime Boundaries Geodatabase: Maritime Boundaries and Exclusive Economic Zones (200NM), version 12. https://doi.org/10.14284/632",
+      "attribution_required": true,
+      "manual_download": true,
+      "note": "GOTCHA: Marine Regions' EEZ polygons INCLUDE archipelagic, internal and territorial waters — a deliberate deviation from UNCLOS. Difference the inner zones out before rendering, or the inner zones draw four deep. Requires a form submission, so it is not fetched automatically."
+    },
+    {
+      "id": "marineregions_territorial_seas_v4",
+      "layer": "maritime_territorial",
+      "url": "https://www.marineregions.org/download_file.php?name=World_12NM_v4_20231025.zip",
+      "version": "v4, 2023-10-25",
+      "license": "CC-BY-4.0",
+      "attribution": "Flanders Marine Institute (2023). Maritime Boundaries Geodatabase: Territorial Seas (12NM), version 4. https://doi.org/10.14284/629",
+      "attribution_required": true,
+      "manual_download": true
+    },
+    {
+      "id": "marineregions_contiguous_v4",
+      "layer": "maritime_contiguous",
+      "url": "https://www.marineregions.org/download_file.php?name=World_24NM_v4_20231025.zip",
+      "version": "v4, 2023-10-25",
+      "license": "CC-BY-4.0",
+      "attribution": "Flanders Marine Institute (2023). Maritime Boundaries Geodatabase: Contiguous Zones (24NM), version 4. https://doi.org/10.14284/630",
+      "attribution_required": true,
+      "manual_download": true
+    },
+    {
+      "id": "marineregions_internal_waters_v4",
+      "layer": "maritime_internal",
+      "url": "https://www.marineregions.org/download_file.php?name=World_Internal_Waters_v4_20231025.zip",
+      "version": "v4, 2023-10-25",
+      "license": "CC-BY-4.0",
+      "attribution": "Flanders Marine Institute (2023). Maritime Boundaries Geodatabase: Internal Waters, version 4. https://doi.org/10.14284/631",
+      "attribution_required": true,
+      "manual_download": true
+    },
+    {
+      "id": "marineregions_archipelagic_v4",
+      "layer": "maritime_archipelagic",
+      "url": "https://www.marineregions.org/download_file.php?name=World_Archipelagic_Waters_v4_20231025.zip",
+      "version": "v4, 2023-10-25",
+      "license": "CC-BY-4.0",
+      "attribution": "Flanders Marine Institute (2023). Maritime Boundaries Geodatabase: Archipelagic Waters, version 4. https://doi.org/10.14284/628",
+      "attribution_required": true,
+      "manual_download": true
+    },
+    {
+      "id": "marineregions_high_seas_v2",
+      "layer": "maritime_high_seas",
+      "url": "https://www.marineregions.org/download_file.php?name=World_High_Seas_v2_20241010.zip",
+      "version": "v2, 2024-10-10",
+      "license": "CC-BY-4.0",
+      "attribution": "Flanders Marine Institute (2024). Maritime Boundaries Geodatabase: High Seas, version 2. https://doi.org/10.14284/701",
+      "attribution_required": true,
+      "manual_download": true
+    },
+    {
+      "id": "overture_divisions",
+      "layer": "boundaries_overture",
+      "url": "s3://overturemaps-us-west-2/release/2026-07-22.0/theme=divisions/",
+      "version": "2026-07-22.0",
+      "license": "ODbL-1.0",
+      "attribution": "© OpenStreetMap contributors. Overture Maps Foundation divisions theme, ODbL.",
+      "attribution_required": true,
+      "share_alike": true,
+      "manual_download": true,
+      "note": "Query the GeoParquet with DuckDB; do not download the theme. The `perspectives` property carries accepted_by / disputed_by and is the eventual replacement for the FCLASS_* mechanic — verify it is populated in the current release before switching."
+    },
+    {
+      "id": "overture_transportation",
+      "layer": "roads",
+      "url": "s3://overturemaps-us-west-2/release/2026-07-22.0/theme=transportation/type=segment/",
+      "version": "2026-07-22.0",
+      "license": "ODbL-1.0",
+      "attribution": "© OpenStreetMap contributors. Overture Maps Foundation transportation theme, ODbL.",
+      "attribution_required": true,
+      "share_alike": true,
+      "manual_download": true,
+      "note": "Filter at the query, not after: subtype='road' AND class IN ('motorway','trunk','primary'). 300M+ segments unfiltered."
+    }
+  ],
+  "rejected": [
+    {
+      "id": "gadm",
+      "reason": "Prohibits commercial use. Cabinet has a paid tier, so this is disqualifying regardless of data quality. Widely recommended and widely misused."
+    },
+    {
+      "id": "ne_10m_roads",
+      "reason": "56,600 features globally of which 25,766 (45%) have type='Unknown', and coverage is heavily skewed to North America and Europe. Acceptable only as a decorative low-zoom hint, never as a road network."
+    },
+    {
+      "id": "grip4",
+      "reason": "License reported inconsistently across mirrors — ODbL (FAO), CC-0 (GLOBIO), CC BY 4.0 (Earth Engine catalog). Verify at globio.info before shipping and assume ODbL if unresolved."
+    }
+  ]
+}

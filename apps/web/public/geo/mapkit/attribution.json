@@ -1,0 +1,190 @@
+{
+  "generatedAt": "2026-08-17",
+  "note": "ODbL share-alike applies to derived DATABASES. Rendered tiles and images are a Produced Work and do not trigger it, but the tile data itself may. Keep Overture/OSM-derived layers as a separately attributed basemap and keep game state \u2014 territories, control, beliefs \u2014 in a layer of our own.",
+  "sources": [
+    {
+      "id": "ne_10m_admin_0_boundary_lines_land",
+      "layer": "boundaries",
+      "version": "Natural Earth 5.1.2, 10m cultural",
+      "license": "public-domain",
+      "attribution": "Natural Earth. Free vector and raster map data @ naturalearthdata.com.",
+      "required": false,
+      "shareAlike": false,
+      "used": true
+    },
+    {
+      "id": "ne_50m_admin_0_countries",
+      "layer": "countries",
+      "version": "Natural Earth 5.1.2, 50m cultural",
+      "license": "public-domain",
+      "attribution": "Natural Earth. Free vector and raster map data @ naturalearthdata.com.",
+      "required": false,
+      "shareAlike": false,
+      "used": true
+    },
+    {
+      "id": "ne_110m_admin_0_countries",
+      "layer": "countries_low",
+      "version": "Natural Earth 5.1.2, 110m cultural",
+      "license": "public-domain",
+      "attribution": "Natural Earth. Free vector and raster map data @ naturalearthdata.com.",
+      "required": false,
+      "shareAlike": false,
+      "used": true
+    },
+    {
+      "id": "ne_50m_populated_places",
+      "layer": "places",
+      "version": "Natural Earth 5.1.2, 50m cultural",
+      "license": "public-domain",
+      "attribution": "Natural Earth. Free vector and raster map data @ naturalearthdata.com.",
+      "required": false,
+      "shareAlike": false,
+      "used": true
+    },
+    {
+      "id": "ne_50m_coastline",
+      "layer": "coastline",
+      "version": "Natural Earth 5.1.2, 50m physical",
+      "license": "public-domain",
+      "attribution": "Natural Earth. Free vector and raster map data @ naturalearthdata.com.",
+      "required": false,
+      "shareAlike": false,
+      "used": true
+    },
+    {
+      "id": "ne_50m_ocean",
+      "layer": "ocean",
+      "version": "Natural Earth 5.1.2, 50m physical",
+      "license": "public-domain",
+      "attribution": "Natural Earth. Free vector and raster map data @ naturalearthdata.com.",
+      "required": false,
+      "shareAlike": false,
+      "used": true
+    },
+    {
+      "id": "ne_50m_lakes",
+      "layer": "lakes",
+      "version": "Natural Earth 5.1.2, 50m physical",
+      "license": "public-domain",
+      "attribution": "Natural Earth. Free vector and raster map data @ naturalearthdata.com.",
+      "required": false,
+      "shareAlike": false,
+      "used": true
+    },
+    {
+      "id": "ne_50m_rivers_lake_centerlines",
+      "layer": "rivers",
+      "version": "Natural Earth 5.1.2, 50m physical",
+      "license": "public-domain",
+      "attribution": "Natural Earth. Free vector and raster map data @ naturalearthdata.com.",
+      "required": false,
+      "shareAlike": false,
+      "used": true
+    },
+    {
+      "id": "ne_10m_bathymetry_K_200",
+      "layer": "bathymetry",
+      "version": "Natural Earth 5.1.2, 10m physical",
+      "license": "public-domain",
+      "attribution": "Natural Earth. Free vector and raster map data @ naturalearthdata.com.",
+      "required": false,
+      "shareAlike": false,
+      "used": true
+    },
+    {
+      "id": "marineregions_eez_v12",
+      "layer": "maritime_eez",
+      "version": "v12, 2023-10-25, low resolution (Visvalingam, 10% retention)",
+      "license": "CC-BY-4.0",
+      "attribution": "Flanders Marine Institute (2023). Maritime Boundaries Geodatabase: Maritime Boundaries and Exclusive Economic Zones (200NM), version 12. https://doi.org/10.14284/632",
+      "required": true,
+      "shareAlike": false,
+      "used": false
+    },
+    {
+      "id": "marineregions_territorial_seas_v4",
+      "layer": "maritime_territorial",
+      "version": "v4, 2023-10-25",
+      "license": "CC-BY-4.0",
+      "attribution": "Flanders Marine Institute (2023). Maritime Boundaries Geodatabase: Territorial Seas (12NM), version 4. https://doi.org/10.14284/629",
+      "required": true,
+      "shareAlike": false,
+      "used": false
+    },
+    {
+      "id": "marineregions_contiguous_v4",
+      "layer": "maritime_contiguous",
+      "version": "v4, 2023-10-25",
+      "license": "CC-BY-4.0",
+      "attribution": "Flanders Marine Institute (2023). Maritime Boundaries Geodatabase: Contiguous Zones (24NM), version 4. https://doi.org/10.14284/630",
+      "required": true,
+      "shareAlike": false,
+      "used": false
+    },
+    {
+      "id": "marineregions_internal_waters_v4",
+      "layer": "maritime_internal",
+      "version": "v4, 2023-10-25",
+      "license": "CC-BY-4.0",
+      "attribution": "Flanders Marine Institute (2023). Maritime Boundaries Geodatabase: Internal Waters, version 4. https://doi.org/10.14284/631",
+      "required": true,
+      "shareAlike": false,
+      "used": false
+    },
+    {
+      "id": "marineregions_archipelagic_v4",
+      "layer": "maritime_archipelagic",
+      "version": "v4, 2023-10-25",
+      "license": "CC-BY-4.0",
+      "attribution": "Flanders Marine Institute (2023). Maritime Boundaries Geodatabase: Archipelagic Waters, version 4. https://doi.org/10.14284/628",
+      "required": true,
+      "shareAlike": false,
+      "used": false
+    },
+    {
+      "id": "marineregions_high_seas_v2",
+      "layer": "maritime_high_seas",
+      "version": "v2, 2024-10-10",
+      "license": "CC-BY-4.0",
+      "attribution": "Flanders Marine Institute (2024). Maritime Boundaries Geodatabase: High Seas, version 2. https://doi.org/10.14284/701",
+      "required": true,
+      "shareAlike": false,
+      "used": false
+    },
+    {
+      "id": "overture_divisions",
+      "layer": "boundaries_overture",
+      "version": "2026-07-22.0",
+      "license": "ODbL-1.0",
+      "attribution": "\u00a9 OpenStreetMap contributors. Overture Maps Foundation divisions theme, ODbL.",
+      "required": true,
+      "shareAlike": true,
+      "used": false
+    },
+    {
+      "id": "overture_transportation",
+      "layer": "roads",
+      "version": "2026-07-22.0",
+      "license": "ODbL-1.0",
+      "attribution": "\u00a9 OpenStreetMap contributors. Overture Maps Foundation transportation theme, ODbL.",
+      "required": true,
+      "shareAlike": true,
+      "used": false
+    }
+  ],
+  "rejected": [
+    {
+      "id": "gadm",
+      "reason": "Prohibits commercial use. Cabinet has a paid tier, so this is disqualifying regardless of data quality. Widely recommended and widely misused."
+    },
+    {
+      "id": "ne_10m_roads",
+      "reason": "56,600 features globally of which 25,766 (45%) have type='Unknown', and coverage is heavily skewed to North America and Europe. Acceptable only as a decorative low-zoom hint, never as a road network."
+    },
+    {
+      "id": "grip4",
+      "reason": "License reported inconsistently across mirrors \u2014 ODbL (FAO), CC-0 (GLOBIO), CC BY 4.0 (Earth Engine catalog). Verify at globio.info before shipping and assume ODbL if unresolved."
+    }
+  ]
+}
