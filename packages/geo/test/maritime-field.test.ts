@@ -19,6 +19,7 @@ import {
   medianLinePath,
   zoneBandPath,
   zoneLadderPaths,
+  zoneLimitPath,
   type Point,
 } from "../src/index.ts";
 
@@ -128,6 +129,66 @@ describe("zone bands", () => {
         );
       }
       expect(medianLinePath(field, 0, 1, outer)).not.toMatch(/NaN|Infinity/);
+    }
+  });
+});
+
+describe("zone limit lines", () => {
+  const field = twoIslands();
+
+  /** Every vertex's distance to the nearest point of the west island's edge. */
+  function distancesFromWestCoast(path: string): number[] {
+    const points = [...path.matchAll(/[ML](-?\d+(?:\.\d+)?),(-?\d+(?:\.\d+)?)/g)].map(
+      (m) => [Number(m[1]), Number(m[2])] as Point,
+    );
+    // The west island spans x 40..140, y 60..240.
+    return points
+      .filter(([x, y]) => x < 250 && y > 20 && y < 280)
+      .map(([x, y]) => {
+        const dx = x < 40 ? 40 - x : x > 140 ? x - 140 : 0;
+        const dy = y < 60 ? 60 - y : y > 240 ? y - 240 : 0;
+        return Math.hypot(dx, dy);
+      });
+  }
+
+  // The west island sits 40px from the left edge and 60px from the top and
+  // bottom, so radii are kept under 40: past that the envelope is clipped to
+  // the sheet and runs along the border, which is correct but not measurable.
+  it("puts the limit at the requested distance from the coast", () => {
+    for (const radius of [8, 12, 24, 36]) {
+      const distances = distancesFromWestCoast(zoneLimitPath(field, radius));
+      expect(distances.length).toBeGreaterThan(8);
+      const mean = distances.reduce((a, b) => a + b, 0) / distances.length;
+      // Within one grid cell of the requested radius: the isoline is
+      // interpolated between samples, so it is not snapped to cell centres.
+      expect(Math.abs(mean - radius), `radius ${radius} · mean ${mean}`).toBeLessThan(field.cellSize);
+    }
+  });
+
+  it("still draws a limit thinner than a single grid cell", () => {
+    // The mobile regression: a 12-mile territorial sea on a narrow viewport is
+    // a fraction of a pixel wide. A band mask has no cell centre inside it and
+    // renders nothing at all; an isoline is interpolated and survives.
+    const radius = field.cellSize / 8;
+    expect(zoneBandPath(field, 0, 0, radius)).toBe("");
+    const limit = zoneLimitPath(field, radius);
+    expect(limit.startsWith("M")).toBe(true);
+    expect(limit).not.toMatch(/NaN|Infinity/);
+  });
+
+  it("scales the limit per row when the projection stretches with latitude", () => {
+    // Halving the ground scale doubles the pixel distance the same limit
+    // reaches, which is what a conformal projection does away from its
+    // standard parallel.
+    const plain = distancesFromWestCoast(zoneLimitPath(field, 16));
+    const stretched = distancesFromWestCoast(zoneLimitPath(field, 16, () => 0.5));
+    const mean = (xs: number[]) => xs.reduce((a, b) => a + b, 0) / xs.length;
+    expect(mean(stretched)).toBeGreaterThan(mean(plain) * 1.7);
+  });
+
+  it("emits no NaN at any radius, including past the sheet edge", () => {
+    for (const radius of [0.5, 8, 24, 140, 400, 900]) {
+      expect(zoneLimitPath(field, radius)).not.toMatch(/NaN|Infinity/);
     }
   });
 });

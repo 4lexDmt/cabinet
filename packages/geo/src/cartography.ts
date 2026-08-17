@@ -144,6 +144,27 @@ export const ZONE_INK: Record<MaritimeZone, ZoneInk> = {
   high_seas: { fill: TOKEN.seaDeep, stroke: null, strokeWidth: null, dash: null, opacity: 1 },
 };
 
+/**
+ * The same ladder when the zones are the subject of the sheet rather than
+ * context for it.
+ *
+ * The weights above are set for a plate carrying boundaries, settlements and
+ * terrain, where the maritime wash has to stay out of the way. A sheet whose
+ * only subjects are political and maritime limits has no competition to defer
+ * to, and at those weights the limits read as smudges on the sea. Same ink,
+ * same dash grammar — a dotted EEZ is still a claim edge — carried at full
+ * strength, with the dot spacing opened up enough to survive being drawn along
+ * a coastline rather than across open water.
+ */
+export function emphasiseZone(ink: ZoneInk): ZoneInk {
+  return {
+    ...ink,
+    strokeWidth: ink.strokeWidth === WEIGHT.thin ? WEIGHT.line : ink.strokeWidth,
+    dash: ink.dash === "1 3" ? "2.4 2.6" : ink.dash,
+    opacity: 1,
+  };
+}
+
 /** Median line where two zones meet — a genuine equidistance line, so it is drawn as one. */
 export const MEDIAN_LINE_INK: StrokeSpec = {
   stroke: TOKEN.alliance,

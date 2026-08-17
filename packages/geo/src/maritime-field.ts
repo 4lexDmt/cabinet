@@ -209,6 +209,48 @@ export function highSeasPath(field: MaritimeField, outerPx: number): string {
   return ringsToPath(ringsOf(field, mask), field.cellSize, [-field.cellSize / 2, -field.cellSize / 2]);
 }
 
+/**
+ * The limit line at one distance from the coast, for every coastal state at
+ * once: a closed envelope enclosing everything within `radiusPx` of land.
+ *
+ * Taken as an isoline of the distance field itself rather than as the edge of a
+ * thresholded band, which matters for two reasons.
+ *
+ * First, precision. A band mask asks "is this cell's centre inside the zone",
+ * so a zone thinner than one cell produces no cells and therefore no geometry
+ * at all. On a narrow viewport a 12-mile territorial sea is a fraction of a
+ * pixel wide and used to disappear entirely. An isoline is interpolated between
+ * samples, so it exists — in the right place — at any width.
+ *
+ * Second, shape. Contouring a binary mask can only ever step between cell
+ * centres, which reads as pixel-art. Contouring the distance field puts each
+ * vertex where the distance actually equals the limit.
+ *
+ * `groundScale`, given a grid row, returns the factor converting a pixel
+ * distance at that row into a true ground distance. On a conformal projection
+ * the scale factor varies with latitude, so without this a 200-mile limit is
+ * drawn short in the north and long at the equator.
+ */
+export function zoneLimitPath(
+  field: MaritimeField,
+  radiusPx: number,
+  groundScale?: (row: number) => number,
+): string {
+  const { cols, rows, cellSize } = field;
+  // Negated, because marching squares encloses values at or above the
+  // threshold and the zone is the region within the limit, not beyond it.
+  const values = new Float32Array(cols * rows);
+  for (let row = 0; row < rows; row++) {
+    const factor = groundScale ? groundScale(row) : 1;
+    for (let col = 0; col < cols; col++) {
+      const i = row * cols + col;
+      values[i] = -(field.distance[i]! * factor);
+    }
+  }
+  const rings = marchingSquares(values, cols, rows, -radiusPx);
+  return ringsToPath(rings, cellSize, [cellSize / 2, cellSize / 2]);
+}
+
 export interface ZoneBandPath {
   band: ZoneBand;
   path: string;

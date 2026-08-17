@@ -115,6 +115,7 @@ export {
   WEIGHT,
   ZONE_INK,
   emphasise,
+  emphasiseZone,
   inkLedger,
 } from "./cartography.ts";
 export type { InkLedger, OverlayCost, PlaceMark, StrokeSpec, ZoneInk } from "./cartography.ts";
@@ -186,5 +187,6 @@ export {
   medianLinePath,
   zoneBandPath,
   zoneLadderPaths,
+  zoneLimitPath,
 } from "./maritime-field.ts";
 export type { CoastSamples, FieldOptions, MaritimeField, ZoneBandPath } from "./maritime-field.ts";
