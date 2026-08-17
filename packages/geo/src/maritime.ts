@@ -15,7 +15,7 @@
  *    single ladder where each point of sea belongs to exactly one zone.
  */
 
-import type { MaritimeZone, ZoneCharacter } from "./types.js";
+import type { MaritimeZone, ZoneCharacter } from "./types.ts";
 
 export const NAUTICAL_MILE_KM = 1.852;
 

@@ -18,7 +18,7 @@
  * field, a complete geopolitical argument.
  */
 
-import type { BoundaryClass, BoundaryPerspective } from "./types.js";
+import type { BoundaryClass, BoundaryPerspective } from "./types.ts";
 
 /**
  * The 33 point-of-view fields Natural Earth carries on

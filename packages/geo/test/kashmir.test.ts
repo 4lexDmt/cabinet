@@ -23,7 +23,7 @@ import {
   normalizeBoundaryClass,
   povKey,
   readBoundary,
-} from "../src/index.js";
+} from "../src/index.ts";
 
 /** A Natural Earth row as it appears in ne_10m_admin_0_boundary_lines_land. */
 const KASHMIR_LOC: Record<string, unknown> = {

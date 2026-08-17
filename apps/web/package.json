@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@cabinet/db": "*",
+    "@cabinet/geo": "*",
     "@cabinet/runtime": "*",
     "@cabinet/scenarios": "*",
     "@cabinet/sim": "*",

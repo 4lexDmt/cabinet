@@ -10,7 +10,7 @@
  *   cartography is drawn in. Standard parallels are declared on the sheet.
  */
 
-import type { BBox, LonLat, Point } from "./types.js";
+import type { BBox, LonLat, Point } from "./types.ts";
 
 const DEG = Math.PI / 180;
 const RAD = 180 / Math.PI;

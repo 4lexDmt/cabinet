@@ -2,6 +2,16 @@ import type { NextConfig } from "next";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
+/**
+ * The atlas is published on its own domain but is not its own deployment.
+ *
+ * `aevanormap.com` serves the atlas at its root; the game keeps `/atlas` as an
+ * ordinary route. One build, one set of static geometry, two front doors. A
+ * host rewrite does this at the routing layer, so there is no middleware to
+ * keep in step and no second copy of the map data to drift.
+ */
+const ATLAS_HOSTS = ["aevanormap.com", "www.aevanormap.com"];
+
 const nextConfig: NextConfig = {
   outputFileTracingRoot: path.join(path.dirname(fileURLToPath(import.meta.url)), "../.."),
   transpilePackages: [
@@ -10,8 +20,32 @@ const nextConfig: NextConfig = {
     "@cabinet/scenarios",
     "@cabinet/db",
     "@cabinet/runtime",
+    "@cabinet/geo",
   ],
   serverExternalPackages: ["pg"],
+  async rewrites() {
+    return {
+      beforeFiles: ATLAS_HOSTS.map((host) => ({
+        source: "/",
+        has: [{ type: "host" as const, value: host }],
+        destination: "/atlas",
+      })),
+      afterFiles: [],
+      fallback: [],
+    };
+  },
+  async headers() {
+    return [
+      {
+        // Generated offline by infra/tiles and rebuilt only when a source
+        // revises, so it can be cached hard and served from the edge.
+        source: "/geo/mapkit/:file*",
+        headers: [
+          { key: "Cache-Control", value: "public, max-age=3600, s-maxage=86400, stale-while-revalidate=604800" },
+        ],
+      },
+    ];
+  },
 };
 
 export default nextConfig;

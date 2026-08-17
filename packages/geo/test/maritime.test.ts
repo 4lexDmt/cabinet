@@ -26,7 +26,7 @@ import {
   zoneAtDistanceNm,
   zoneBands,
   type MaritimeEra,
-} from "../src/index.js";
+} from "../src/index.ts";
 
 const ERAS: Array<[string, MaritimeEra]> = [
   ["UNCLOS", UNCLOS_ERA],

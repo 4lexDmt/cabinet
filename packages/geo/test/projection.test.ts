@@ -23,7 +23,7 @@ import {
   type BBox,
   type LonLat,
   type Projection,
-} from "../src/index.js";
+} from "../src/index.ts";
 
 const SAMPLES: LonLat[] = [
   [0, 0],

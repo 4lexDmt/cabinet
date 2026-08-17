@@ -374,6 +374,9 @@ def build_boundaries() -> int:
                 "name": prop(props, "NAME", default=None),
                 "adm0_a": prop(props, "ADM0_A3_L", "adm0_left", default=None),
                 "adm0_b": prop(props, "ADM0_A3_R", "adm0_right", default=None),
+                # Natural Earth's own view of when this segment is worth drawing.
+                "min_zoom": round(num(prop(props, "MIN_ZOOM", "min_zoom", default=0)), 2),
+                "note": prop(props, "NOTE", "COMMENT", default=None),
                 **pov,
             },
             "geometry": geometry,

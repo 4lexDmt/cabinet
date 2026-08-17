@@ -12,7 +12,7 @@
  * nothing more.
  */
 
-import type { RoadClass } from "./types.js";
+import type { RoadClass } from "./types.ts";
 
 /** Overture `transportation` classes we keep. Everything else is dropped. */
 export const KEPT_OVERTURE_CLASSES = ["motorway", "trunk", "primary"] as const;

@@ -17,7 +17,7 @@ export type {
   RoadClass,
   TerritoryGeometry,
   ZoneCharacter,
-} from "./types.js";
+} from "./types.ts";
 
 export {
   BOUNDARY_LEGEND,
@@ -30,8 +30,8 @@ export {
   normalizeBoundaryClass,
   povKey,
   readBoundary,
-} from "./boundary.js";
-export type { PerspectiveCode, PerspectiveResult, UnmappedBoundaryValue } from "./boundary.js";
+} from "./boundary.ts";
+export type { PerspectiveCode, PerspectiveResult, UnmappedBoundaryValue } from "./boundary.ts";
 
 export {
   CANNON_SHOT_ERA,
@@ -50,8 +50,8 @@ export {
   waterClassOf,
   zoneAtDistanceNm,
   zoneBands,
-} from "./maritime.js";
-export type { BandOverlap, MaritimeEra, WaterClass, ZoneBand } from "./maritime.js";
+} from "./maritime.ts";
+export type { BandOverlap, MaritimeEra, WaterClass, ZoneBand } from "./maritime.ts";
 
 export {
   FIR_ESTABLISHED_YEAR,
@@ -60,8 +60,8 @@ export {
   airspaceRules,
   firsExistInYear,
   sovereignAirspaceReachNm,
-} from "./airspace.js";
-export type { AirspaceComponent, AirspaceLayer, AirspaceRules } from "./airspace.js";
+} from "./airspace.ts";
+export type { AirspaceComponent, AirspaceLayer, AirspaceRules } from "./airspace.ts";
 
 export {
   EARTH_RADIUS_M,
@@ -79,8 +79,8 @@ export {
   unproject,
   viewportBounds,
   zoomOf,
-} from "./projection.js";
-export type { FitOptions, Projection, ProjectionKind, Viewport } from "./projection.js";
+} from "./projection.ts";
+export type { FitOptions, Projection, ProjectionKind, Viewport } from "./projection.ts";
 
 export {
   MOBILE_LABEL_BUDGET,
@@ -90,8 +90,8 @@ export {
   placeFrom,
   placeTierOf,
   visiblePlaces,
-} from "./places.js";
-export type { Place, RawPlaceProperties, ZoomRegister } from "./places.js";
+} from "./places.ts";
+export type { Place, RawPlaceProperties, ZoomRegister } from "./places.ts";
 
 export {
   KEPT_OVERTURE_CLASSES,
@@ -101,8 +101,8 @@ export {
   roadClassOf,
   roadEraForYear,
   roadVisibleAt,
-} from "./roads.js";
-export type { RoadEra } from "./roads.js";
+} from "./roads.ts";
+export type { RoadEra } from "./roads.ts";
 
 export {
   AREA_INK_BUDGET,
@@ -116,8 +116,8 @@ export {
   ZONE_INK,
   emphasise,
   inkLedger,
-} from "./cartography.js";
-export type { InkLedger, OverlayCost, PlaceMark, StrokeSpec, ZoneInk } from "./cartography.js";
+} from "./cartography.ts";
+export type { InkLedger, OverlayCost, PlaceMark, StrokeSpec, ZoneInk } from "./cartography.ts";
 
 export {
   STATE_INK,
@@ -132,7 +132,7 @@ export {
   stalenessOf,
   stateLegend,
   territoryPaint,
-} from "./belief-paint.js";
+} from "./belief-paint.ts";
 export type {
   AreaPaint,
   LinePaint,
@@ -142,7 +142,7 @@ export type {
   MapStaleness,
   MarkPaint,
   ReadingState,
-} from "./belief-paint.js";
+} from "./belief-paint.ts";
 
 export {
   PHYSICAL_LAYERS,
@@ -155,8 +155,8 @@ export {
   resolveScenarioGeo,
   scenarioGeoSchema,
   territorialSeaNmForYear,
-} from "./scenario-geo.js";
-export type { ResolvedScenarioGeo, ScenarioGeoConfig, ScenarioLayer } from "./scenario-geo.js";
+} from "./scenario-geo.ts";
+export type { ResolvedScenarioGeo, ScenarioGeoConfig, ScenarioLayer } from "./scenario-geo.ts";
 
 export {
   bboxOf,
@@ -165,8 +165,26 @@ export {
   polygonCentroid,
   territoryGeometrySchema,
   territoryManifestSchema,
-} from "./registry.js";
-export type { TerritoryManifest, TerritoryRegistry } from "./registry.js";
+} from "./registry.ts";
+export type { TerritoryManifest, TerritoryRegistry } from "./registry.ts";
 
-export { declutter } from "./declutter.js";
-export type { LabelBox, PlacedLabel, DeclutterResult } from "./declutter.js";
+export { declutter } from "./declutter.ts";
+export type { LabelBox, PlacedLabel, DeclutterResult } from "./declutter.ts";
+
+export { bboxIntersects, geometryBbox, geometryPath, padBbox } from "./path.ts";
+export type { Projector } from "./path.ts";
+
+export { marchingSquares, ringsToPath } from "./contour.ts";
+export type { Ring } from "./contour.ts";
+
+export {
+  LAND,
+  UNCLAIMED,
+  buildMaritimeField,
+  densify,
+  highSeasPath,
+  medianLinePath,
+  zoneBandPath,
+  zoneLadderPaths,
+} from "./maritime-field.ts";
+export type { CoastSamples, FieldOptions, MaritimeField, ZoneBandPath } from "./maritime-field.ts";

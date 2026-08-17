@@ -23,7 +23,7 @@ import {
   readingState,
   stateLegend,
   territoryPaint,
-} from "../src/index.js";
+} from "../src/index.ts";
 
 const geoSrc = join(dirname(fileURLToPath(import.meta.url)), "..", "src");
 

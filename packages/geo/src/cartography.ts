@@ -14,7 +14,7 @@
  *   colour appears, it is making a claim.
  */
 
-import type { BoundaryClass, MaritimeZone, PlaceTier } from "./types.js";
+import type { BoundaryClass, MaritimeZone, PlaceTier } from "./types.ts";
 
 /** CSS custom properties. The renderer resolves these; the domain only names them. */
 export const TOKEN = {

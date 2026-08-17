@@ -8,9 +8,9 @@
  * exactly like missing data.
  */
 
-import { LABEL_ANCHORS, PLACE_MARK } from "./cartography.js";
-import type { Place } from "./places.js";
-import type { Point } from "./types.js";
+import { LABEL_ANCHORS, PLACE_MARK } from "./cartography.ts";
+import type { Place } from "./places.ts";
+import type { Point } from "./types.ts";
 
 export interface LabelBox {
   x0: number;

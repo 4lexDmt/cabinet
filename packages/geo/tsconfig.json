@@ -3,6 +3,9 @@
   "compilerOptions": {
     "rootDir": ".",
     "noEmit": true,
+    // The repo imports with explicit .ts extensions; nothing here is emitted,
+    // so the compiler can resolve them directly instead of guessing.
+    "allowImportingTsExtensions": true,
     "types": ["node"]
   },
   "include": ["src", "test"]

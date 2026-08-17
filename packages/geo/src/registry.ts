@@ -13,7 +13,7 @@
  */
 
 import { z } from "zod";
-import type { BBox, TerritoryGeometry } from "./types.js";
+import type { BBox, TerritoryGeometry } from "./types.ts";
 
 export const territoryGeometrySchema = z.object({
   territoryId: z.string(),

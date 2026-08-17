@@ -17,7 +17,7 @@ import {
   createRegistry,
   readBoundary,
   NEUTRAL_OBSERVER,
-} from "../src/index.js";
+} from "../src/index.ts";
 
 const repoRoot = join(dirname(fileURLToPath(import.meta.url)), "..", "..", "..");
 const mapkit = join(repoRoot, "apps", "web", "public", "geo", "mapkit");

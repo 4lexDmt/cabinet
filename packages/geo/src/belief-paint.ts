@@ -20,7 +20,7 @@
  * └──────────────────────────────────────────────────────────────────────────┘
  */
 
-import { TOKEN, WEIGHT, type StrokeSpec } from "./cartography.js";
+import { TOKEN, WEIGHT, type StrokeSpec } from "./cartography.ts";
 
 export type MapConfidence = "confirmed" | "probable" | "unverified";
 export type MapProvenance = "own" | "ally" | "purchased" | "inferred";

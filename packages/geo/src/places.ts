@@ -12,7 +12,7 @@
  * print. `SCALERANK` and `LABELRANK` remain as fallbacks.
  */
 
-import type { PlaceTier } from "./types.js";
+import type { PlaceTier } from "./types.ts";
 
 export interface RawPlaceProperties {
   NAME?: unknown;

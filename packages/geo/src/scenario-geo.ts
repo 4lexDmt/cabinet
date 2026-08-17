@@ -26,10 +26,10 @@
  */
 
 import { z } from "zod";
-import { firsExistInYear } from "./airspace.js";
-import type { MaritimeEra } from "./maritime.js";
-import { roadEraForYear } from "./roads.js";
-import type { BBox } from "./types.js";
+import { firsExistInYear } from "./airspace.ts";
+import type { MaritimeEra } from "./maritime.ts";
+import { roadEraForYear } from "./roads.ts";
+import type { BBox } from "./types.ts";
 
 export const UNCLOS_SIGNED_YEAR = 1982;
 export const UNCLOS_IN_FORCE_YEAR = 1994;

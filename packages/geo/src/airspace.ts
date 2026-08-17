@@ -20,7 +20,7 @@
  * two are separate layers and are never merged.
  */
 
-import type { MaritimeEra } from "./maritime.js";
+import type { MaritimeEra } from "./maritime.ts";
 
 export type AirspaceLayer = "airspace_sovereign" | "airspace_fir";
 
