@@ -11,7 +11,7 @@
  */
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import type { MouseEvent as ReactMouseEvent, PointerEvent as ReactPointerEvent, WheelEvent as ReactWheelEvent } from "react";
+import type { MouseEvent as ReactMouseEvent, PointerEvent as ReactPointerEvent } from "react";
 import {
   BOUNDARY_INK,
   NEUTRAL_OBSERVER,
@@ -210,52 +210,53 @@ export function Sheet(props: SheetProps) {
   );
 
   // ── pointer interaction: drag to pan, pinch to zoom, wheel to zoom ────────
+  //
+  // Deliberately NOT using setPointerCapture here: capturing the pointer to
+  // the <svg> root retargets the synthesized `click` event to the root too,
+  // which silently breaks clicking a country to open its dossier. Tracking
+  // is done on `window` instead, so a drag keeps working even once the
+  // pointer leaves the sheet, without stealing clicks from the paths below.
+  const svgRef = useRef<SVGSVGElement | null>(null);
   const pointers = useRef(new Map<number, Point>());
   const gesture = useRef<{ kind: "pan" | "pinch"; anchor: LonLat; k: number; dist?: number } | null>(null);
   const dragged = useRef(false);
   const moveAccum = useRef(0);
+  const cameraRef = useRef(camera);
+  const viewportRef = useRef(viewport);
+  const projectionRef = useRef(projection);
+  const baseViewportRef = useRef(baseViewport);
+  cameraRef.current = camera;
+  viewportRef.current = viewport;
+  projectionRef.current = projection;
+  baseViewportRef.current = baseViewport;
 
-  const pointFromEvent = (e: { clientX: number; clientY: number; currentTarget: SVGSVGElement }): Point => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    return [e.clientX - rect.left, e.clientY - rect.top];
+  const pointFromClient = (clientX: number, clientY: number): Point => {
+    const rect = svgRef.current?.getBoundingClientRect();
+    return rect ? [clientX - rect.left, clientY - rect.top] : [clientX, clientY];
   };
 
   const beginGesture = useCallback(() => {
     const pts = [...pointers.current.values()];
     if (pts.length === 1) {
-      gesture.current = { kind: "pan", anchor: unproject(viewport, pts[0]!), k: camera?.k ?? 1 };
+      gesture.current = { kind: "pan", anchor: unproject(viewportRef.current, pts[0]!), k: cameraRef.current?.k ?? 1 };
     } else if (pts.length >= 2) {
       const [a, b] = pts;
       const mid: Point = [(a![0] + b![0]) / 2, (a![1] + b![1]) / 2];
       const dist = Math.hypot(a![0] - b![0], a![1] - b![1]);
-      gesture.current = { kind: "pinch", anchor: unproject(viewport, mid), k: camera?.k ?? 1, dist };
+      gesture.current = { kind: "pinch", anchor: unproject(viewportRef.current, mid), k: cameraRef.current?.k ?? 1, dist };
     } else {
       gesture.current = null;
     }
-  }, [viewport, camera]);
+  }, []);
 
-  const onPointerDown = (e: ReactPointerEvent<SVGSVGElement>) => {
-    e.currentTarget.setPointerCapture(e.pointerId);
-    if (pointers.current.size === 0) {
-      dragged.current = false;
-      moveAccum.current = 0;
-    }
-    pointers.current.set(e.pointerId, pointFromEvent(e));
-    beginGesture();
-  };
-
-  const onPointerMove = (e: ReactPointerEvent<SVGSVGElement>) => {
-    if (!pointers.current.has(e.pointerId)) return;
-    const previous = pointers.current.get(e.pointerId)!;
-    const next = pointFromEvent(e);
-    moveAccum.current += Math.hypot(next[0] - previous[0], next[1] - previous[1]);
-    if (moveAccum.current > 6) dragged.current = true;
-    pointers.current.set(e.pointerId, next);
+  const applyGestureMove = useCallback(() => {
     const g = gesture.current;
     if (!g) return;
     const pts = [...pointers.current.values()];
+    const base = baseViewportRef.current;
+    const projection = projectionRef.current;
     if (g.kind === "pan" && pts.length === 1) {
-      const scale = baseViewport.scale * g.k;
+      const scale = base.scale * g.k;
       const [ax, ay] = projection.forward(g.anchor);
       const point = pts[0]!;
       setFromTranslateScale([point[0] - ax * scale, point[1] + ay * scale], scale, g.k);
@@ -264,25 +265,63 @@ export function Sheet(props: SheetProps) {
       const mid: Point = [(a![0] + b![0]) / 2, (a![1] + b![1]) / 2];
       const dist = Math.hypot(a![0] - b![0], a![1] - b![1]);
       const newK = clampZoomK(g.k * (dist / g.dist));
-      const scale = baseViewport.scale * newK;
+      const scale = base.scale * newK;
       const [ax, ay] = projection.forward(g.anchor);
       setFromTranslateScale([mid[0] - ax * scale, mid[1] + ay * scale], scale, newK);
     }
-  };
+  }, [setFromTranslateScale]);
 
-  const endPointer = (e: ReactPointerEvent<SVGSVGElement>) => {
-    pointers.current.delete(e.pointerId);
-    if (pointers.current.size > 0) beginGesture();
-    else gesture.current = null;
-  };
+  useEffect(() => {
+    const onMove = (e: PointerEvent) => {
+      if (!pointers.current.has(e.pointerId)) return;
+      const previous = pointers.current.get(e.pointerId)!;
+      const next = pointFromClient(e.clientX, e.clientY);
+      moveAccum.current += Math.hypot(next[0] - previous[0], next[1] - previous[1]);
+      if (moveAccum.current > 6) dragged.current = true;
+      pointers.current.set(e.pointerId, next);
+      applyGestureMove();
+    };
+    const onUp = (e: PointerEvent) => {
+      if (!pointers.current.has(e.pointerId)) return;
+      pointers.current.delete(e.pointerId);
+      if (pointers.current.size > 0) beginGesture();
+      else gesture.current = null;
+    };
+    window.addEventListener("pointermove", onMove);
+    window.addEventListener("pointerup", onUp);
+    window.addEventListener("pointercancel", onUp);
+    return () => {
+      window.removeEventListener("pointermove", onMove);
+      window.removeEventListener("pointerup", onUp);
+      window.removeEventListener("pointercancel", onUp);
+    };
+  }, [applyGestureMove, beginGesture]);
 
-  const onWheel = (e: ReactWheelEvent<SVGSVGElement>) => {
-    e.preventDefault();
-    zoomAt(pointFromEvent(e), Math.exp(-e.deltaY * 0.0018));
+  // A native, non-passive listener: React's onWheel is registered passive at
+  // the root, so calling preventDefault from a synthetic handler just warns
+  // and does nothing.
+  useEffect(() => {
+    const node = svgRef.current;
+    if (!node) return;
+    const onNativeWheel = (e: WheelEvent) => {
+      e.preventDefault();
+      zoomAt(pointFromClient(e.clientX, e.clientY), Math.exp(-e.deltaY * 0.0018));
+    };
+    node.addEventListener("wheel", onNativeWheel, { passive: false });
+    return () => node.removeEventListener("wheel", onNativeWheel);
+  }, [zoomAt]);
+
+  const onPointerDown = (e: ReactPointerEvent<SVGSVGElement>) => {
+    if (pointers.current.size === 0) {
+      dragged.current = false;
+      moveAccum.current = 0;
+    }
+    pointers.current.set(e.pointerId, pointFromClient(e.clientX, e.clientY));
+    beginGesture();
   };
 
   const onDoubleClick = (e: ReactMouseEvent<SVGSVGElement>) => {
-    zoomAt(pointFromEvent(e), 1.8);
+    zoomAt(pointFromClient(e.clientX, e.clientY), 1.8);
   };
 
   const selectUnlessDragged = (iso3: string) => {
@@ -470,17 +509,13 @@ export function Sheet(props: SheetProps) {
   return (
     <>
     <svg
+      ref={svgRef}
       className="sheet"
       width={width}
       height={height}
       role="img"
       aria-label={`${sheet.label}, drawn from the ${observer === NEUTRAL_OBSERVER ? "disinterested" : observer} reading. Scroll or pinch to zoom, drag to pan.`}
       onPointerDown={onPointerDown}
-      onPointerMove={onPointerMove}
-      onPointerUp={endPointer}
-      onPointerCancel={endPointer}
-      onPointerLeave={endPointer}
-      onWheel={onWheel}
       onDoubleClick={onDoubleClick}
     >
       <defs>
