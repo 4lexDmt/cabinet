@@ -252,36 +252,55 @@ export function medianLinePath(
   maxPx: number,
 ): string {
   const { cols, rows, cellSize } = field;
-  const inCorridor = new Uint8Array(cols * rows);
-  let any = false;
-  for (let i = 0; i < inCorridor.length; i++) {
-    const owner = field.owner[i]!;
-    const ok = (owner === aIndex || owner === bIndex) && field.distance[i]! <= maxPx;
-    inCorridor[i] = ok ? 1 : 0;
-    if (ok) any = true;
+  const ownerAt = (col: number, row: number): number => {
+    if (col < 0 || row < 0 || col >= cols || row >= rows) return UNCLAIMED;
+    return field.owner[row * cols + col]!;
+  };
+  const withinReach = (col: number, row: number): boolean =>
+    col >= 0 && row >= 0 && col < cols && row < rows && field.distance[row * cols + col]! <= maxPx;
+
+  let touching = false;
+  for (let i = 0; i < field.owner.length && !touching; i++) {
+    touching = field.owner[i] === aIndex || field.owner[i] === bIndex;
   }
-  if (!any) return "";
+  if (!touching) return "";
 
   // A signed field: positive on A's side, negative on B's. Its zero crossing is
-  // the median. Cells belonging to neither state are pushed far positive so the
-  // crossing cannot wander outside the corridor.
+  // the median. Everything else sits on the positive side so it introduces no
+  // crossing of its own.
   const signed = new Float32Array(cols * rows);
   for (let i = 0; i < signed.length; i++) {
-    const owner = field.owner[i]!;
-    if (owner === aIndex) signed[i] = 1;
-    else if (owner === bIndex) signed[i] = -1;
-    else signed[i] = owner === LAND ? 0.5 : 1;
+    signed[i] = field.owner[i] === bIndex ? -1 : 1;
   }
 
-  const rings = marchingSquares(signed, cols, rows, 0);
+  // Outside the grid counts as A's side rather than the usual "below
+  // threshold". A band must close along the sheet edge; a median line must not,
+  // or the whole border reads as an equidistance line.
+  const rings = marchingSquares(signed, cols, rows, 0, 1);
   const offset = -cellSize / 2;
   let out = "";
   for (const ring of rings) {
     let open = false;
     for (const [gx, gy] of ring) {
-      const col = Math.min(cols - 1, Math.max(0, Math.round(gx)));
-      const row = Math.min(rows - 1, Math.max(0, Math.round(gy)));
-      if (!inCorridor[row * cols + col]) {
+      // A vertex is on the median only if the cells it separates are A's sea
+      // and B's sea. A crossing that merely leaves a coastline is A's water
+      // meeting land, which is a shoreline and already drawn as one.
+      const cols2 = [Math.floor(gx), Math.ceil(gx)];
+      const rows2 = [Math.floor(gy), Math.ceil(gy)];
+      let sawA = false;
+      let sawB = false;
+      let sawLand = false;
+      let reachable = false;
+      for (const col of cols2) {
+        for (const row of rows2) {
+          const owner = ownerAt(col, row);
+          if (owner === aIndex) sawA = true;
+          else if (owner === bIndex) sawB = true;
+          else if (owner === LAND) sawLand = true;
+          if (withinReach(col, row)) reachable = true;
+        }
+      }
+      if (!sawA || !sawB || sawLand || !reachable) {
         open = false;
         continue;
       }

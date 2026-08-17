@@ -26,7 +26,9 @@ function interpolate(
 ): [number, number] {
   const denominator = v1 - v0;
   const t = denominator === 0 ? 0.5 : (threshold - v0) / denominator;
-  const clamped = t < 0 ? 0 : t > 1 ? 1 : t;
+  // A non-finite sample would propagate NaN into the path and the whole ring
+  // would be discarded by the renderer. Fall back to the cell midpoint instead.
+  const clamped = Number.isFinite(t) ? (t < 0 ? 0 : t > 1 ? 1 : t) : 0.5;
   return [x0 + (x1 - x0) * clamped, y0 + (y1 - y0) * clamped];
 }
 
@@ -42,10 +44,18 @@ export function marchingSquares(
   width: number,
   height: number,
   threshold = 0.5,
+  /**
+   * Value assumed outside the grid. Must be finite and below `threshold`, so a
+   * band running off the sheet closes along the border rather than dividing by
+   * infinity. Using -Infinity here was a real bug: it turns the interpolation
+   * into Infinity/Infinity and every vertex on the border comes out NaN.
+   */
+  outside = threshold - 1,
 ): Ring[] {
   const at = (x: number, y: number): number => {
-    if (x < 0 || y < 0 || x >= width || y >= height) return -Infinity;
-    return values[y * width + x] ?? -Infinity;
+    if (x < 0 || y < 0 || x >= width || y >= height) return outside;
+    const value = values[y * width + x];
+    return value === undefined || !Number.isFinite(value) ? outside : value;
   };
 
   const segments: Segment[] = [];
@@ -130,7 +140,9 @@ function stitch(segments: Segment[]): Ring[] {
       cursor = next.b;
       if (key(cursor) === key(segment.a)) break;
     }
-    if (ring.length >= 4) rings.push(ring);
+    if (ring.length >= 4 && ring.every((p) => Number.isFinite(p[0]) && Number.isFinite(p[1]))) {
+      rings.push(ring);
+    }
   }
   return rings;
 }

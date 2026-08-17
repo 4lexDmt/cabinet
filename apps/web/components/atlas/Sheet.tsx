@@ -271,7 +271,10 @@ export function Sheet(props: SheetProps) {
       if (!coords) continue;
       const place = placeFrom(feature.properties, coords);
       if (!register.tiers.includes(place.tier)) continue;
-      if (place.minZoom > register.zoom + 1.5) continue;
+      // A capital is a decision point whatever its size, so it is never
+      // filtered out by zoom. Density is controlled by the label budget below,
+      // which drops from the bottom of the ranking rather than by rule.
+      if (place.tier !== "capital" && place.minZoom > register.zoom + 1.5) continue;
       places.push(place);
     }
     const result = declutter(places, projector, {

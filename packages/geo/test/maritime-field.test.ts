@@ -118,6 +118,18 @@ describe("zone bands", () => {
     // so the ring must be a loop rather than a filled square.
     expect(path.split("Z").length).toBeGreaterThan(1);
   });
+
+  it("emit no NaN, at any radius, on any sheet edge", () => {
+    for (const outer of [8, 24, 60, 140, 400, 900]) {
+      for (const stateIndex of [0, 1]) {
+        expect(zoneBandPath(field, stateIndex, 0, outer)).not.toMatch(/NaN|Infinity/);
+        expect(zoneLadderPaths(field, stateIndex, outer / 200, UNCLOS_ERA).map((p) => p.path).join("")).not.toMatch(
+          /NaN|Infinity/,
+        );
+      }
+      expect(medianLinePath(field, 0, 1, outer)).not.toMatch(/NaN|Infinity/);
+    }
+  });
 });
 
 describe("median lines", () => {
@@ -179,8 +191,35 @@ describe("marching squares", () => {
     expect(marchingSquares(new Float32Array(64), 8, 8, 0.5)).toEqual([]);
   });
 
-  it("finds nothing in a saturated field", () => {
-    expect(marchingSquares(new Float32Array(64).fill(1), 8, 8, 0.5)).toEqual([]);
+  it("closes a saturated field along the sheet edge", () => {
+    // A band covering the whole frame must still be a ring, or it renders as
+    // nothing at all — the failure mode is silent and total.
+    const rings = marchingSquares(new Float32Array(64).fill(1), 8, 8, 0.5);
+    expect(rings).toHaveLength(1);
+    expect(rings[0]!.every(([x, y]) => Number.isFinite(x) && Number.isFinite(y))).toBe(true);
+  });
+
+  it("does not close along the edge when told the outside is inside", () => {
+    const values = new Float32Array(64).fill(1);
+    expect(marchingSquares(values, 8, 8, 0.5, 1)).toEqual([]);
+  });
+
+  it("closes a region that runs off the grid without producing NaN", () => {
+    // Regression: treating outside-the-grid as -Infinity turns the edge
+    // interpolation into Infinity/Infinity, and every border vertex comes out
+    // NaN. The browser then rejects the whole path and the band vanishes.
+    const width = 10;
+    const height = 10;
+    const values = new Float32Array(width * height).fill(1);
+    for (let y = 0; y < height; y++) values[y * width + width - 1] = 0;
+    const rings = marchingSquares(values, width, height, 0.5);
+    expect(rings.length).toBeGreaterThan(0);
+    for (const ring of rings) {
+      for (const [x, y] of ring) {
+        expect(Number.isFinite(x)).toBe(true);
+        expect(Number.isFinite(y)).toBe(true);
+      }
+    }
   });
 
   it("finds two rings for two blobs", () => {
