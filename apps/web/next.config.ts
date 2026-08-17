@@ -5,12 +5,16 @@ import { fileURLToPath } from "node:url";
 /**
  * The atlas is published on its own domain but is not its own deployment.
  *
- * `aevanormap.com` serves the atlas at its root; the game keeps `/atlas` as an
- * ordinary route. One build, one set of static geometry, two front doors. A
- * host rewrite does this at the routing layer, so there is no middleware to
- * keep in step and no second copy of the map data to drift.
+ * The game keeps `/atlas` as an ordinary route; any of these hosts serve the
+ * atlas at their root instead. One build, one set of static geometry, many
+ * front doors. A host rewrite does this at the routing layer, so there is no
+ * middleware to keep in step and no second copy of the map data to drift.
+ *
+ * `atlas.aevanor.com` is a working front door on a domain already delegated
+ * to a real registrar, kept alongside `aevanormap.com` while that domain's
+ * own DNS is still unconfigured.
  */
-const ATLAS_HOSTS = ["aevanormap.com", "www.aevanormap.com"];
+const ATLAS_HOSTS = ["aevanormap.com", "www.aevanormap.com", "atlas.aevanor.com"];
 
 const nextConfig: NextConfig = {
   outputFileTracingRoot: path.join(path.dirname(fileURLToPath(import.meta.url)), "../.."),

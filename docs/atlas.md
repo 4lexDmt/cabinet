@@ -46,6 +46,16 @@ A second project would fork the geometry.
    requests whose Host is `aevanormap.com` or `www.aevanormap.com` and
    whose path is `/` are rewritten to `/atlas`.
 
+`aevanormap.com` currently has no nameservers or records at the registrar —
+adding it in Vercel alone does nothing until DNS actually delegates to
+Vercel. Check with `dig NS aevanormap.com` before troubleshooting the app.
+
+`atlas.aevanor.com` is wired into `ATLAS_HOSTS` as a working front door on a
+domain that already resolves, for use while `aevanormap.com`'s DNS is
+outstanding. Same steps: add the subdomain in Vercel → Domains, then add a
+CNAME for `atlas` to `cname.vercel-dns.com` at the registrar. Any host can be
+added the same way — extend the `ATLAS_HOSTS` array and repeat the two steps.
+
 No `vercel.json` domain list is required. The rewrite is the contract.
 
 This environment cannot attach the domain: the Vercel integration is not
