@@ -34,15 +34,29 @@ import type { BBox } from "./types.ts";
 export const UNCLOS_SIGNED_YEAR = 1982;
 export const UNCLOS_IN_FORCE_YEAR = 1994;
 
-/** Territorial sea width for a year, in nautical miles. */
+/**
+ * Territorial sea width for a year, in nautical miles.
+ *
+ * Three miles is the cannon-shot rule; twelve is UNCLOS. The codification date
+ * is the right threshold here because the twelve-mile limit was already
+ * widespread state practice by the time the convention wrote it down.
+ */
 export function territorialSeaNmForYear(year: number): number {
   return year >= UNCLOS_SIGNED_YEAR ? 12 : 3;
 }
 
+/**
+ * Whether an exclusive economic zone is mechanically live.
+ *
+ * Signed in 1982, in force in 1994, and the later date is the one that matters:
+ * an EEZ nobody can enforce is not a feature of a game about competing claims.
+ * A scenario that wants the transitional period says so explicitly.
+ */
 export function eezExistsInYear(year: number): boolean {
-  return year >= UNCLOS_SIGNED_YEAR;
+  return year >= UNCLOS_IN_FORCE_YEAR;
 }
 
+/** The 24nm contiguous zone is UNCLOS. The 1958 Geneva zone was 12nm. */
 export function contiguousZoneExistsInYear(year: number): boolean {
   return year >= UNCLOS_SIGNED_YEAR;
 }
@@ -158,7 +172,7 @@ export function layerAbsenceReason(geo: ResolvedScenarioGeo, layer: ScenarioLaye
   if (layerPermitted(geo, layer)) return null;
   switch (layer) {
     case "maritime_eez":
-      return `No exclusive economic zone in ${geo.year}. The EEZ arrives with UNCLOS in 1982.`;
+      return `No exclusive economic zone in ${geo.year}. UNCLOS is signed in 1982 and enters force in 1994; the EEZ is not live until then.`;
     case "maritime_contiguous":
       return `No contiguous zone in ${geo.year}. The 24nm zone is a 1982 instrument.`;
     case "airspace_fir":

@@ -153,4 +153,4 @@ export function loadWorld(config: ScenarioConfig, matchId: string, seed: number)
   };
 }
 
-export { scenarioSchema, type ScenarioConfig };
+export { scenarioSchema, scenarioGeoSchema, type ScenarioConfig, type ScenarioGeoConfig } from "./schema.ts";

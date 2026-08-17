@@ -582,5 +582,19 @@
     "secret_pact_leak_base_chance": 0.05,
     "standing_penalty_on_breach": 18,
     "cascade_depth_cap": 3
+  },
+  "geo": {
+    "year": 1884,
+    "theatre_bbox": [
+      -20,
+      -36,
+      53,
+      38
+    ],
+    "boundaries_source": "geo/berlin_conference_1884.geojson",
+    "projection": {
+      "kind": "equirectangular"
+    },
+    "note": "Boundaries drawn in a room in Berlin over territory none of the parties had surveyed. Many are marked indefinite because that is what they were."
   }
 }

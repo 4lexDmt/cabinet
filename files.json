@@ -48,39 +48,39 @@
     },
     {
       "path": "apps/web/app/(game)/briefing/page.tsx",
-      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/app/%28game%29/briefing/page.tsx"
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/app/(game)/briefing/page.tsx"
     },
     {
       "path": "apps/web/app/(game)/channels/page.tsx",
-      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/app/%28game%29/channels/page.tsx"
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/app/(game)/channels/page.tsx"
     },
     {
       "path": "apps/web/app/(game)/chronicle/page.tsx",
-      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/app/%28game%29/chronicle/page.tsx"
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/app/(game)/chronicle/page.tsx"
     },
     {
       "path": "apps/web/app/(game)/layout.tsx",
-      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/app/%28game%29/layout.tsx"
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/app/(game)/layout.tsx"
     },
     {
       "path": "apps/web/app/(game)/ledger/page.tsx",
-      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/app/%28game%29/ledger/page.tsx"
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/app/(game)/ledger/page.tsx"
     },
     {
       "path": "apps/web/app/(game)/map/page.tsx",
-      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/app/%28game%29/map/page.tsx"
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/app/(game)/map/page.tsx"
     },
     {
       "path": "apps/web/app/(game)/nation/page.tsx",
-      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/app/%28game%29/nation/page.tsx"
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/app/(game)/nation/page.tsx"
     },
     {
       "path": "apps/web/app/(game)/pacts/new/page.tsx",
-      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/app/%28game%29/pacts/new/page.tsx"
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/app/(game)/pacts/new/page.tsx"
     },
     {
       "path": "apps/web/app/(game)/pacts/page.tsx",
-      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/app/%28game%29/pacts/page.tsx"
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/app/(game)/pacts/page.tsx"
     },
     {
       "path": "apps/web/app/api/matches/route.ts",
@@ -105,6 +105,14 @@
     {
       "path": "apps/web/app/api/tick/route.ts",
       "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/app/api/tick/route.ts"
+    },
+    {
+      "path": "apps/web/app/atlas/atlas.css",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/app/atlas/atlas.css"
+    },
+    {
+      "path": "apps/web/app/atlas/page.tsx",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/app/atlas/page.tsx"
     },
     {
       "path": "apps/web/app/globals.css",
@@ -141,6 +149,34 @@
     {
       "path": "apps/web/components/RailNav.tsx",
       "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/components/RailNav.tsx"
+    },
+    {
+      "path": "apps/web/components/atlas/AtlasShell.tsx",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/components/atlas/AtlasShell.tsx"
+    },
+    {
+      "path": "apps/web/components/atlas/Colophon.tsx",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/components/atlas/Colophon.tsx"
+    },
+    {
+      "path": "apps/web/components/atlas/Dossier.tsx",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/components/atlas/Dossier.tsx"
+    },
+    {
+      "path": "apps/web/components/atlas/Legend.tsx",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/components/atlas/Legend.tsx"
+    },
+    {
+      "path": "apps/web/components/atlas/Rail.tsx",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/components/atlas/Rail.tsx"
+    },
+    {
+      "path": "apps/web/components/atlas/ScaleBar.tsx",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/components/atlas/ScaleBar.tsx"
+    },
+    {
+      "path": "apps/web/components/atlas/Sheet.tsx",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/components/atlas/Sheet.tsx"
     },
     {
       "path": "apps/web/components/channels/ChannelDesk.tsx",
@@ -185,6 +221,22 @@
     {
       "path": "apps/web/components/shell/TimePresence.tsx",
       "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/components/shell/TimePresence.tsx"
+    },
+    {
+      "path": "apps/web/lib/atlas/layers.ts",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/lib/atlas/layers.ts"
+    },
+    {
+      "path": "apps/web/lib/atlas/overlays.ts",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/lib/atlas/overlays.ts"
+    },
+    {
+      "path": "apps/web/lib/atlas/perspectives.ts",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/lib/atlas/perspectives.ts"
+    },
+    {
+      "path": "apps/web/lib/atlas/sheets.ts",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/lib/atlas/sheets.ts"
     },
     {
       "path": "apps/web/lib/belief-view.ts",
@@ -267,6 +319,50 @@
       "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/public/geo/malvinas_1982.geojson"
     },
     {
+      "path": "apps/web/public/geo/mapkit/attribution.json",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/public/geo/mapkit/attribution.json"
+    },
+    {
+      "path": "apps/web/public/geo/mapkit/bathymetry.geojson",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/public/geo/mapkit/bathymetry.geojson"
+    },
+    {
+      "path": "apps/web/public/geo/mapkit/boundaries.geojson",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/public/geo/mapkit/boundaries.geojson"
+    },
+    {
+      "path": "apps/web/public/geo/mapkit/coastline.geojson",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/public/geo/mapkit/coastline.geojson"
+    },
+    {
+      "path": "apps/web/public/geo/mapkit/countries.geojson",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/public/geo/mapkit/countries.geojson"
+    },
+    {
+      "path": "apps/web/public/geo/mapkit/countries_low.geojson",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/public/geo/mapkit/countries_low.geojson"
+    },
+    {
+      "path": "apps/web/public/geo/mapkit/lakes.geojson",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/public/geo/mapkit/lakes.geojson"
+    },
+    {
+      "path": "apps/web/public/geo/mapkit/ocean.geojson",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/public/geo/mapkit/ocean.geojson"
+    },
+    {
+      "path": "apps/web/public/geo/mapkit/places.geojson",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/public/geo/mapkit/places.geojson"
+    },
+    {
+      "path": "apps/web/public/geo/mapkit/rivers.geojson",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/public/geo/mapkit/rivers.geojson"
+    },
+    {
+      "path": "apps/web/public/geo/mapkit/territory-manifest.json",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/public/geo/mapkit/territory-manifest.json"
+    },
+    {
       "path": "apps/web/public/geo/molotov_ribbentrop_1939.geojson",
       "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/public/geo/molotov_ribbentrop_1939.geojson"
     },
@@ -343,6 +439,10 @@
       "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/docs/05-claude-design-core-interface.md"
     },
     {
+      "path": "docs/atlas.md",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/docs/atlas.md"
+    },
+    {
       "path": "docs/handoff/SPEC.md",
       "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/docs/handoff/SPEC.md"
     },
@@ -353,6 +453,38 @@
     {
       "path": "files.json",
       "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/files.json"
+    },
+    {
+      "path": "infra/tiles/.gitignore",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/infra/tiles/.gitignore"
+    },
+    {
+      "path": "infra/tiles/Makefile",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/infra/tiles/Makefile"
+    },
+    {
+      "path": "infra/tiles/README.md",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/infra/tiles/README.md"
+    },
+    {
+      "path": "infra/tiles/build.py",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/infra/tiles/build.py"
+    },
+    {
+      "path": "infra/tiles/checksums.json",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/infra/tiles/checksums.json"
+    },
+    {
+      "path": "infra/tiles/fetch.sh",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/infra/tiles/fetch.sh"
+    },
+    {
+      "path": "infra/tiles/sources.json",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/infra/tiles/sources.json"
+    },
+    {
+      "path": "infra/tiles/tile.sh",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/infra/tiles/tile.sh"
     },
     {
       "path": "package-lock.json",
@@ -389,6 +521,110 @@
     {
       "path": "packages/db/src/types.ts",
       "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/packages/db/src/types.ts"
+    },
+    {
+      "path": "packages/geo/package.json",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/packages/geo/package.json"
+    },
+    {
+      "path": "packages/geo/src/airspace.ts",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/packages/geo/src/airspace.ts"
+    },
+    {
+      "path": "packages/geo/src/belief-paint.ts",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/packages/geo/src/belief-paint.ts"
+    },
+    {
+      "path": "packages/geo/src/boundary.ts",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/packages/geo/src/boundary.ts"
+    },
+    {
+      "path": "packages/geo/src/cartography.ts",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/packages/geo/src/cartography.ts"
+    },
+    {
+      "path": "packages/geo/src/contour.ts",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/packages/geo/src/contour.ts"
+    },
+    {
+      "path": "packages/geo/src/declutter.ts",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/packages/geo/src/declutter.ts"
+    },
+    {
+      "path": "packages/geo/src/index.ts",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/packages/geo/src/index.ts"
+    },
+    {
+      "path": "packages/geo/src/maritime-field.ts",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/packages/geo/src/maritime-field.ts"
+    },
+    {
+      "path": "packages/geo/src/maritime.ts",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/packages/geo/src/maritime.ts"
+    },
+    {
+      "path": "packages/geo/src/path.ts",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/packages/geo/src/path.ts"
+    },
+    {
+      "path": "packages/geo/src/places.ts",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/packages/geo/src/places.ts"
+    },
+    {
+      "path": "packages/geo/src/projection.ts",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/packages/geo/src/projection.ts"
+    },
+    {
+      "path": "packages/geo/src/registry.ts",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/packages/geo/src/registry.ts"
+    },
+    {
+      "path": "packages/geo/src/roads.ts",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/packages/geo/src/roads.ts"
+    },
+    {
+      "path": "packages/geo/src/scenario-geo.ts",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/packages/geo/src/scenario-geo.ts"
+    },
+    {
+      "path": "packages/geo/src/types.ts",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/packages/geo/src/types.ts"
+    },
+    {
+      "path": "packages/geo/test/architecture.test.ts",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/packages/geo/test/architecture.test.ts"
+    },
+    {
+      "path": "packages/geo/test/kashmir.test.ts",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/packages/geo/test/kashmir.test.ts"
+    },
+    {
+      "path": "packages/geo/test/maritime-field.test.ts",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/packages/geo/test/maritime-field.test.ts"
+    },
+    {
+      "path": "packages/geo/test/maritime.test.ts",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/packages/geo/test/maritime.test.ts"
+    },
+    {
+      "path": "packages/geo/test/pipeline-output.test.ts",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/packages/geo/test/pipeline-output.test.ts"
+    },
+    {
+      "path": "packages/geo/test/planted-parity.test.ts",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/packages/geo/test/planted-parity.test.ts"
+    },
+    {
+      "path": "packages/geo/test/projection.test.ts",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/packages/geo/test/projection.test.ts"
+    },
+    {
+      "path": "packages/geo/test/scenario-geo.test.ts",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/packages/geo/test/scenario-geo.test.ts"
+    },
+    {
+      "path": "packages/geo/tsconfig.json",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/packages/geo/tsconfig.json"
     },
     {
       "path": "packages/rules/advisors/whitehall_1956.json",
@@ -493,6 +729,10 @@
     {
       "path": "packages/scenarios/tanker-war-1980.json",
       "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/packages/scenarios/tanker-war-1980.json"
+    },
+    {
+      "path": "packages/scenarios/test/geo.test.ts",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/packages/scenarios/test/geo.test.ts"
     },
     {
       "path": "packages/scenarios/the-concept-1967.json",
@@ -629,6 +869,14 @@
     {
       "path": "scripts/write-catalog-scenarios.mjs",
       "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/scripts/write-catalog-scenarios.mjs"
+    },
+    {
+      "path": "scripts/write-raw-index.mjs",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/scripts/write-raw-index.mjs"
+    },
+    {
+      "path": "scripts/write-scenario-geo.mjs",
+      "raw": "https://raw.githubusercontent.com/4lexDmt/cabinet/main/scripts/write-scenario-geo.mjs"
     },
     {
       "path": "tsconfig.base.json",

@@ -769,5 +769,24 @@
     "secret_pact_leak_base_chance": 0.07,
     "standing_penalty_on_breach": 24,
     "cascade_depth_cap": 3
+  },
+  "geo": {
+    "year": 1939,
+    "theatre_bbox": [
+      -16,
+      20,
+      96,
+      63
+    ],
+    "boundaries_source": "geo/grand_alliance_1939.geojson",
+    "projection": {
+      "kind": "conic_conformal",
+      "parallels": [
+        27.2,
+        55.8
+      ],
+      "lon0": 40
+    },
+    "note": "A theatre spanning three continents, before any of the maritime instruments that would later govern it."
   }
 }

@@ -3,7 +3,11 @@
   "display_name": "Sèvres",
   "duration_ticks": 720,
   "player_slots": 6,
-  "requires_systems": ["pacts", "standing", "channels"],
+  "requires_systems": [
+    "pacts",
+    "standing",
+    "channels"
+  ],
   "nations": [
     {
       "id": "uk",
@@ -16,8 +20,15 @@
       "intelligence_capacity": 85,
       "supply": 70,
       "status": "sovereign",
-      "territories": ["home_isles", "cyprus", "malta"],
-      "social_tree_unlocks": ["covert_operations", "economic_coercion"],
+      "territories": [
+        "home_isles",
+        "cyprus",
+        "malta"
+      ],
+      "social_tree_unlocks": [
+        "covert_operations",
+        "economic_coercion"
+      ],
       "advisor_set": "whitehall_1956"
     },
     {
@@ -31,8 +42,13 @@
       "intelligence_capacity": 78,
       "supply": 66,
       "status": "sovereign",
-      "territories": ["metropolitan_france", "algeria"],
-      "social_tree_unlocks": ["covert_operations"],
+      "territories": [
+        "metropolitan_france",
+        "algeria"
+      ],
+      "social_tree_unlocks": [
+        "covert_operations"
+      ],
       "advisor_set": "quai_dorsay_1956"
     },
     {
@@ -46,8 +62,12 @@
       "intelligence_capacity": 80,
       "supply": 55,
       "status": "sovereign",
-      "territories": ["israel_home"],
-      "social_tree_unlocks": ["covert_operations"],
+      "territories": [
+        "israel_home"
+      ],
+      "social_tree_unlocks": [
+        "covert_operations"
+      ],
       "advisor_set": "kirya_1956"
     },
     {
@@ -61,8 +81,15 @@
       "intelligence_capacity": 52,
       "supply": 48,
       "status": "sovereign",
-      "territories": ["egypt_home", "sinai", "canal_zone", "straits_tiran"],
-      "social_tree_unlocks": ["nationalization"],
+      "territories": [
+        "egypt_home",
+        "sinai",
+        "canal_zone",
+        "straits_tiran"
+      ],
+      "social_tree_unlocks": [
+        "nationalization"
+      ],
       "advisor_set": "cairo_1956"
     },
     {
@@ -76,8 +103,13 @@
       "intelligence_capacity": 90,
       "supply": 88,
       "status": "sovereign",
-      "territories": ["united_states_home"],
-      "social_tree_unlocks": ["economic_coercion", "patronage"],
+      "territories": [
+        "united_states_home"
+      ],
+      "social_tree_unlocks": [
+        "economic_coercion",
+        "patronage"
+      ],
       "advisor_set": "foggy_bottom_1956"
     },
     {
@@ -91,38 +123,167 @@
       "intelligence_capacity": 86,
       "supply": 74,
       "status": "sovereign",
-      "territories": ["soviet_home", "hungary"],
-      "social_tree_unlocks": ["patronage"],
+      "territories": [
+        "soviet_home",
+        "hungary"
+      ],
+      "social_tree_unlocks": [
+        "patronage"
+      ],
       "advisor_set": "kremlin_1956"
     }
   ],
   "territories": [
-    { "id": "home_isles", "name": "Home Isles", "owner": "uk", "controller": "uk", "region": "europe", "supplyValue": 20 },
-    { "id": "cyprus", "name": "Cyprus", "owner": "uk", "controller": "uk", "region": "med", "supplyValue": 6 },
-    { "id": "malta", "name": "Malta", "owner": "uk", "controller": "uk", "region": "med", "supplyValue": 4 },
-    { "id": "metropolitan_france", "name": "Metropolitan France", "owner": "fr", "controller": "fr", "region": "europe", "supplyValue": 18 },
-    { "id": "algeria", "name": "Algeria", "owner": "fr", "controller": "fr", "region": "maghreb", "supplyValue": 8 },
-    { "id": "israel_home", "name": "Israel", "owner": "il", "controller": "il", "region": "levant", "supplyValue": 7 },
-    { "id": "egypt_home", "name": "Egypt", "owner": "eg", "controller": "eg", "region": "nile", "supplyValue": 12 },
-    { "id": "sinai", "name": "Sinai", "owner": "eg", "controller": "eg", "region": "nile", "supplyValue": 5 },
-    { "id": "canal_zone", "name": "Canal Zone", "owner": "eg", "controller": "eg", "region": "nile", "supplyValue": 10 },
-    { "id": "straits_tiran", "name": "Straits of Tiran", "owner": "eg", "controller": "eg", "region": "nile", "supplyValue": 3 },
-    { "id": "united_states_home", "name": "United States", "owner": "us", "controller": "us", "region": "americas", "supplyValue": 24 },
-    { "id": "soviet_home", "name": "Soviet Union", "owner": "su", "controller": "su", "region": "eurasia", "supplyValue": 22 },
-    { "id": "hungary", "name": "Hungary", "owner": "su", "controller": "su", "region": "europe", "supplyValue": 6 }
+    {
+      "id": "home_isles",
+      "name": "Home Isles",
+      "owner": "uk",
+      "controller": "uk",
+      "region": "europe",
+      "supplyValue": 20
+    },
+    {
+      "id": "cyprus",
+      "name": "Cyprus",
+      "owner": "uk",
+      "controller": "uk",
+      "region": "med",
+      "supplyValue": 6
+    },
+    {
+      "id": "malta",
+      "name": "Malta",
+      "owner": "uk",
+      "controller": "uk",
+      "region": "med",
+      "supplyValue": 4
+    },
+    {
+      "id": "metropolitan_france",
+      "name": "Metropolitan France",
+      "owner": "fr",
+      "controller": "fr",
+      "region": "europe",
+      "supplyValue": 18
+    },
+    {
+      "id": "algeria",
+      "name": "Algeria",
+      "owner": "fr",
+      "controller": "fr",
+      "region": "maghreb",
+      "supplyValue": 8
+    },
+    {
+      "id": "israel_home",
+      "name": "Israel",
+      "owner": "il",
+      "controller": "il",
+      "region": "levant",
+      "supplyValue": 7
+    },
+    {
+      "id": "egypt_home",
+      "name": "Egypt",
+      "owner": "eg",
+      "controller": "eg",
+      "region": "nile",
+      "supplyValue": 12
+    },
+    {
+      "id": "sinai",
+      "name": "Sinai",
+      "owner": "eg",
+      "controller": "eg",
+      "region": "nile",
+      "supplyValue": 5
+    },
+    {
+      "id": "canal_zone",
+      "name": "Canal Zone",
+      "owner": "eg",
+      "controller": "eg",
+      "region": "nile",
+      "supplyValue": 10
+    },
+    {
+      "id": "straits_tiran",
+      "name": "Straits of Tiran",
+      "owner": "eg",
+      "controller": "eg",
+      "region": "nile",
+      "supplyValue": 3
+    },
+    {
+      "id": "united_states_home",
+      "name": "United States",
+      "owner": "us",
+      "controller": "us",
+      "region": "americas",
+      "supplyValue": 24
+    },
+    {
+      "id": "soviet_home",
+      "name": "Soviet Union",
+      "owner": "su",
+      "controller": "su",
+      "region": "eurasia",
+      "supplyValue": 22
+    },
+    {
+      "id": "hungary",
+      "name": "Hungary",
+      "owner": "su",
+      "controller": "su",
+      "region": "europe",
+      "supplyValue": 6
+    }
   ],
   "formations": [
-    { "id": "uk-med", "nationId": "uk", "location": "cyprus", "strength": 12 },
-    { "id": "fr-alg", "nationId": "fr", "location": "algeria", "strength": 10 },
-    { "id": "il-south", "nationId": "il", "location": "israel_home", "strength": 8 },
-    { "id": "eg-canal", "nationId": "eg", "location": "canal_zone", "strength": 9 },
-    { "id": "us-sixth", "nationId": "us", "location": "united_states_home", "strength": 20 },
-    { "id": "su-south", "nationId": "su", "location": "hungary", "strength": 14 }
+    {
+      "id": "uk-med",
+      "nationId": "uk",
+      "location": "cyprus",
+      "strength": 12
+    },
+    {
+      "id": "fr-alg",
+      "nationId": "fr",
+      "location": "algeria",
+      "strength": 10
+    },
+    {
+      "id": "il-south",
+      "nationId": "il",
+      "location": "israel_home",
+      "strength": 8
+    },
+    {
+      "id": "eg-canal",
+      "nationId": "eg",
+      "location": "canal_zone",
+      "strength": 9
+    },
+    {
+      "id": "us-sixth",
+      "nationId": "us",
+      "location": "united_states_home",
+      "strength": 20
+    },
+    {
+      "id": "su-south",
+      "nationId": "su",
+      "location": "hungary",
+      "strength": 14
+    }
   ],
   "starting_pacts": [
     {
       "id": "entente-uk-fr",
-      "parties": ["uk", "fr"],
+      "parties": [
+        "uk",
+        "fr"
+      ],
       "type": "defense",
       "secret": false,
       "terms": {
@@ -130,14 +291,27 @@
         "type": "defense",
         "secret": false,
         "obligations": [
-          { "id": "uk-no-war-fr", "party": "uk", "must": "not_declare_war_on", "target": "fr" },
-          { "id": "fr-no-war-uk", "party": "fr", "must": "not_declare_war_on", "target": "uk" }
+          {
+            "id": "uk-no-war-fr",
+            "party": "uk",
+            "must": "not_declare_war_on",
+            "target": "fr"
+          },
+          {
+            "id": "fr-no-war-uk",
+            "party": "fr",
+            "must": "not_declare_war_on",
+            "target": "uk"
+          }
         ]
       }
     },
     {
       "id": "sterling-trade",
-      "parties": ["uk", "us"],
+      "parties": [
+        "uk",
+        "us"
+      ],
       "type": "trade",
       "secret": false,
       "terms": {
@@ -145,15 +319,35 @@
         "type": "trade",
         "secret": false,
         "obligations": [
-          { "id": "uk-keep-route", "party": "uk", "must": "maintain_trade_route", "target": "us" },
-          { "id": "us-keep-route", "party": "us", "must": "maintain_trade_route", "target": "uk" }
+          {
+            "id": "uk-keep-route",
+            "party": "uk",
+            "must": "maintain_trade_route",
+            "target": "us"
+          },
+          {
+            "id": "us-keep-route",
+            "party": "us",
+            "must": "maintain_trade_route",
+            "target": "uk"
+          }
         ]
       }
     }
   ],
   "trade_routes": [
-    { "id": "uk-us-sterling", "from": "uk", "to": "us", "open": true },
-    { "id": "canal-traffic", "from": "eg", "to": "uk", "open": true }
+    {
+      "id": "uk-us-sterling",
+      "from": "uk",
+      "to": "us",
+      "open": true
+    },
+    {
+      "id": "canal-traffic",
+      "from": "eg",
+      "to": "uk",
+      "open": true
+    }
   ],
   "flags": {
     "canal_nationalized": true,
@@ -163,38 +357,86 @@
   "victory_conditions": {
     "uk": {
       "all_of": [
-        { "control": "territory:canal_zone" },
-        { "gte": ["standing_external", 45] }
+        {
+          "control": "territory:canal_zone"
+        },
+        {
+          "gte": [
+            "standing_external",
+            45
+          ]
+        }
       ]
     },
     "fr": {
       "all_of": [
-        { "control": "territory:canal_zone" },
-        { "gte": ["standing_external", 45] }
+        {
+          "control": "territory:canal_zone"
+        },
+        {
+          "gte": [
+            "standing_external",
+            45
+          ]
+        }
       ]
     },
     "il": {
       "all_of": [
-        { "flag_eq": ["straits_tiran_open", true] },
-        { "gte": ["standing_external", 40] }
+        {
+          "flag_eq": [
+            "straits_tiran_open",
+            true
+          ]
+        },
+        {
+          "gte": [
+            "standing_external",
+            40
+          ]
+        }
       ]
     },
     "eg": {
       "all_of": [
-        { "retain": "canal_nationalized" },
-        { "status_not": "occupied" }
+        {
+          "retain": "canal_nationalized"
+        },
+        {
+          "status_not": "occupied"
+        }
       ]
     },
     "us": {
       "all_of": [
-        { "lte": ["hungary_attention", 2] },
-        { "gte": ["standing_external", 70] }
+        {
+          "lte": [
+            "hungary_attention",
+            2
+          ]
+        },
+        {
+          "gte": [
+            "standing_external",
+            70
+          ]
+        }
       ]
     },
     "su": {
       "all_of": [
-        { "lte": ["hungary_attention", 1] },
-        { "lte": ["uk.standing_external", 55] }
+        {
+          "lte": [
+            "hungary_attention",
+            1
+          ]
+        },
+        {
+          "lte": [
+            "uk.standing_external",
+            55
+          ]
+        }
       ]
     }
   },
@@ -202,5 +444,24 @@
     "secret_pact_leak_base_chance": 0.08,
     "standing_penalty_on_breach": 25,
     "cascade_depth_cap": 3
+  },
+  "geo": {
+    "year": 1956,
+    "theatre_bbox": [
+      28,
+      25,
+      39,
+      34
+    ],
+    "boundaries_source": "geo/sevres_1956.geojson",
+    "projection": {
+      "kind": "conic_conformal",
+      "parallels": [
+        26.5,
+        32.5
+      ],
+      "lon0": 33.5
+    },
+    "note": "The territorial sea is three nautical miles. In a canal crisis that is not a detail — it is the substance of the dispute."
   }
 }

@@ -131,6 +131,8 @@ export interface TheatreView {
     economy: number;
     force: number;
   };
+  /** [west, south, east, north] from the scenario geo block. Leaflet only. */
+  theatreBbox: [number, number, number, number] | null;
 }
 
 const EUROPE_1914: PeriodChart = {
@@ -200,8 +202,18 @@ export function periodChartOf(scenarioId: string): PeriodChart | null {
   return PERIOD_CHART[scenarioId] ?? null;
 }
 
-export function cameraOf(scenarioId: string): TheatreCamera {
-  return CAMERA[scenarioId] ?? EUROPE;
+export function cameraOf(
+  scenarioId: string,
+  theatreBbox?: readonly [number, number, number, number] | null,
+): TheatreCamera {
+  const fallback = CAMERA[scenarioId] ?? EUROPE;
+  if (!theatreBbox) return fallback;
+  const [west, south, east, north] = theatreBbox;
+  // Leaflet centre is [lat, lon]. The theatre frame is [west, south, east, north].
+  return {
+    ...fallback,
+    center: [(south + north) / 2, (west + east) / 2],
+  };
 }
 
 export function asMapMode(value: string | undefined): MapMode {
@@ -212,7 +224,11 @@ export function asMapMode(value: string | undefined): MapMode {
  * Belief-only paint list. Advisors never call this; the map HUD may.
  * Planted provenance is already collapsed in territoryReading.
  */
-export function buildTheatreView(match: MatchRecord, nation: Nation): TheatreView {
+export function buildTheatreView(
+  match: MatchRecord,
+  nation: Nation,
+  theatreBbox: [number, number, number, number] | null = null,
+): TheatreView {
   const coverage = coverageOf(match.world, nation.id);
   const territories = Object.values(match.world.territories).map((territory) => {
     const reading = territoryReading(match.world, nation.id, territory);
@@ -283,5 +299,6 @@ export function buildTheatreView(match: MatchRecord, nation: Nation): TheatreVie
       economy: pillars.economyAvailable,
       force: pillars.force,
     },
+    theatreBbox,
   };
 }

@@ -449,5 +449,25 @@
     "secret_pact_leak_base_chance": 0.05,
     "standing_penalty_on_breach": 20,
     "cascade_depth_cap": 3
+  },
+  "geo": {
+    "year": 1991,
+    "theatre_bbox": [
+      11,
+      39,
+      25,
+      49
+    ],
+    "boundaries_source": "geo/fragmentation_1991.geojson",
+    "projection": {
+      "kind": "conic_conformal",
+      "parallels": [
+        40.7,
+        47.3
+      ],
+      "lon0": 18
+    },
+    "note": "Republics becoming states, and internal administrative lines becoming international boundaries overnight. UNCLOS is three years from force.",
+    "has_eez": false
   }
 }

@@ -74,6 +74,29 @@ written documents. There is NO unit micromanagement anywhere.
 - Name things after the domain: `pact`, `breach`, `briefing`, `standing`,
   `belief`, `formation`. Not `contract`, `violation`, `notification`.
 
+## Map domain boundary
+
+packages/sim MUST NOT import packages/geo, and MUST NOT contain coordinates,
+projections, or geometry of any kind. The simulation knows territory IDs and
+adjacency only. Geometry lives in packages/geo and is consumed by the web app.
+
+Tile generation is an OFFLINE build step in infra/tiles. It never runs at
+request time and is never imported by the app.
+
+An EEZ is NOT territory. Never render EEZ polygons with the land fill, and
+never treat EEZ control as territorial control in game logic. Sovereign
+waters are internal + territorial sea (12nm) only.
+
+Planted beliefs must render identically to genuine beliefs at equal
+confidence, on the map as everywhere else. No map layer, style expression,
+or API response may expose source === "planted" to the observing nation.
+
+Historical scenarios inherit physical layers and override political ones. A
+scenario may not render a layer its era did not have: no EEZ before UNCLOS
+enters force in 1994 (signed 1982), a 3nm territorial sea before 1982, no
+flight information regions before 1947, and no motorway network before the
+1950s.
+
 ## Never do
 
 - Never put simulation logic in an API route or React component

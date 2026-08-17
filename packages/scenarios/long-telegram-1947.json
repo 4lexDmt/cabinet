@@ -1251,5 +1251,20 @@
     "secret_pact_leak_base_chance": 0.06,
     "standing_penalty_on_breach": 22,
     "cascade_depth_cap": 3
+  },
+  "geo": {
+    "year": 1947,
+    "theatre_bbox": [
+      -170,
+      -52,
+      179,
+      76
+    ],
+    "boundaries_source": "geo/long_telegram_1947.geojson",
+    "projection": {
+      "kind": "equirectangular"
+    },
+    "note": "ICAO establishes flight information regions this year. They are administrative reach, not sovereignty, and the difference is about to matter.",
+    "has_fir": true
   }
 }

@@ -42,31 +42,31 @@ Allowlisted hosts only. No auth. Nested GitHub directory pages are JS and are no
   https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/tick-worker/src/main.ts
 
 - `apps/web/app/(game)/briefing/page.tsx`
-  https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/app/%28game%29/briefing/page.tsx
+  https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/app/(game)/briefing/page.tsx
 
 - `apps/web/app/(game)/channels/page.tsx`
-  https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/app/%28game%29/channels/page.tsx
+  https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/app/(game)/channels/page.tsx
 
 - `apps/web/app/(game)/chronicle/page.tsx`
-  https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/app/%28game%29/chronicle/page.tsx
+  https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/app/(game)/chronicle/page.tsx
 
 - `apps/web/app/(game)/layout.tsx`
-  https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/app/%28game%29/layout.tsx
+  https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/app/(game)/layout.tsx
 
 - `apps/web/app/(game)/ledger/page.tsx`
-  https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/app/%28game%29/ledger/page.tsx
+  https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/app/(game)/ledger/page.tsx
 
 - `apps/web/app/(game)/map/page.tsx`
-  https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/app/%28game%29/map/page.tsx
+  https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/app/(game)/map/page.tsx
 
 - `apps/web/app/(game)/nation/page.tsx`
-  https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/app/%28game%29/nation/page.tsx
+  https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/app/(game)/nation/page.tsx
 
 - `apps/web/app/(game)/pacts/new/page.tsx`
-  https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/app/%28game%29/pacts/new/page.tsx
+  https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/app/(game)/pacts/new/page.tsx
 
 - `apps/web/app/(game)/pacts/page.tsx`
-  https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/app/%28game%29/pacts/page.tsx
+  https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/app/(game)/pacts/page.tsx
 
 - `apps/web/app/api/matches/route.ts`
   https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/app/api/matches/route.ts
@@ -85,6 +85,12 @@ Allowlisted hosts only. No auth. Nested GitHub directory pages are JS and are no
 
 - `apps/web/app/api/tick/route.ts`
   https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/app/api/tick/route.ts
+
+- `apps/web/app/atlas/atlas.css`
+  https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/app/atlas/atlas.css
+
+- `apps/web/app/atlas/page.tsx`
+  https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/app/atlas/page.tsx
 
 - `apps/web/app/globals.css`
   https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/app/globals.css
@@ -112,6 +118,27 @@ Allowlisted hosts only. No auth. Nested GitHub directory pages are JS and are no
 
 - `apps/web/components/RailNav.tsx`
   https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/components/RailNav.tsx
+
+- `apps/web/components/atlas/AtlasShell.tsx`
+  https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/components/atlas/AtlasShell.tsx
+
+- `apps/web/components/atlas/Colophon.tsx`
+  https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/components/atlas/Colophon.tsx
+
+- `apps/web/components/atlas/Dossier.tsx`
+  https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/components/atlas/Dossier.tsx
+
+- `apps/web/components/atlas/Legend.tsx`
+  https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/components/atlas/Legend.tsx
+
+- `apps/web/components/atlas/Rail.tsx`
+  https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/components/atlas/Rail.tsx
+
+- `apps/web/components/atlas/ScaleBar.tsx`
+  https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/components/atlas/ScaleBar.tsx
+
+- `apps/web/components/atlas/Sheet.tsx`
+  https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/components/atlas/Sheet.tsx
 
 - `apps/web/components/channels/ChannelDesk.tsx`
   https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/components/channels/ChannelDesk.tsx
@@ -145,6 +172,18 @@ Allowlisted hosts only. No auth. Nested GitHub directory pages are JS and are no
 
 - `apps/web/components/shell/TimePresence.tsx`
   https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/components/shell/TimePresence.tsx
+
+- `apps/web/lib/atlas/layers.ts`
+  https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/lib/atlas/layers.ts
+
+- `apps/web/lib/atlas/overlays.ts`
+  https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/lib/atlas/overlays.ts
+
+- `apps/web/lib/atlas/perspectives.ts`
+  https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/lib/atlas/perspectives.ts
+
+- `apps/web/lib/atlas/sheets.ts`
+  https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/lib/atlas/sheets.ts
 
 - `apps/web/lib/belief-view.ts`
   https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/lib/belief-view.ts
@@ -206,6 +245,39 @@ Allowlisted hosts only. No auth. Nested GitHub directory pages are JS and are no
 - `apps/web/public/geo/malvinas_1982.geojson`
   https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/public/geo/malvinas_1982.geojson
 
+- `apps/web/public/geo/mapkit/attribution.json`
+  https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/public/geo/mapkit/attribution.json
+
+- `apps/web/public/geo/mapkit/bathymetry.geojson`
+  https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/public/geo/mapkit/bathymetry.geojson
+
+- `apps/web/public/geo/mapkit/boundaries.geojson`
+  https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/public/geo/mapkit/boundaries.geojson
+
+- `apps/web/public/geo/mapkit/coastline.geojson`
+  https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/public/geo/mapkit/coastline.geojson
+
+- `apps/web/public/geo/mapkit/countries.geojson`
+  https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/public/geo/mapkit/countries.geojson
+
+- `apps/web/public/geo/mapkit/countries_low.geojson`
+  https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/public/geo/mapkit/countries_low.geojson
+
+- `apps/web/public/geo/mapkit/lakes.geojson`
+  https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/public/geo/mapkit/lakes.geojson
+
+- `apps/web/public/geo/mapkit/ocean.geojson`
+  https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/public/geo/mapkit/ocean.geojson
+
+- `apps/web/public/geo/mapkit/places.geojson`
+  https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/public/geo/mapkit/places.geojson
+
+- `apps/web/public/geo/mapkit/rivers.geojson`
+  https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/public/geo/mapkit/rivers.geojson
+
+- `apps/web/public/geo/mapkit/territory-manifest.json`
+  https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/public/geo/mapkit/territory-manifest.json
+
 - `apps/web/public/geo/molotov_ribbentrop_1939.geojson`
   https://raw.githubusercontent.com/4lexDmt/cabinet/main/apps/web/public/geo/molotov_ribbentrop_1939.geojson
 
@@ -263,6 +335,9 @@ Allowlisted hosts only. No auth. Nested GitHub directory pages are JS and are no
 - `docs/05-claude-design-core-interface.md`
   https://raw.githubusercontent.com/4lexDmt/cabinet/main/docs/05-claude-design-core-interface.md
 
+- `docs/atlas.md`
+  https://raw.githubusercontent.com/4lexDmt/cabinet/main/docs/atlas.md
+
 - `docs/handoff/SPEC.md`
   https://raw.githubusercontent.com/4lexDmt/cabinet/main/docs/handoff/SPEC.md
 
@@ -271,6 +346,30 @@ Allowlisted hosts only. No auth. Nested GitHub directory pages are JS and are no
 
 - `files.json`
   https://raw.githubusercontent.com/4lexDmt/cabinet/main/files.json
+
+- `infra/tiles/.gitignore`
+  https://raw.githubusercontent.com/4lexDmt/cabinet/main/infra/tiles/.gitignore
+
+- `infra/tiles/Makefile`
+  https://raw.githubusercontent.com/4lexDmt/cabinet/main/infra/tiles/Makefile
+
+- `infra/tiles/README.md`
+  https://raw.githubusercontent.com/4lexDmt/cabinet/main/infra/tiles/README.md
+
+- `infra/tiles/build.py`
+  https://raw.githubusercontent.com/4lexDmt/cabinet/main/infra/tiles/build.py
+
+- `infra/tiles/checksums.json`
+  https://raw.githubusercontent.com/4lexDmt/cabinet/main/infra/tiles/checksums.json
+
+- `infra/tiles/fetch.sh`
+  https://raw.githubusercontent.com/4lexDmt/cabinet/main/infra/tiles/fetch.sh
+
+- `infra/tiles/sources.json`
+  https://raw.githubusercontent.com/4lexDmt/cabinet/main/infra/tiles/sources.json
+
+- `infra/tiles/tile.sh`
+  https://raw.githubusercontent.com/4lexDmt/cabinet/main/infra/tiles/tile.sh
 
 - `package-lock.json`
   https://raw.githubusercontent.com/4lexDmt/cabinet/main/package-lock.json
@@ -298,6 +397,84 @@ Allowlisted hosts only. No auth. Nested GitHub directory pages are JS and are no
 
 - `packages/db/src/types.ts`
   https://raw.githubusercontent.com/4lexDmt/cabinet/main/packages/db/src/types.ts
+
+- `packages/geo/package.json`
+  https://raw.githubusercontent.com/4lexDmt/cabinet/main/packages/geo/package.json
+
+- `packages/geo/src/airspace.ts`
+  https://raw.githubusercontent.com/4lexDmt/cabinet/main/packages/geo/src/airspace.ts
+
+- `packages/geo/src/belief-paint.ts`
+  https://raw.githubusercontent.com/4lexDmt/cabinet/main/packages/geo/src/belief-paint.ts
+
+- `packages/geo/src/boundary.ts`
+  https://raw.githubusercontent.com/4lexDmt/cabinet/main/packages/geo/src/boundary.ts
+
+- `packages/geo/src/cartography.ts`
+  https://raw.githubusercontent.com/4lexDmt/cabinet/main/packages/geo/src/cartography.ts
+
+- `packages/geo/src/contour.ts`
+  https://raw.githubusercontent.com/4lexDmt/cabinet/main/packages/geo/src/contour.ts
+
+- `packages/geo/src/declutter.ts`
+  https://raw.githubusercontent.com/4lexDmt/cabinet/main/packages/geo/src/declutter.ts
+
+- `packages/geo/src/index.ts`
+  https://raw.githubusercontent.com/4lexDmt/cabinet/main/packages/geo/src/index.ts
+
+- `packages/geo/src/maritime-field.ts`
+  https://raw.githubusercontent.com/4lexDmt/cabinet/main/packages/geo/src/maritime-field.ts
+
+- `packages/geo/src/maritime.ts`
+  https://raw.githubusercontent.com/4lexDmt/cabinet/main/packages/geo/src/maritime.ts
+
+- `packages/geo/src/path.ts`
+  https://raw.githubusercontent.com/4lexDmt/cabinet/main/packages/geo/src/path.ts
+
+- `packages/geo/src/places.ts`
+  https://raw.githubusercontent.com/4lexDmt/cabinet/main/packages/geo/src/places.ts
+
+- `packages/geo/src/projection.ts`
+  https://raw.githubusercontent.com/4lexDmt/cabinet/main/packages/geo/src/projection.ts
+
+- `packages/geo/src/registry.ts`
+  https://raw.githubusercontent.com/4lexDmt/cabinet/main/packages/geo/src/registry.ts
+
+- `packages/geo/src/roads.ts`
+  https://raw.githubusercontent.com/4lexDmt/cabinet/main/packages/geo/src/roads.ts
+
+- `packages/geo/src/scenario-geo.ts`
+  https://raw.githubusercontent.com/4lexDmt/cabinet/main/packages/geo/src/scenario-geo.ts
+
+- `packages/geo/src/types.ts`
+  https://raw.githubusercontent.com/4lexDmt/cabinet/main/packages/geo/src/types.ts
+
+- `packages/geo/test/architecture.test.ts`
+  https://raw.githubusercontent.com/4lexDmt/cabinet/main/packages/geo/test/architecture.test.ts
+
+- `packages/geo/test/kashmir.test.ts`
+  https://raw.githubusercontent.com/4lexDmt/cabinet/main/packages/geo/test/kashmir.test.ts
+
+- `packages/geo/test/maritime-field.test.ts`
+  https://raw.githubusercontent.com/4lexDmt/cabinet/main/packages/geo/test/maritime-field.test.ts
+
+- `packages/geo/test/maritime.test.ts`
+  https://raw.githubusercontent.com/4lexDmt/cabinet/main/packages/geo/test/maritime.test.ts
+
+- `packages/geo/test/pipeline-output.test.ts`
+  https://raw.githubusercontent.com/4lexDmt/cabinet/main/packages/geo/test/pipeline-output.test.ts
+
+- `packages/geo/test/planted-parity.test.ts`
+  https://raw.githubusercontent.com/4lexDmt/cabinet/main/packages/geo/test/planted-parity.test.ts
+
+- `packages/geo/test/projection.test.ts`
+  https://raw.githubusercontent.com/4lexDmt/cabinet/main/packages/geo/test/projection.test.ts
+
+- `packages/geo/test/scenario-geo.test.ts`
+  https://raw.githubusercontent.com/4lexDmt/cabinet/main/packages/geo/test/scenario-geo.test.ts
+
+- `packages/geo/tsconfig.json`
+  https://raw.githubusercontent.com/4lexDmt/cabinet/main/packages/geo/tsconfig.json
 
 - `packages/rules/advisors/whitehall_1956.json`
   https://raw.githubusercontent.com/4lexDmt/cabinet/main/packages/rules/advisors/whitehall_1956.json
@@ -376,6 +553,9 @@ Allowlisted hosts only. No auth. Nested GitHub directory pages are JS and are no
 
 - `packages/scenarios/tanker-war-1980.json`
   https://raw.githubusercontent.com/4lexDmt/cabinet/main/packages/scenarios/tanker-war-1980.json
+
+- `packages/scenarios/test/geo.test.ts`
+  https://raw.githubusercontent.com/4lexDmt/cabinet/main/packages/scenarios/test/geo.test.ts
 
 - `packages/scenarios/the-concept-1967.json`
   https://raw.githubusercontent.com/4lexDmt/cabinet/main/packages/scenarios/the-concept-1967.json
@@ -478,6 +658,12 @@ Allowlisted hosts only. No auth. Nested GitHub directory pages are JS and are no
 
 - `scripts/write-catalog-scenarios.mjs`
   https://raw.githubusercontent.com/4lexDmt/cabinet/main/scripts/write-catalog-scenarios.mjs
+
+- `scripts/write-raw-index.mjs`
+  https://raw.githubusercontent.com/4lexDmt/cabinet/main/scripts/write-raw-index.mjs
+
+- `scripts/write-scenario-geo.mjs`
+  https://raw.githubusercontent.com/4lexDmt/cabinet/main/scripts/write-scenario-geo.mjs
 
 - `tsconfig.base.json`
   https://raw.githubusercontent.com/4lexDmt/cabinet/main/tsconfig.base.json

@@ -421,5 +421,24 @@
     "secret_pact_leak_base_chance": 0.1,
     "standing_penalty_on_breach": 20,
     "cascade_depth_cap": 4
+  },
+  "geo": {
+    "year": 1980,
+    "theatre_bbox": [
+      43,
+      21,
+      61,
+      34
+    ],
+    "boundaries_source": "geo/tanker_war_1980.geojson",
+    "projection": {
+      "kind": "conic_conformal",
+      "parallels": [
+        23.2,
+        31.8
+      ],
+      "lon0": 52
+    },
+    "note": "A shipping war in a gulf with no agreed maritime boundaries. UNCLOS is two years from signature and fourteen from force."
   }
 }

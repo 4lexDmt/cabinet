@@ -21,6 +21,8 @@ import { describe, expect, it } from "vitest";
 const geoRoot = join(dirname(fileURLToPath(import.meta.url)), "..");
 const repoRoot = join(geoRoot, "..", "..");
 const simRoot = join(repoRoot, "packages", "sim");
+const scenariosRoot = join(repoRoot, "packages", "scenarios");
+const workerRoot = join(repoRoot, "apps", "tick-worker");
 
 function sourceFiles(root: string): string[] {
   const out: string[] = [];
@@ -65,6 +67,36 @@ describe("map domain boundary", () => {
     };
     const all = { ...pkg.dependencies, ...pkg.devDependencies };
     expect(Object.keys(all)).not.toContain("@cabinet/geo");
+  });
+
+  it("packages/scenarios never imports packages/geo — the Zod shape is local", () => {
+    const offenders: string[] = [];
+    for (const file of sourceFiles(join(scenariosRoot, "src"))) {
+      for (const specifier of importsOf(file)) {
+        if (specifier.includes("@cabinet/geo") || specifier.includes("packages/geo")) {
+          offenders.push(`${relative(repoRoot, file)} -> ${specifier}`);
+        }
+      }
+    }
+    const pkg = JSON.parse(readFileSync(join(scenariosRoot, "package.json"), "utf8")) as {
+      dependencies?: Record<string, string>;
+      devDependencies?: Record<string, string>;
+    };
+    const all = { ...pkg.dependencies, ...pkg.devDependencies };
+    expect(Object.keys(all)).not.toContain("@cabinet/geo");
+    expect(offenders).toEqual([]);
+  });
+
+  it("the tick worker never imports packages/geo", () => {
+    const offenders: string[] = [];
+    for (const file of sourceFiles(join(workerRoot, "src"))) {
+      for (const specifier of importsOf(file)) {
+        if (specifier.includes("@cabinet/geo") || specifier.includes("packages/geo")) {
+          offenders.push(`${relative(repoRoot, file)} -> ${specifier}`);
+        }
+      }
+    }
+    expect(offenders).toEqual([]);
   });
 
   it("packages/geo never imports the simulation, the database, or React", () => {

@@ -10,7 +10,7 @@
  * two states' zones meet, the line that appears is a genuine median.
  */
 
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import {
   BOUNDARY_INK,
   NEUTRAL_OBSERVER,
@@ -297,7 +297,7 @@ export function Sheet(props: SheetProps) {
     [frame, projector],
   );
 
-  useMemo(() => {
+  useEffect(() => {
     onMeasured({
       placed: labels.placed.length,
       dropped: labels.dropped,

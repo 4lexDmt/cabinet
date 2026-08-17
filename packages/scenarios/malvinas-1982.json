@@ -341,5 +341,25 @@
     "secret_pact_leak_base_chance": 0.05,
     "standing_penalty_on_breach": 18,
     "cascade_depth_cap": 3
+  },
+  "geo": {
+    "year": 1982,
+    "theatre_bbox": [
+      -71,
+      -58,
+      -34,
+      -31
+    ],
+    "boundaries_source": "geo/malvinas_1982.geojson",
+    "projection": {
+      "kind": "conic_conformal",
+      "parallels": [
+        -53.5,
+        -35.5
+      ],
+      "lon0": -52.5
+    },
+    "note": "UNCLOS is signed in December of this year and does not enter force until 1994. The exclusion zone declared here is a belligerent act, not a maritime zone.",
+    "has_eez": false
   }
 }

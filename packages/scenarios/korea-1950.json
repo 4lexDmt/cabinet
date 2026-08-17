@@ -401,5 +401,24 @@
     "secret_pact_leak_base_chance": 0.08,
     "standing_penalty_on_breach": 22,
     "cascade_depth_cap": 3
+  },
+  "geo": {
+    "year": 1950,
+    "theatre_bbox": [
+      122,
+      32,
+      133,
+      44
+    ],
+    "boundaries_source": "geo/korea_1950.geojson",
+    "projection": {
+      "kind": "conic_conformal",
+      "parallels": [
+        34,
+        42
+      ],
+      "lon0": 127.5
+    },
+    "note": "A military demarcation line, not a border. It reads as a line of control from every desk, which is a rare agreement."
   }
 }

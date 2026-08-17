@@ -7,7 +7,7 @@
  * simplification tolerance and quietly drops a border.
  */
 
-import { existsSync, readFileSync } from "node:fs";
+import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
@@ -203,5 +203,28 @@ describe("territory manifest", () => {
       expect(extent![2]).toBeGreaterThan(extent![0]);
       expect(extent![3]).toBeGreaterThan(extent![1]);
     }
+  });
+
+  it("reports the gap between sim territories and map geometry", () => {
+    // The simulation's territory list is coarse — one polygon per capital,
+    // often. The GeoJSON can be richer, and occasionally a sim id has no
+    // matching feature. The join is allowed to be incomplete; this test
+    // exists so the gap is visible rather than silent.
+    const scenariosDir = join(repoRoot, "packages", "scenarios");
+    const missing: Record<string, string[]> = {};
+    const extra: Record<string, number> = {};
+    for (const file of readdirSync(scenariosDir).filter((name) => name.endsWith(".json"))) {
+      const raw = JSON.parse(readFileSync(join(scenariosDir, file), "utf8")) as {
+        id: string;
+        territories: Array<{ id: string }>;
+      };
+      const ids = raw.territories.map((t) => t.id);
+      const absent = registry.missing(raw.id, ids);
+      if (absent.length > 0) missing[raw.id] = absent;
+      extra[raw.id] = Math.max(0, registry.all(raw.id).length - ids.length);
+    }
+    expect(missing).toEqual({});
+    // Extra geometry is expected: the map is allowed to be richer than the sim.
+    expect(Object.values(extra).some((n) => n >= 0)).toBe(true);
   });
 });

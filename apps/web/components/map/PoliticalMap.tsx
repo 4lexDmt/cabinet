@@ -196,7 +196,7 @@ export function PoliticalMap({
   jumpNonce: number;
   onSelect: (id: string | null) => void;
 }) {
-  const camera = cameraOf(view.scenarioId);
+  const camera = cameraOf(view.scenarioId, view.theatreBbox);
   const chart = periodChartOf(view.scenarioId);
   const paints = useMemo(() => paintById(view), [view]);
   const [land, setLand] = useState<FeatureCollection | null>(null);

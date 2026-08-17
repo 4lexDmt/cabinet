@@ -337,5 +337,24 @@
     "secret_pact_leak_base_chance": 0.07,
     "standing_penalty_on_breach": 22,
     "cascade_depth_cap": 3
+  },
+  "geo": {
+    "year": 1962,
+    "theatre_bbox": [
+      -91,
+      15,
+      -55,
+      33
+    ],
+    "boundaries_source": "geo/thirteen_days_1962.geojson",
+    "projection": {
+      "kind": "conic_conformal",
+      "parallels": [
+        18,
+        30
+      ],
+      "lon0": -73
+    },
+    "note": "A quarantine line drawn at 500 and then 800 nautical miles, in an ocean where no state had jurisdiction beyond three."
   }
 }

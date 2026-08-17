@@ -440,5 +440,24 @@
     "secret_pact_leak_base_chance": 0.07,
     "standing_penalty_on_breach": 20,
     "cascade_depth_cap": 3
+  },
+  "geo": {
+    "year": 1967,
+    "theatre_bbox": [
+      30,
+      26,
+      40,
+      35
+    ],
+    "boundaries_source": "geo/the_concept_1967.geojson",
+    "projection": {
+      "kind": "conic_conformal",
+      "parallels": [
+        27.5,
+        33.5
+      ],
+      "lon0": 35
+    },
+    "note": "The Straits of Tiran are the casus belli, and at three nautical miles the strait is territorial water on both sides with no corridor between."
   }
 }

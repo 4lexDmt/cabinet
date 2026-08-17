@@ -438,5 +438,25 @@
     "secret_pact_leak_base_chance": 0.06,
     "standing_penalty_on_breach": 16,
     "cascade_depth_cap": 3
+  },
+  "geo": {
+    "year": 1979,
+    "theatre_bbox": [
+      58,
+      27,
+      76,
+      40
+    ],
+    "boundaries_source": "geo/afghanistan_1979.geojson",
+    "projection": {
+      "kind": "conic_conformal",
+      "parallels": [
+        29.2,
+        37.8
+      ],
+      "lon0": 67
+    },
+    "note": "Landlocked: no maritime layer applies. The Salang tunnel is the theatre, and there is one of it.",
+    "road_era": "rail_and_road"
   }
 }

@@ -67,11 +67,10 @@ export function Rail(props: RailProps) {
             ))}
           </div>
           <label>
-            <span className="sr-only" />
+            <span className="sr-only">Perspective</span>
             <select
               value={props.observer}
               onChange={(event) => props.onObserver(event.target.value)}
-              aria-label="Perspective"
             >
               {PERSPECTIVES.map((entry) => (
                 <option key={entry.code} value={entry.code}>

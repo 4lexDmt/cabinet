@@ -432,5 +432,24 @@
     "secret_pact_leak_base_chance": 0.06,
     "standing_penalty_on_breach": 24,
     "cascade_depth_cap": 3
+  },
+  "geo": {
+    "year": 1938,
+    "theatre_bbox": [
+      -7,
+      36,
+      34,
+      58
+    ],
+    "boundaries_source": "geo/munich_1938.geojson",
+    "projection": {
+      "kind": "conic_conformal",
+      "parallels": [
+        39.7,
+        54.3
+      ],
+      "lon0": 13.5
+    },
+    "note": "The Reichsautobahn exists; almost nothing else does. Roads are shown only where a trunk network was actually built."
   }
 }

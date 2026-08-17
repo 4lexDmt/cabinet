@@ -3,38 +3,255 @@
   "display_name": "The Concert",
   "duration_ticks": 1008,
   "player_slots": 8,
-  "requires_systems": ["pacts", "standing", "channels"],
+  "requires_systems": [
+    "pacts",
+    "standing",
+    "channels"
+  ],
   "nations": [
-    { "id": "at", "name": "Austria", "shortName": "Austria", "adjective": "Austrian", "standing_external": 80, "standing_internal": 70, "economy": 70, "intelligence_capacity": 75, "supply": 65, "status": "sovereign", "territories": ["vienna"], "social_tree_unlocks": [], "advisor_set": "hofburg_1815" },
-    { "id": "gb", "name": "Britain", "shortName": "Britain", "adjective": "British", "standing_external": 82, "standing_internal": 68, "economy": 85, "intelligence_capacity": 70, "supply": 80, "status": "sovereign", "territories": ["london"], "social_tree_unlocks": [], "advisor_set": "whitehall_1815" },
-    { "id": "ru", "name": "Russia", "shortName": "Russia", "adjective": "Russian", "standing_external": 78, "standing_internal": 72, "economy": 68, "intelligence_capacity": 60, "supply": 75, "status": "sovereign", "territories": ["petersburg"], "social_tree_unlocks": [], "advisor_set": "winter_palace_1815" },
-    { "id": "pr", "name": "Prussia", "shortName": "Prussia", "adjective": "Prussian", "standing_external": 66, "standing_internal": 64, "economy": 60, "intelligence_capacity": 55, "supply": 70, "status": "sovereign", "territories": ["berlin"], "social_tree_unlocks": [], "advisor_set": "berlin_1815" },
-    { "id": "fr", "name": "France", "shortName": "France", "adjective": "French", "standing_external": 30, "standing_internal": 40, "economy": 20, "intelligence_capacity": 80, "supply": 10, "status": "exile", "territories": ["paris"], "social_tree_unlocks": [], "advisor_set": "talleyrand_1815" },
-    { "id": "se", "name": "Sweden", "shortName": "Sweden", "adjective": "Swedish", "standing_external": 50, "standing_internal": 55, "economy": 40, "intelligence_capacity": 40, "supply": 40, "status": "sovereign", "territories": ["stockholm"], "social_tree_unlocks": [], "advisor_set": "stockholm_1815" },
-    { "id": "es", "name": "Spain", "shortName": "Spain", "adjective": "Spanish", "standing_external": 44, "standing_internal": 48, "economy": 36, "intelligence_capacity": 35, "supply": 38, "status": "sovereign", "territories": ["madrid"], "social_tree_unlocks": [], "advisor_set": "madrid_1815" },
-    { "id": "de", "name": "German States", "shortName": "the German States", "adjective": "German", "standing_external": 40, "standing_internal": 42, "economy": 45, "intelligence_capacity": 30, "supply": 40, "status": "sovereign", "territories": ["frankfurt"], "social_tree_unlocks": [], "advisor_set": "bund_1815" }
+    {
+      "id": "at",
+      "name": "Austria",
+      "shortName": "Austria",
+      "adjective": "Austrian",
+      "standing_external": 80,
+      "standing_internal": 70,
+      "economy": 70,
+      "intelligence_capacity": 75,
+      "supply": 65,
+      "status": "sovereign",
+      "territories": [
+        "vienna"
+      ],
+      "social_tree_unlocks": [],
+      "advisor_set": "hofburg_1815"
+    },
+    {
+      "id": "gb",
+      "name": "Britain",
+      "shortName": "Britain",
+      "adjective": "British",
+      "standing_external": 82,
+      "standing_internal": 68,
+      "economy": 85,
+      "intelligence_capacity": 70,
+      "supply": 80,
+      "status": "sovereign",
+      "territories": [
+        "london"
+      ],
+      "social_tree_unlocks": [],
+      "advisor_set": "whitehall_1815"
+    },
+    {
+      "id": "ru",
+      "name": "Russia",
+      "shortName": "Russia",
+      "adjective": "Russian",
+      "standing_external": 78,
+      "standing_internal": 72,
+      "economy": 68,
+      "intelligence_capacity": 60,
+      "supply": 75,
+      "status": "sovereign",
+      "territories": [
+        "petersburg"
+      ],
+      "social_tree_unlocks": [],
+      "advisor_set": "winter_palace_1815"
+    },
+    {
+      "id": "pr",
+      "name": "Prussia",
+      "shortName": "Prussia",
+      "adjective": "Prussian",
+      "standing_external": 66,
+      "standing_internal": 64,
+      "economy": 60,
+      "intelligence_capacity": 55,
+      "supply": 70,
+      "status": "sovereign",
+      "territories": [
+        "berlin"
+      ],
+      "social_tree_unlocks": [],
+      "advisor_set": "berlin_1815"
+    },
+    {
+      "id": "fr",
+      "name": "France",
+      "shortName": "France",
+      "adjective": "French",
+      "standing_external": 30,
+      "standing_internal": 40,
+      "economy": 20,
+      "intelligence_capacity": 80,
+      "supply": 10,
+      "status": "exile",
+      "territories": [
+        "paris"
+      ],
+      "social_tree_unlocks": [],
+      "advisor_set": "talleyrand_1815"
+    },
+    {
+      "id": "se",
+      "name": "Sweden",
+      "shortName": "Sweden",
+      "adjective": "Swedish",
+      "standing_external": 50,
+      "standing_internal": 55,
+      "economy": 40,
+      "intelligence_capacity": 40,
+      "supply": 40,
+      "status": "sovereign",
+      "territories": [
+        "stockholm"
+      ],
+      "social_tree_unlocks": [],
+      "advisor_set": "stockholm_1815"
+    },
+    {
+      "id": "es",
+      "name": "Spain",
+      "shortName": "Spain",
+      "adjective": "Spanish",
+      "standing_external": 44,
+      "standing_internal": 48,
+      "economy": 36,
+      "intelligence_capacity": 35,
+      "supply": 38,
+      "status": "sovereign",
+      "territories": [
+        "madrid"
+      ],
+      "social_tree_unlocks": [],
+      "advisor_set": "madrid_1815"
+    },
+    {
+      "id": "de",
+      "name": "German States",
+      "shortName": "the German States",
+      "adjective": "German",
+      "standing_external": 40,
+      "standing_internal": 42,
+      "economy": 45,
+      "intelligence_capacity": 30,
+      "supply": 40,
+      "status": "sovereign",
+      "territories": [
+        "frankfurt"
+      ],
+      "social_tree_unlocks": [],
+      "advisor_set": "bund_1815"
+    }
   ],
   "territories": [
-    { "id": "vienna", "name": "Vienna", "owner": "at", "controller": "at", "region": "europe", "supplyValue": 10 },
-    { "id": "london", "name": "London", "owner": "gb", "controller": "gb", "region": "europe", "supplyValue": 12 },
-    { "id": "petersburg", "name": "St Petersburg", "owner": "ru", "controller": "ru", "region": "europe", "supplyValue": 11 },
-    { "id": "berlin", "name": "Berlin", "owner": "pr", "controller": "pr", "region": "europe", "supplyValue": 9 },
-    { "id": "paris", "name": "Paris", "owner": "fr", "controller": "fr", "region": "europe", "supplyValue": 8 },
-    { "id": "stockholm", "name": "Stockholm", "owner": "se", "controller": "se", "region": "europe", "supplyValue": 5 },
-    { "id": "madrid", "name": "Madrid", "owner": "es", "controller": "es", "region": "europe", "supplyValue": 6 },
-    { "id": "frankfurt", "name": "Frankfurt", "owner": "de", "controller": "de", "region": "europe", "supplyValue": 5 }
+    {
+      "id": "vienna",
+      "name": "Vienna",
+      "owner": "at",
+      "controller": "at",
+      "region": "europe",
+      "supplyValue": 10
+    },
+    {
+      "id": "london",
+      "name": "London",
+      "owner": "gb",
+      "controller": "gb",
+      "region": "europe",
+      "supplyValue": 12
+    },
+    {
+      "id": "petersburg",
+      "name": "St Petersburg",
+      "owner": "ru",
+      "controller": "ru",
+      "region": "europe",
+      "supplyValue": 11
+    },
+    {
+      "id": "berlin",
+      "name": "Berlin",
+      "owner": "pr",
+      "controller": "pr",
+      "region": "europe",
+      "supplyValue": 9
+    },
+    {
+      "id": "paris",
+      "name": "Paris",
+      "owner": "fr",
+      "controller": "fr",
+      "region": "europe",
+      "supplyValue": 8
+    },
+    {
+      "id": "stockholm",
+      "name": "Stockholm",
+      "owner": "se",
+      "controller": "se",
+      "region": "europe",
+      "supplyValue": 5
+    },
+    {
+      "id": "madrid",
+      "name": "Madrid",
+      "owner": "es",
+      "controller": "es",
+      "region": "europe",
+      "supplyValue": 6
+    },
+    {
+      "id": "frankfurt",
+      "name": "Frankfurt",
+      "owner": "de",
+      "controller": "de",
+      "region": "europe",
+      "supplyValue": 5
+    }
   ],
   "formations": [],
   "starting_pacts": [],
   "trade_routes": [],
   "flags": {},
   "victory_conditions": {
-    "fr": { "gte": ["standing_external", 50] },
-    "at": { "gte": ["standing_external", 70] }
+    "fr": {
+      "gte": [
+        "standing_external",
+        50
+      ]
+    },
+    "at": {
+      "gte": [
+        "standing_external",
+        70
+      ]
+    }
   },
   "tuning": {
     "secret_pact_leak_base_chance": 0.06,
     "standing_penalty_on_breach": 20,
     "cascade_depth_cap": 3
+  },
+  "geo": {
+    "year": 1815,
+    "theatre_bbox": [
+      -11,
+      35,
+      42,
+      61
+    ],
+    "boundaries_source": "geo/vienna_1815.geojson",
+    "projection": {
+      "kind": "conic_conformal",
+      "parallels": [
+        39.3,
+        56.7
+      ],
+      "lon0": 15.5
+    },
+    "note": "Post roads and rivers, no engineered network. The territorial sea is three nautical miles — the cannon-shot rule — and no zone exists beyond it."
   }
 }

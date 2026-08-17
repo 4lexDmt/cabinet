@@ -486,5 +486,19 @@
     "secret_pact_leak_base_chance": 0.05,
     "standing_penalty_on_breach": 18,
     "cascade_depth_cap": 3
+  },
+  "geo": {
+    "year": 1964,
+    "theatre_bbox": [
+      99,
+      6,
+      113,
+      24
+    ],
+    "boundaries_source": "geo/vietnam_1964.geojson",
+    "projection": {
+      "kind": "equirectangular"
+    },
+    "note": "An incident in a gulf, at a time when the water it happened in belonged to nobody."
   }
 }

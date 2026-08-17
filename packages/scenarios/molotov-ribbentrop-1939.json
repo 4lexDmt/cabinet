@@ -369,5 +369,24 @@
     "secret_pact_leak_base_chance": 0.09,
     "standing_penalty_on_breach": 26,
     "cascade_depth_cap": 3
+  },
+  "geo": {
+    "year": 1939,
+    "theatre_bbox": [
+      9,
+      33,
+      70,
+      62
+    ],
+    "boundaries_source": "geo/molotov_ribbentrop_1939.geojson",
+    "projection": {
+      "kind": "conic_conformal",
+      "parallels": [
+        37.8,
+        57.2
+      ],
+      "lon0": 39.5
+    },
+    "note": "A secret protocol divides territory the map still shows as sovereign. The boundary layer is the public one."
   }
 }
