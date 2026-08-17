@@ -5,11 +5,11 @@ import "./atlas.css";
 export const metadata: Metadata = {
   title: "Aevanor Atlas — a map is a claim, not a fact",
   description:
-    "One geometry, several beliefs about it. A reference cartographic instrument for Cabinet: real Natural Earth boundaries rendered from each government's own point of view, with maritime zones computed by equidistance rather than traced.",
+    "The world, from nobody's desk: real Natural Earth political boundaries and the two sovereignty-adjacent maritime zones — territorial sea and exclusive economic zone — computed by equidistance rather than traced.",
   openGraph: {
     title: "Aevanor Atlas — a map is a claim, not a fact",
     description:
-      "Switch perspective and contested boundaries redraw. From Delhi the Line of Control is an international boundary; from Islamabad it is an internal administrative line. Both ship in the same file.",
+      "One reference plate: political borders and maritime zones, nothing else. Scroll or pinch to zoom, drag to pan, bounded to the map's own frame.",
     type: "website",
   },
 };

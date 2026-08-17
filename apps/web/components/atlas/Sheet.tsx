@@ -8,6 +8,13 @@
  * maritime bands are computed by equidistance from sampled coastline rather
  * than traced — the same principle as UNCLOS Article 15 median lines, so where
  * two states' zones meet, the line that appears is a genuine median.
+ *
+ * Geometry is projected exactly once, into the sheet's own fixed frame
+ * (`baseViewport`). Panning and zooming are a cheap SVG transform layered on
+ * top of that fixed projection, never a re-projection: reprojecting on every
+ * pointer-move — in particular rebuilding the maritime equidistance field,
+ * which is a per-pixel nearest-coastline search over the whole sheet — is
+ * expensive enough at world scale to freeze the tab mid-gesture.
  */
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
@@ -15,30 +22,21 @@ import type { MouseEvent as ReactMouseEvent, PointerEvent as ReactPointerEvent }
 import {
   BOUNDARY_INK,
   NEUTRAL_OBSERVER,
-  PLACE_MARK,
   ZONE_INK,
   buildMaritimeField,
-  declutter,
   densify,
   emphasise,
   fitBounds,
   geometryPath,
-  highSeasPath,
   kmPerPixel,
-  medianLinePath,
-  placeFrom,
   project,
   readBoundary,
-  unproject,
   viewportBounds,
   zoneLadderPaths,
-  zoomOf,
   type BBox,
   type BoundaryClass,
   type LonLat,
   type MaritimeEra,
-  type Place,
-  type PlacedLabel,
   type Point,
   type Projection,
   type Projector,
@@ -115,31 +113,24 @@ interface DrawnBoundary {
 }
 
 /**
- * A sheet is a printed frame — fixed content, fixed register — but a reader
- * is never pinned to the frame's own centre and scale. The camera is a
- * separate, interactive lens over the same fixed geometry: it never changes
- * what the register says (tiers, label budget, min_zoom), only how much of
- * the sheet's own extent is currently in view.
+ * The camera: a plain 2D affine transform (`screen = base * k + [x, y]`) over
+ * the sheet's fixed projection. It never touches geometry, so panning and
+ * zooming cost nothing beyond what the browser already does for any CSS/SVG
+ * transform.
  */
 interface Camera {
-  center: LonLat;
-  /** Multiplier over the sheet's home (`fitBounds`) scale. */
   k: number;
+  x: number;
+  y: number;
 }
 
-const MIN_ZOOM_K = 0.4;
+const HOME: Camera = { k: 1, x: 0, y: 0 };
+
+// A reader can zoom in as far as the register allows, but never out past the
+// sheet's own home framing — the same way a slippy map stops at world zoom 0
+// rather than showing the frame repeat into empty space.
+const MIN_ZOOM_K = 1;
 const MAX_ZOOM_K = 48;
-const clampZoomK = (k: number) => Math.min(MAX_ZOOM_K, Math.max(MIN_ZOOM_K, k));
-
-function deriveViewport(projection: Projection, base: Viewport, width: number, height: number, camera: Camera): Viewport {
-  const scale = base.scale * camera.k;
-  const [px, py] = projection.forward(camera.center);
-  const translate: Point = [width / 2 - px * scale, height / 2 + py * scale];
-  const viewport: Viewport = { ...base, width, height, scale, translate, center: camera.center };
-  viewport.zoom = zoomOf(projection, scale, camera.center);
-  viewport.bounds = viewportBounds(viewport);
-  return viewport;
-}
 
 export function Sheet(props: SheetProps) {
   const {
@@ -163,50 +154,66 @@ export function Sheet(props: SheetProps) {
   const showPhysical = active.includes("physical");
   const showDispute = active.includes("dispute");
 
+  // The sheet's fixed projection. Every path below is computed from this and
+  // only this — never from the live camera — so a pan/zoom gesture is purely
+  // a transform on already-computed paths, not a recomputation of them.
   const baseViewport: Viewport = useMemo(
     () => fitBounds(projection, sheet.bbox, width, height, { padding: 26 }),
     [projection, sheet.bbox, width, height],
   );
 
+  const projector: Projector = useMemo(
+    () => (lonLat: LonLat) => project(baseViewport, lonLat),
+    [baseViewport],
+  );
+
+  const frame = useMemo(() => viewportBounds(baseViewport), [baseViewport]);
+  const kmPerPx = useMemo(() => kmPerPixel(baseViewport), [baseViewport]);
+  const pixelsPerNm = 1.852 / kmPerPx;
+
+  // The sheet's own extent in the fixed projection's pixel space, so
+  // panning/zooming can be kept from ever revealing empty canvas past its
+  // edges — the frame has a hard border, the way a printed sheet does.
+  const sheetRect = useMemo(() => {
+    const [w, s, e, n] = sheet.bbox;
+    const corners = [projector([w, s]), projector([w, n]), projector([e, s]), projector([e, n])];
+    const xs = corners.map((c) => c[0]);
+    const ys = corners.map((c) => c[1]);
+    return { x0: Math.min(...xs), x1: Math.max(...xs), y0: Math.min(...ys), y1: Math.max(...ys) };
+  }, [projector, sheet.bbox]);
+
+  const clampCamera = useCallback(
+    (cam: Camera): Camera => {
+      const k = Math.min(MAX_ZOOM_K, Math.max(MIN_ZOOM_K, cam.k));
+      const { x0, x1, y0, y1 } = sheetRect;
+      const mapW = (x1 - x0) * k;
+      const mapH = (y1 - y0) * k;
+      const x = mapW <= width ? (width - mapW) / 2 - x0 * k : Math.min(-x0 * k, Math.max(width - x1 * k, cam.x));
+      const y = mapH <= height ? (height - mapH) / 2 - y0 * k : Math.min(-y0 * k, Math.max(height - y1 * k, cam.y));
+      return { k, x, y };
+    },
+    [sheetRect, width, height],
+  );
+
   // The reader's own pan/zoom over the sheet. Reset whenever a different
   // sheet is chosen, so switching sheets always re-homes to its own frame.
-  const [camera, setCamera] = useState<Camera | null>(null);
-  useEffect(() => setCamera(null), [sheet.id]);
+  const [camera, setCamera] = useState<Camera>(HOME);
+  useEffect(() => setCamera(HOME), [sheet.id]);
+  // Re-clamp on resize: a camera that was valid at one viewport size can
+  // otherwise leave the sheet short of covering a newly larger one.
+  useEffect(() => setCamera((c) => clampCamera(c)), [clampCamera]);
 
-  const viewport: Viewport = useMemo(
-    () => (camera ? deriveViewport(projection, baseViewport, width, height, camera) : baseViewport),
-    [projection, baseViewport, width, height, camera],
-  );
-
-  const projector: Projector = useMemo(
-    () => (lonLat: LonLat) => project(viewport, lonLat),
-    [viewport],
-  );
-
-  const frame = useMemo(() => viewportBounds(viewport), [viewport]);
-  const kmPerPx = useMemo(() => kmPerPixel(viewport), [viewport]);
-  const pixelsPerNm = 1.852 / kmPerPx;
-  const atHome = camera === null;
-
-  const setFromTranslateScale = useCallback(
-    (translate: Point, scale: number, k: number) => {
-      const centerPlane: Point = [(width / 2 - translate[0]) / scale, (translate[1] - height / 2) / scale];
-      setCamera({ center: projection.inverse(centerPlane), k: clampZoomK(k) });
-    },
-    [projection, width, height],
-  );
+  const fromScreen = useCallback((cam: Camera, p: Point): Point => [(p[0] - cam.x) / cam.k, (p[1] - cam.y) / cam.k], []);
 
   const zoomAt = useCallback(
     (screenPoint: Point, factor: number) => {
-      const currentK = camera?.k ?? 1;
-      const anchor = unproject(viewport, screenPoint);
-      const newK = clampZoomK(currentK * factor);
-      const newScale = baseViewport.scale * newK;
-      const [ax, ay] = projection.forward(anchor);
-      const translate: Point = [screenPoint[0] - ax * newScale, screenPoint[1] + ay * newScale];
-      setFromTranslateScale(translate, newScale, newK);
+      setCamera((cam) => {
+        const anchor = fromScreen(cam, screenPoint);
+        const k = cam.k * factor;
+        return clampCamera({ k, x: screenPoint[0] - anchor[0] * k, y: screenPoint[1] - anchor[1] * k });
+      });
     },
-    [camera, viewport, baseViewport.scale, projection, setFromTranslateScale],
+    [fromScreen, clampCamera],
   );
 
   // ── pointer interaction: drag to pan, pinch to zoom, wheel to zoom ────────
@@ -218,17 +225,11 @@ export function Sheet(props: SheetProps) {
   // pointer leaves the sheet, without stealing clicks from the paths below.
   const svgRef = useRef<SVGSVGElement | null>(null);
   const pointers = useRef(new Map<number, Point>());
-  const gesture = useRef<{ kind: "pan" | "pinch"; anchor: LonLat; k: number; dist?: number } | null>(null);
+  const gesture = useRef<{ kind: "pan" | "pinch"; anchor: Point; k: number; dist?: number } | null>(null);
   const dragged = useRef(false);
   const moveAccum = useRef(0);
   const cameraRef = useRef(camera);
-  const viewportRef = useRef(viewport);
-  const projectionRef = useRef(projection);
-  const baseViewportRef = useRef(baseViewport);
   cameraRef.current = camera;
-  viewportRef.current = viewport;
-  projectionRef.current = projection;
-  baseViewportRef.current = baseViewport;
 
   const pointFromClient = (clientX: number, clientY: number): Point => {
     const rect = svgRef.current?.getBoundingClientRect();
@@ -237,39 +238,34 @@ export function Sheet(props: SheetProps) {
 
   const beginGesture = useCallback(() => {
     const pts = [...pointers.current.values()];
+    const cam = cameraRef.current;
     if (pts.length === 1) {
-      gesture.current = { kind: "pan", anchor: unproject(viewportRef.current, pts[0]!), k: cameraRef.current?.k ?? 1 };
+      gesture.current = { kind: "pan", anchor: fromScreen(cam, pts[0]!), k: cam.k };
     } else if (pts.length >= 2) {
       const [a, b] = pts;
       const mid: Point = [(a![0] + b![0]) / 2, (a![1] + b![1]) / 2];
       const dist = Math.hypot(a![0] - b![0], a![1] - b![1]);
-      gesture.current = { kind: "pinch", anchor: unproject(viewportRef.current, mid), k: cameraRef.current?.k ?? 1, dist };
+      gesture.current = { kind: "pinch", anchor: fromScreen(cam, mid), k: cam.k, dist };
     } else {
       gesture.current = null;
     }
-  }, []);
+  }, [fromScreen]);
 
   const applyGestureMove = useCallback(() => {
     const g = gesture.current;
     if (!g) return;
     const pts = [...pointers.current.values()];
-    const base = baseViewportRef.current;
-    const projection = projectionRef.current;
     if (g.kind === "pan" && pts.length === 1) {
-      const scale = base.scale * g.k;
-      const [ax, ay] = projection.forward(g.anchor);
       const point = pts[0]!;
-      setFromTranslateScale([point[0] - ax * scale, point[1] + ay * scale], scale, g.k);
+      setCamera(clampCamera({ k: g.k, x: point[0] - g.anchor[0] * g.k, y: point[1] - g.anchor[1] * g.k }));
     } else if (g.kind === "pinch" && pts.length >= 2 && g.dist) {
       const [a, b] = pts;
       const mid: Point = [(a![0] + b![0]) / 2, (a![1] + b![1]) / 2];
       const dist = Math.hypot(a![0] - b![0], a![1] - b![1]);
-      const newK = clampZoomK(g.k * (dist / g.dist));
-      const scale = base.scale * newK;
-      const [ax, ay] = projection.forward(g.anchor);
-      setFromTranslateScale([mid[0] - ax * scale, mid[1] + ay * scale], scale, newK);
+      const k = g.k * (dist / g.dist);
+      setCamera(clampCamera({ k, x: mid[0] - g.anchor[0] * k, y: mid[1] - g.anchor[1] * k }));
     }
-  }, [setFromTranslateScale]);
+  }, [clampCamera]);
 
   useEffect(() => {
     const onMove = (e: PointerEvent) => {
@@ -400,6 +396,20 @@ export function Sheet(props: SheetProps) {
   }, [boundaries]);
 
   // ── maritime, computed by equidistance ────────────────────────────────────
+  //
+  // This is a per-pixel nearest-coastline search over the whole sheet — the
+  // single most expensive computation on this page. It depends only on the
+  // fixed projector above, never the live camera, so it runs once per
+  // sheet/layer load rather than on every pan/zoom frame.
+  //
+  // Deliberately not computing median lines or the high-seas polygon here:
+  // the equidistant field already makes every state's band mutually
+  // exclusive with its neighbours (that is the whole point of computing
+  // zones from one distance field rather than tracing them), so a band's own
+  // edge already sits exactly on the median. Drawing that same line a second
+  // time would cost one `medianLinePath` scan per PAIR of coastal states —
+  // 26,796 pairs at world scale — for a purely decorative overlay this view
+  // doesn't need.
   const maritime = useMemo(() => {
     if (!showMaritime || !layers.countries) return null;
     const cellSize = width > 1100 ? 5 : 4;
@@ -432,47 +442,8 @@ export function Sheet(props: SheetProps) {
       id: coast.id,
       ladder: zoneLadderPaths(field, index, pixelsPerNm, era),
     }));
-    const outerNm = era.hasEez ? 200 : era.hasContiguousZone ? era.territorialSeaNm * 2 : era.territorialSeaNm;
-    const medians: string[] = [];
-    for (let a = 0; a < coasts.length; a++) {
-      for (let b = a + 1; b < coasts.length; b++) {
-        const path = medianLinePath(field, a, b, outerNm * pixelsPerNm);
-        if (path) medians.push(path);
-      }
-    }
-    return { bands, medians, highSeas: highSeasPath(field, outerNm * pixelsPerNm) };
+    return { bands };
   }, [showMaritime, layers.countries, inFrame, projector, width, height, pixelsPerNm, era]);
-
-  // ── settlements ───────────────────────────────────────────────────────────
-  const labels = useMemo(() => {
-    const source = layers.places;
-    if (!source) return { placed: [] as PlacedLabel[], dropped: 0 };
-    const places: Place[] = [];
-    for (const feature of source.features) {
-      const coords = (feature.geometry as { coordinates?: LonLat })?.coordinates;
-      if (!coords) continue;
-      const place = placeFrom(feature.properties, coords);
-      if (!register.tiers.includes(place.tier)) continue;
-      // A capital is a decision point whatever its size, so it is never
-      // filtered out by zoom. Density is controlled by the label budget below,
-      // which drops from the bottom of the ranking rather than by rule.
-      if (place.tier !== "capital" && place.minZoom > register.zoom + 1.5) continue;
-      places.push(place);
-    }
-    const result = declutter(places, projector, {
-      width,
-      height,
-      gap: width < 700 ? 6 : 3,
-      margin: 14,
-      budget: width < 700 ? 22 : register.labelBudget,
-      reserved: [
-        // The legend and title block own their corners; labels do not fight them.
-        { x0: 0, y0: height - 220, x1: 320, y1: height },
-        { x0: width - 190, y0: height - 60, x1: width, y1: height },
-      ],
-    });
-    return { placed: result.placed, dropped: result.dropped.length };
-  }, [layers.places, projector, register, width, height]);
 
   const graticule = useMemo(
     () => graticulePath(frame, projector, pickGraticuleStep(frame[2] - frame[0])),
@@ -480,13 +451,8 @@ export function Sheet(props: SheetProps) {
   );
 
   useEffect(() => {
-    onMeasured({
-      placed: labels.placed.length,
-      dropped: labels.dropped,
-      kmPerPx,
-      declaration: projection.declaration,
-    });
-  }, [labels, kmPerPx, projection.declaration, onMeasured]);
+    onMeasured({ placed: 0, dropped: 0, kmPerPx, declaration: projection.declaration });
+  }, [kmPerPx, projection.declaration, onMeasured]);
 
   const politicalHolder = areaHolder === "political";
   const disputeHolder = areaHolder === "dispute";
@@ -506,8 +472,9 @@ export function Sheet(props: SheetProps) {
     return "var(--land)";
   };
 
+  const cameraTransform = `translate(${camera.x},${camera.y}) scale(${camera.k})`;
+
   return (
-    <>
     <svg
       ref={svgRef}
       className="sheet"
@@ -538,224 +505,155 @@ export function Sheet(props: SheetProps) {
       <g clipPath="url(#sheet-frame)">
         <rect width={width} height={height} fill="var(--sea)" />
 
-        {showPhysical && layers.bathymetry ? (
-          <g opacity={demoted.has("physical") ? 0.4 : 1}>
-            {layers.bathymetry.features.filter(inFrame).map((feature, i) => (
+        <g transform={cameraTransform}>
+          {showPhysical && layers.bathymetry ? (
+            <g opacity={demoted.has("physical") ? 0.4 : 1}>
+              {layers.bathymetry.features.filter(inFrame).map((feature, i) => (
+                <path
+                  key={`bath-${i}`}
+                  d={geometryPath(feature.geometry as never, projector)}
+                  fill="var(--sea-deep)"
+                  opacity={0.55}
+                />
+              ))}
+            </g>
+          ) : null}
+
+          {maritime ? (
+            <g className="maritime">
+              {maritime.bands.map(({ id, ladder }) =>
+                ladder
+                  .filter(({ band }) => band.zone === "territorial" || band.zone === "eez")
+                  .map(({ band, path }) => {
+                    const ink = ZONE_INK[band.zone];
+                    return (
+                      <g key={`${id}-${band.zone}`}>
+                        {demoted.has("maritime") || !ink.fill ? null : (
+                          <path d={path} fill={ink.fill} />
+                        )}
+                        <path
+                          d={path}
+                          fill="none"
+                          stroke={ink.stroke ?? "none"}
+                          strokeWidth={ink.strokeWidth ?? undefined}
+                          strokeDasharray={ink.dash ?? undefined}
+                          opacity={ink.opacity}
+                          vectorEffect="non-scaling-stroke"
+                        />
+                      </g>
+                    );
+                  }),
+              )}
+            </g>
+          ) : null}
+
+          <path
+            d={graticule}
+            fill="none"
+            stroke="var(--ink-5)"
+            strokeWidth="var(--w-hair)"
+            opacity={0.5}
+            vectorEffect="non-scaling-stroke"
+          />
+
+          <g className="land">
+            {countries.map((country) => (
               <path
-                key={`bath-${i}`}
-                d={geometryPath(feature.geometry as never, projector)}
-                fill="var(--sea-deep)"
-                opacity={0.55}
-              />
+                key={country.iso3 || country.name}
+                d={country.path}
+                fill={fillFor(country.iso3)}
+                onClick={() => selectUnlessDragged(country.iso3)}
+                style={{ cursor: "pointer" }}
+              >
+                <title>{country.name}</title>
+              </path>
             ))}
           </g>
-        ) : null}
 
-        {maritime ? (
-          <g className="maritime">
-            {demoted.has("maritime") ? null : (
-              <path d={maritime.highSeas} fill="var(--sea-deep)" />
-            )}
-            {maritime.bands.map(({ id, ladder }) =>
-              ladder.map(({ band, path }) => {
-                const ink = ZONE_INK[band.zone];
-                return (
-                  <g key={`${id}-${band.zone}`}>
-                    {demoted.has("maritime") || !ink.fill ? null : (
-                      <path d={path} fill={ink.fill} />
-                    )}
-                    <path
-                      d={path}
-                      fill="none"
-                      stroke={ink.stroke ?? "none"}
-                      strokeWidth={ink.strokeWidth ?? undefined}
-                      strokeDasharray={ink.dash ?? undefined}
-                      opacity={ink.opacity}
-                    />
-                  </g>
-                );
-              }),
-            )}
-            {maritime.medians.map((path, i) => (
-              <path
-                key={`median-${i}`}
-                d={path}
-                fill="none"
-                stroke="var(--alliance)"
-                strokeWidth="var(--w-line)"
-                strokeDasharray="8 3 1.5 3"
-              />
-            ))}
-          </g>
-        ) : null}
+          {showPhysical && layers.lakes ? (
+            <g>
+              {layers.lakes.features.filter(inFrame).map((feature, i) => (
+                <path key={`lake-${i}`} d={geometryPath(feature.geometry as never, projector)} fill="var(--sea)" />
+              ))}
+            </g>
+          ) : null}
 
-        <path
-          d={graticule}
-          fill="none"
-          stroke="var(--ink-5)"
-          strokeWidth="var(--w-hair)"
-          opacity={0.5}
-        />
-
-        <g className="land">
-          {countries.map((country) => (
-            <path
-              key={country.iso3 || country.name}
-              d={country.path}
-              fill={fillFor(country.iso3)}
-              onClick={() => selectUnlessDragged(country.iso3)}
-              style={{ cursor: "pointer" }}
-            >
-              <title>{country.name}</title>
-            </path>
-          ))}
-        </g>
-
-        {showPhysical && layers.lakes ? (
-          <g>
-            {layers.lakes.features.filter(inFrame).map((feature, i) => (
-              <path key={`lake-${i}`} d={geometryPath(feature.geometry as never, projector)} fill="var(--sea)" />
-            ))}
-          </g>
-        ) : null}
-
-        {showPhysical && layers.rivers ? (
-          <g>
-            {layers.rivers.features.filter(inFrame).map((feature, i) => (
-              <path
-                key={`river-${i}`}
-                d={geometryPath(feature.geometry as never, projector)}
-                fill="none"
-                stroke="var(--sea-deep)"
-                strokeWidth={Math.max(0.4, Number(feature.properties.width ?? 1) * 0.5)}
-                opacity={0.85}
-              />
-            ))}
-          </g>
-        ) : null}
-
-        {layers.coastline ? (
-          <g>
-            {layers.coastline.features.filter(inFrame).map((feature, i) => (
-              <path
-                key={`coast-${i}`}
-                d={geometryPath(feature.geometry as never, projector)}
-                fill="none"
-                stroke="var(--ink-2)"
-                strokeWidth="var(--w-line)"
-                strokeLinejoin="round"
-              />
-            ))}
-          </g>
-        ) : null}
-
-        <g className="boundaries">
-          {boundaries.map((boundary) => {
-            const specs =
-              showDispute && boundary.dissents
-                ? emphasise(BOUNDARY_INK[boundary.cls])
-                : BOUNDARY_INK[boundary.cls];
-            return (
-              <g key={boundary.id} data-class={boundary.cls}>
-                {specs.map((spec, i) => (
-                  <path
-                    key={i}
-                    d={boundary.path}
-                    fill="none"
-                    stroke={spec.stroke}
-                    strokeWidth={spec.width}
-                    strokeDasharray={spec.dash ?? undefined}
-                    strokeLinecap="butt"
-                    opacity={spec.opacity}
-                    transform={spec.offset ? `translate(0,${spec.offset})` : undefined}
-                  />
-                ))}
-                {showDispute && boundary.dissents ? (
-                  <path
-                    d={boundary.path}
-                    fill="none"
-                    stroke="var(--breach)"
-                    strokeWidth="5.5"
-                    strokeDasharray="1 6"
-                    opacity={0.75}
-                  />
-                ) : null}
-              </g>
-            );
-          })}
-        </g>
-
-        <g className="places">
-          {labels.placed.map((label) => {
-            const mark = PLACE_MARK[label.place.tier];
-            const [x, y] = label.at;
-            return (
-              <g key={`${label.place.name}-${x.toFixed(1)}-${y.toFixed(1)}`}>
-                {mark.mark === "capital" ? (
-                  <>
-                    <circle cx={x} cy={y} r={mark.radius} fill="var(--paper)" stroke="var(--ink)" strokeWidth={1.1} />
-                    <rect x={x - 1.5} y={y - 1.5} width={3} height={3} fill="var(--ink)" />
-                  </>
-                ) : mark.mark === "square" ? (
-                  <rect
-                    x={x - mark.radius}
-                    y={y - mark.radius}
-                    width={mark.radius * 2}
-                    height={mark.radius * 2}
-                    fill="var(--ink)"
-                    stroke="var(--paper)"
-                    strokeWidth={0.8}
-                  />
-                ) : mark.mark === "disc" ? (
-                  <circle cx={x} cy={y} r={mark.radius} fill="var(--ink-2)" />
-                ) : mark.mark === "ring" ? (
-                  <circle cx={x} cy={y} r={mark.radius} fill="none" stroke="var(--ink-3)" strokeWidth={1} />
-                ) : (
-                  <circle cx={x} cy={y} r={mark.radius} fill="var(--ink-4)" />
-                )}
-                {/* Halo by knockout, never a drop shadow. */}
-                <text
-                  className={mark.labelClass}
-                  x={label.labelAt[0]}
-                  y={label.labelAt[1]}
-                  textAnchor={label.anchor}
-                  stroke="var(--paper)"
-                  strokeWidth={2.4}
-                  strokeLinejoin="round"
-                  opacity={0.82}
+          {showPhysical && layers.rivers ? (
+            <g>
+              {layers.rivers.features.filter(inFrame).map((feature, i) => (
+                <path
+                  key={`river-${i}`}
+                  d={geometryPath(feature.geometry as never, projector)}
                   fill="none"
-                >
-                  {label.place.name}
-                </text>
-                <text
-                  className={mark.labelClass}
-                  x={label.labelAt[0]}
-                  y={label.labelAt[1]}
-                  textAnchor={label.anchor}
-                >
-                  {label.place.name}
-                </text>
-              </g>
-            );
-          })}
+                  stroke="var(--sea-deep)"
+                  strokeWidth={Math.max(0.4, Number(feature.properties.width ?? 1) * 0.5)}
+                  opacity={0.85}
+                  vectorEffect="non-scaling-stroke"
+                />
+              ))}
+            </g>
+          ) : null}
+
+          {layers.coastline ? (
+            <g>
+              {layers.coastline.features.filter(inFrame).map((feature, i) => (
+                <path
+                  key={`coast-${i}`}
+                  d={geometryPath(feature.geometry as never, projector)}
+                  fill="none"
+                  stroke="var(--ink-2)"
+                  strokeWidth="var(--w-line)"
+                  strokeLinejoin="round"
+                  vectorEffect="non-scaling-stroke"
+                />
+              ))}
+            </g>
+          ) : null}
+
+          <g className="boundaries">
+            {boundaries.map((boundary) => {
+              const specs =
+                showDispute && boundary.dissents
+                  ? emphasise(BOUNDARY_INK[boundary.cls])
+                  : BOUNDARY_INK[boundary.cls];
+              return (
+                <g key={boundary.id} data-class={boundary.cls}>
+                  {specs.map((spec, i) => (
+                    <path
+                      key={i}
+                      d={boundary.path}
+                      fill="none"
+                      stroke={spec.stroke}
+                      strokeWidth={spec.width}
+                      strokeDasharray={spec.dash ?? undefined}
+                      strokeLinecap="butt"
+                      opacity={spec.opacity}
+                      transform={spec.offset ? `translate(0,${spec.offset})` : undefined}
+                      vectorEffect="non-scaling-stroke"
+                    />
+                  ))}
+                  {showDispute && boundary.dissents ? (
+                    <path
+                      d={boundary.path}
+                      fill="none"
+                      stroke="var(--breach)"
+                      strokeWidth="5.5"
+                      strokeDasharray="1 6"
+                      opacity={0.75}
+                      vectorEffect="non-scaling-stroke"
+                    />
+                  ) : null}
+                </g>
+              );
+            })}
+          </g>
         </g>
       </g>
 
-      {/* Neatline. A sheet has an edge; a viewport does not. */}
+      {/* Neatline. A sheet has an edge; a viewport does not. Fixed to the
+          screen frame, not the camera — a border does not pan or zoom. */}
       <rect x={6} y={6} width={width - 12} height={height - 12} fill="none" stroke="var(--ink)" strokeWidth="var(--w-line)" />
       <rect x={10} y={10} width={width - 20} height={height - 20} fill="none" stroke="var(--ink-4)" strokeWidth="var(--w-hair)" />
     </svg>
-    <div className="atlas-zoomctl" role="group" aria-label="Zoom and pan controls">
-      <button type="button" aria-label="Zoom in" onClick={() => zoomAt([width / 2, height / 2], 1.6)}>
-        +
-      </button>
-      <button type="button" aria-label="Zoom out" onClick={() => zoomAt([width / 2, height / 2], 1 / 1.6)}>
-        −
-      </button>
-      <button type="button" aria-label="Reset view to this sheet's frame" disabled={atHome} onClick={() => setCamera(null)}>
-        ⟲
-      </button>
-    </div>
-    </>
   );
 }
