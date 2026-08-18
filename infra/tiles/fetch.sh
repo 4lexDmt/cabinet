@@ -84,7 +84,7 @@ while IFS=$'\t' read -r id url; do
   else
     echo "fetch: $id — WARN no checksums.json; run ./fetch.sh --record" >&2
   fi
-done < <(jq -r '.sources[] | select(.manual_download != true) | [.id, .url] | @tsv' "$MANIFEST")
+done < <(jq -r '.sources[] | select(.manual_download != true) | select(.fetch == null) | [.id, .url] | @tsv' "$MANIFEST")
 
 if [[ $RECORD -eq 1 ]]; then
   printf '%s\n' "${RECORDED[@]}" | jq -s '.' > "$CHECKSUMS"

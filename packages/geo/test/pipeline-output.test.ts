@@ -182,7 +182,14 @@ describe("generated physical base", () => {
 
 describe("attribution sidecar", () => {
   const raw = JSON.parse(readFileSync(join(mapkit, "attribution.json"), "utf8")) as {
-    sources: Array<{ id: string; license: string; attribution: string; required: boolean; used: boolean }>;
+    sources: Array<{
+      id: string;
+      license: string;
+      attribution: string;
+      required: boolean;
+      used: boolean;
+      shareAlike?: boolean;
+    }>;
     rejected: Array<{ id: string; reason: string }>;
   };
 
@@ -198,9 +205,14 @@ describe("attribution sidecar", () => {
     }
   });
 
-  it("ships nothing that requires attribution today, and knows it", () => {
+  it("credits every used source that requires it, and records ODbL share-alike on the OSM source", () => {
     const owed = raw.sources.filter((s) => s.used && s.required);
-    expect(owed).toEqual([]);
+    const ids = owed.map((s) => s.id);
+    expect(ids).toContain("geoboundaries_adm1");
+    expect(ids).toContain("geonames_cities15000");
+    const osm = raw.sources.find((s) => s.id === "osm_slice_transport");
+    expect(osm?.shareAlike).toBe(true);
+    expect(osm?.license).toMatch(/ODbL/i);
   });
 
   it("records why GADM is refused", () => {

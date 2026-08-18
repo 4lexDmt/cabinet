@@ -102,6 +102,7 @@ export function loadWorld(config: ScenarioConfig, matchId: string, seed: number)
       ...f,
       destination: null,
       inTransit: false,
+      ticks_remaining: 0,
     };
   }
 
@@ -141,6 +142,7 @@ export function loadWorld(config: ScenarioConfig, matchId: string, seed: number)
     beliefs: [],
     wars: [],
     tradeRoutes: config.trade_routes,
+    corridors: [...(config.corridors ?? [])],
     postures,
     flags: { ...config.flags },
     victory: config.victory_conditions,

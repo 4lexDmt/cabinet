@@ -22,6 +22,7 @@ import type { MouseEvent as ReactMouseEvent, PointerEvent as ReactPointerEvent }
 import {
   NEUTRAL_OBSERVER,
   PLAIN_BOUNDARY_INK,
+  TOKEN,
   buildMaritimeField,
   densify,
   emphasise,
@@ -66,6 +67,16 @@ export interface SheetProps {
 }
 
 const GRATICULE_STEPS = [1, 2, 5, 10, 15, 30];
+
+function projectedPoint(feature: LoadedFeature, projector: Projector): Point | null {
+  const geometry = feature.geometry;
+  if (!geometry || geometry.type !== "Point" || !Array.isArray(geometry.coordinates)) return null;
+  const coords = geometry.coordinates as number[];
+  if (coords.length < 2) return null;
+  const [x, y] = projector([coords[0]!, coords[1]!]);
+  if (!Number.isFinite(x) || !Number.isFinite(y)) return null;
+  return [x, y];
+}
 
 function graticulePath(bounds: BBox, project: Projector, step: number, wrapped = false): string {
   const [w, s, e, n] = bounds;
@@ -1008,6 +1019,168 @@ export function Sheet(props: SheetProps) {
           );
         })}
       </g>
+
+      {/* Stage 1 theatre overlays. Hairline administration, not a second political fill. */}
+      {layers.provinces ? (
+        <g className="provinces">
+          {layers.provinces.features.filter(inFrame).map((feature, i) => {
+            const props = feature.properties;
+            const povLabel =
+              observer === "UA" && props.pov_ua
+                ? String(props.pov_ua)
+                : observer === "RU" && props.pov_ru
+                  ? String(props.pov_ru)
+                  : String(props.name ?? "");
+            return (
+              <path
+                key={`prov-${String(feature.properties.id ?? i)}`}
+                d={geometryPath(feature.geometry as never, projector)}
+                fill="none"
+                stroke="var(--ink-4)"
+                strokeWidth="var(--w-hair)"
+                vectorEffect="non-scaling-stroke"
+              >
+                <title>{povLabel}</title>
+              </path>
+            );
+          })}
+        </g>
+      ) : null}
+
+      {layers.roads ? (
+        <g className="roads">
+          {layers.roads.features.filter(inFrame).map((feature, i) => (
+            <path
+              key={`road-${String(feature.properties.id ?? i)}`}
+              d={geometryPath(feature.geometry as never, projector)}
+              fill="none"
+              stroke="var(--ink-3)"
+              strokeWidth={feature.properties.class === "strategic" ? "var(--w-thin)" : "var(--w-hair)"}
+              strokeLinecap="round"
+              opacity={0.85}
+              vectorEffect="non-scaling-stroke"
+            />
+          ))}
+        </g>
+      ) : null}
+
+      {layers.rail ? (
+        <g className="rail">
+          {layers.rail.features.filter(inFrame).map((feature, i) => (
+            <path
+              key={`rail-${String(feature.properties.id ?? i)}`}
+              d={geometryPath(feature.geometry as never, projector)}
+              fill="none"
+              stroke="var(--ink-2)"
+              strokeWidth="var(--w-line)"
+              strokeLinecap="round"
+              opacity={0.9}
+              vectorEffect="non-scaling-stroke"
+            />
+          ))}
+        </g>
+      ) : null}
+
+      {layers.chokepoints ? (
+        <g className="chokepoints">
+          {layers.chokepoints.features.filter(inFrame).map((feature, i) => {
+            const kind = String(feature.properties.kind ?? "");
+            if (kind === "gauge_break") {
+              const pt = projectedPoint(feature, projector);
+              if (!pt) return null;
+              return (
+                <circle
+                  key={`break-${String(feature.properties.id ?? i)}`}
+                  cx={pt[0]}
+                  cy={pt[1]}
+                  r={3.2}
+                  fill={TOKEN.uncertainty}
+                  stroke="var(--paper)"
+                  strokeWidth={1}
+                >
+                  <title>Gauge break</title>
+                </circle>
+              );
+            }
+            return (
+              <path
+                key={`choke-${String(feature.properties.id ?? i)}`}
+                d={geometryPath(feature.geometry as never, projector)}
+                fill="none"
+                stroke="var(--ink)"
+                strokeWidth="var(--w-heavy)"
+                strokeLinecap="round"
+                vectorEffect="non-scaling-stroke"
+              >
+                <title>{String(feature.properties.name ?? "Chokepoint")}</title>
+              </path>
+            );
+          })}
+        </g>
+      ) : null}
+
+      {layers.ports ? (
+        <g className="ports">
+          {layers.ports.features.filter(inFrame).map((feature, i) => {
+            const pt = projectedPoint(feature, projector);
+            if (!pt) return null;
+            return (
+              <rect
+                key={`port-${String(feature.properties.id ?? i)}`}
+                x={pt[0] - 2.1}
+                y={pt[1] - 2.1}
+                width={4.2}
+                height={4.2}
+                fill="var(--ink-2)"
+              >
+                <title>{String(feature.properties.name ?? "Port")}</title>
+              </rect>
+            );
+          })}
+        </g>
+      ) : null}
+
+      {layers.airports ? (
+        <g className="airports">
+          {layers.airports.features.filter(inFrame).map((feature, i) => {
+            const pt = projectedPoint(feature, projector);
+            if (!pt) return null;
+            return (
+              <circle
+                key={`air-${String(feature.properties.id ?? i)}`}
+                cx={pt[0]}
+                cy={pt[1]}
+                r={2.8}
+                fill="none"
+                stroke="var(--ink-2)"
+                strokeWidth={1.15}
+              >
+                <title>{String(feature.properties.name ?? "Airport")}</title>
+              </circle>
+            );
+          })}
+        </g>
+      ) : null}
+
+      {layers.cities ? (
+        <g className="cities">
+          {layers.cities.features.filter(inFrame).map((feature, i) => {
+            const pt = projectedPoint(feature, projector);
+            if (!pt) return null;
+            const seat = Boolean(feature.properties.seat);
+            return (
+              <g key={`city-${String(feature.properties.id ?? i)}`}>
+                {seat ? (
+                  <rect x={pt[0] - 2} y={pt[1] - 2} width={4} height={4} fill="var(--ink)" transform={`rotate(45 ${pt[0]} ${pt[1]})`} />
+                ) : (
+                  <circle cx={pt[0]} cy={pt[1]} r={1.7} fill="var(--ink-2)" />
+                )}
+                <title>{String(feature.properties.name ?? "")}</title>
+              </g>
+            );
+          })}
+        </g>
+      ) : null}
     </>
   );
 

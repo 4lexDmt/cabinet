@@ -134,6 +134,17 @@ export const SHEETS: SheetConfig[] = [
     brief:
       "Crimea renders differently from Kyiv's desk and from Moscow's. Both readings are shipped in the same file, on the same geometry.",
   },
+  {
+    id: "ee_black_sea_2026",
+    label: "Eastern Europe / Black Sea",
+    scale: "1:12M",
+    bbox: [14, 36, 50, 56],
+    register: "theatre",
+    parties: ["RU", "UA", "TR", "PL", "RO"],
+    brief:
+      "Stage 1 theatre: aggregated provinces, gauged rail, strategic roads, and the Bosphorus as a closeable node. Crimea is one geometry; Ukraine's desk and Russia's desk disagree about the label, not the polygon.",
+    projection: { kind: "conic_conformal", parallels: [40, 52], lon0: 32 },
+  },
 ];
 
 export function sheetById(id: string): SheetConfig {

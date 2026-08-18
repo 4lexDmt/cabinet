@@ -164,6 +164,15 @@ export {
   territorialSeaNmForYear,
 } from "./scenario-geo.ts";
 export type { ResolvedScenarioGeo, ScenarioGeoConfig, ScenarioLayer } from "./scenario-geo.ts";
+export {
+  DEFAULT_SIMPLIFIED_CAP,
+  nationByIso3,
+  nationEntrySchema,
+  provinceCap,
+  tierOf,
+  worldRosterSchema,
+} from "./nations.ts";
+export type { AdmRecipe, ContestedCase, NationEntry, NationTier, TheatreConfig, WorldRoster } from "./nations.ts";
 
 export {
   bboxOf,

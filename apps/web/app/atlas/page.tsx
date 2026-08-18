@@ -5,15 +5,20 @@ import "./atlas.css";
 export const metadata: Metadata = {
   title: "Aevanor Atlas — a map is a claim, not a fact",
   description:
-    "The world, from nobody's desk: real Natural Earth political boundaries and the two sovereignty-adjacent maritime zones — territorial sea and exclusive economic zone — computed by equidistance rather than traced.",
+    "Eastern Europe and the Black Sea, 2026: aggregated provinces, cities, strategic roads and gauged rail, with the Bosphorus as a closeable node. The world plate remains at /atlas?sheet=world.",
   openGraph: {
     title: "Aevanor Atlas — a map is a claim, not a fact",
     description:
-      "One reference plate: political borders and maritime zones, nothing else. Scroll or pinch to zoom, drag to pan, bounded to the map's own frame.",
+      "Stage 1 theatre: provinces, cities and roads from Poland through the Bosphorus. Scroll or pinch to zoom, drag to pan.",
     type: "website",
   },
 };
 
-export default function AtlasPage() {
-  return <AtlasShell />;
+export default async function AtlasPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ sheet?: string }>;
+}) {
+  const params = await searchParams;
+  return <AtlasShell sheetId={params.sheet} />;
 }

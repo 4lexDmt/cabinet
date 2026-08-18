@@ -58,6 +58,7 @@ export function emptyWorld(nationCount: number, seed: number): WorldState {
       destination: null,
       strength: 5,
       inTransit: false,
+      ticks_remaining: 0,
     };
     postures[id] = { nationId: id, engagement: "hold", delegation: [] };
   }
@@ -112,6 +113,7 @@ export function emptyWorld(nationCount: number, seed: number): WorldState {
     beliefs: [],
     wars: [],
     tradeRoutes: [],
+    corridors: [],
     postures,
     flags: {},
     victory: {},
