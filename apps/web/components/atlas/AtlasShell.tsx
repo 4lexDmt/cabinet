@@ -4,14 +4,11 @@
  * The instrument, reduced to its base plate.
  *
  * No sheet switcher, no perspective switcher, no overlay toggles, no
- * buttons anywhere. One frame — the world, from nobody's desk — showing
- * only political boundaries and the two maritime zones that are actually
- * sovereignty-adjacent: the territorial sea and the exclusive economic
- * zone. Reading is still interactive (scroll or pinch to zoom, drag to
- * pan); the frame itself is not a control.
- *
- * The Stage 1 theatre is the same instrument with more layers, opened at
- * `/atlas?sheet=ee_black_sea_2026`. The world plate is unchanged.
+ * buttons anywhere. Production opens the 2026 Eastern Europe / Black Sea
+ * plate so provinces, cities and strategic roads are on the instrument.
+ * The chrome-free world plate remains at `/atlas?sheet=world`. Reading is
+ * still interactive (scroll or pinch to zoom, drag to pan); the frame
+ * itself is not a control.
  */
 
 import { useEffect, useMemo, useRef, useState } from "react";
@@ -44,7 +41,10 @@ const DEMOTED = new Set<OverlayId>(["maritime"]);
 const ERA: MaritimeEra = UNCLOS_ERA;
 
 export function AtlasShell({ sheetId }: { sheetId?: string }) {
-  const sheet = useMemo(() => sheetById(sheetId && sheetId.length > 0 ? sheetId : "world"), [sheetId]);
+  const sheet = useMemo(
+    () => sheetById(sheetId && sheetId.length > 0 ? sheetId : "ee_black_sea_2026"),
+    [sheetId],
+  );
   const projection = useMemo(() => projectionOf(sheet), [sheet]);
   const isSlice = sheet.id === "ee_black_sea_2026";
   const layerNames = isSlice ? SLICE_LAYERS : WORLD_LAYERS;

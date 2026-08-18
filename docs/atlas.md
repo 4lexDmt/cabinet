@@ -14,7 +14,10 @@ a refetch: every boundary segment carries one property per government
 (`pov_in`, `pov_pk`, `pov_neutral`, …). Switching from a disinterested
 reading to Delhi's is a change of which property the ink is chosen by.
 
-Start on Kashmir. From Delhi the Line of Control is an international
+Start on Eastern Europe / Black Sea, 2026: aggregated provinces, cities,
+strategic roads and gauged rail, with the Bosphorus as a closeable node.
+The chrome-free world plate is `/atlas?sheet=world`. Kashmir remains a
+sheet of its own: from Delhi the Line of Control is an international
 boundary. From Islamabad it is an internal administrative line. To nobody
 in particular it is a de facto military line with no agreed legal status.
 All three ship in the same file.
