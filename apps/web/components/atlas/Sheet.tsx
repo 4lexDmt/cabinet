@@ -27,6 +27,7 @@ import {
   emphasise,
   fitBounds,
   geometryPath,
+  groundScaleAt,
   kmPerPixel,
   project,
   readBoundary,
@@ -701,7 +702,7 @@ export function Sheet(props: SheetProps) {
     // room for both at once.
     //
     // Reach: a coast up to 200 miles off screen still casts water into view,
-    // and a conformal projection's scale grows with latitude, so that same 200
+    // and a projection's scale typically grows with latitude, so that same 200
     // miles is more pixels the further from the equator the frame sits.
     //
     // Drift: the view is allowed to move without earning a recomputation, and
@@ -789,14 +790,16 @@ export function Sheet(props: SheetProps) {
 
     const field = buildMaritimeField({ width: frameWidth, height: frameHeight, cellSize, coasts, landPolygons });
 
-    // A conformal projection's scale grows away from the equator, so a fixed
+    // A projection's scale typically grows away from the equator, so a fixed
     // number of pixels is a shorter distance on the ground the further north it
-    // sits. Correcting per row is what keeps a 200-mile limit 200 miles wide
-    // off Norway as well as off Somalia.
+    // sits. Correcting per row from the projection itself — not from cos(lat),
+    // which is only Mercator's answer — is what keeps a 200-mile limit 200
+    // miles wide off Norway as well as off Somalia, including across the
+    // compact-Mercator fold.
     const rowGround: number[] = [];
     for (let row = 0; row < field.rows; row++) {
       const [, lat] = unproject(ref, [frameWidth / 2, (row + 0.5) * cellSize]);
-      rowGround.push(Math.cos(Math.max(-85, Math.min(85, lat)) * (Math.PI / 180)));
+      rowGround.push(groundScaleAt(projection, lat));
     }
     const groundScale = (row: number) => rowGround[row] ?? 1;
 

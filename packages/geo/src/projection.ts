@@ -1,11 +1,13 @@
 /**
  * Projections and viewports. Pure functions — no DOM, no side effects.
  *
- * Three projections, each earning its place:
+ * Four projections, each earning its place:
  *
  * - `equirectangular` for theatre views. Trivial to reason about and it keeps
  *   historical scenario geometry honest: nothing is silently stretched.
  * - `mercator` for zoomed views, because that is what tiled data assumes.
+ * - `compactMercator` for the world sheet. Mercator through the inhabited
+ *   latitudes, then a folded Arctic so Greenland does not eat the plate.
  * - `conicConformal` for printed theatre sheets, which is the register the
  *   cartography is drawn in. Standard parallels are declared on the sheet.
  */
@@ -20,7 +22,7 @@ export const EARTH_RADIUS_M = 6_378_137;
 /** Ground resolution in metres per pixel at zoom 0, latitude 0, 256px tiles. */
 export const RESOLUTION_Z0 = (2 * Math.PI * EARTH_RADIUS_M) / 256;
 
-export type ProjectionKind = "equirectangular" | "mercator" | "conic_conformal";
+export type ProjectionKind = "equirectangular" | "mercator" | "mercator_compact" | "conic_conformal";
 
 export interface Projection {
   kind: ProjectionKind;
@@ -57,6 +59,14 @@ function clampLat(lat: number): number {
   return Math.max(-89.999999, Math.min(89.999999, lat));
 }
 
+function mercatorY(phi: number): number {
+  return Math.log(Math.tan(Math.PI / 4 + phi / 2));
+}
+
+function mercatorPhi(y: number): number {
+  return 2 * Math.atan(Math.exp(y)) - Math.PI / 2;
+}
+
 export function equirectangular(standardParallel = 0): Projection {
   const k = Math.cos(standardParallel * DEG);
   return {
@@ -73,11 +83,74 @@ export function mercator(): Projection {
     kind: "mercator",
     declaration: "WEB MERCATOR · EPSG:3857",
     maxLongitudeSpan: 360,
-    forward: ([lon, lat]) => {
-      const phi = clampLat(lat) * DEG;
-      return [lon * DEG, Math.log(Math.tan(Math.PI / 4 + phi / 2))];
+    forward: ([lon, lat]) => [lon * DEG, mercatorY(clampLat(lat) * DEG)],
+    inverse: ([x, y]) => [x * RAD, mercatorPhi(y) * RAD],
+  };
+}
+
+/**
+ * Mercator through the inhabited latitudes, then a folded Arctic.
+ *
+ * Mercator is conformal, which is why France and Japan look like themselves
+ * on it, and why the world sheet used it in the first place. It is also why
+ * Greenland becomes a tower and why Svalbard, Franz Josef Land and the rest
+ * of the Russian Arctic sit a third of the plate away from the coasts they
+ * belong to: from 60°N to 84°N the scale roughly doubles, and that band is
+ * almost everything a reader thinks of as "the north".
+ *
+ * So Mercator is kept to 60°N — the lowest latitude of Greenland, Yukon and
+ * the Norwegian Sea — and the remaining 24° to the sheet's northern edge are
+ * folded onto 16° of Mercator latitude. The join is C¹ (value and derivative
+ * match), so a coastline that crosses 60° does not kink. Longitude is
+ * untouched: countries do not smear sideways. The Arctic is no longer
+ * conformal, which the title block declares; that is the price of a world
+ * plate whose other nations still have the shape they actually have.
+ *
+ * The fold is a rational taper, not a linear squash: compression increases
+ * toward the pole, which is what pulls the far islands in without sitting
+ * Ellesmere on Hudson Bay.
+ */
+export const COMPACT_CUT_DEG = 60;
+/** World-sheet north used to calibrate the fold. */
+export const COMPACT_SHEET_NORTH_DEG = 84;
+/** Degrees of Mercator latitude the 60–84° band occupies after the fold. */
+export const COMPACT_POLE_SPAN_DEG = 16;
+
+function compactWarp(phi: number, cut: number, a: number): number {
+  const abs = Math.abs(phi);
+  if (abs <= cut) return phi;
+  const delta = abs - cut;
+  const warped = cut + delta / (1 + a * delta);
+  return phi < 0 ? -warped : warped;
+}
+
+function compactUnwarp(psi: number, cut: number, a: number): number {
+  const abs = Math.abs(psi);
+  if (abs <= cut) return psi;
+  const delta = abs - cut;
+  const denom = 1 - a * delta;
+  // The asymptote is past 90° for the calibrated `a`, so this stays positive
+  // for every latitude the projection will actually be asked to invert.
+  const u = denom > 1e-12 ? delta / denom : delta;
+  const phi = cut + u;
+  return psi < 0 ? -phi : phi;
+}
+
+export function compactMercator(): Projection {
+  const cut = COMPACT_CUT_DEG * DEG;
+  const deltaNorth = (COMPACT_SHEET_NORTH_DEG - COMPACT_CUT_DEG) * DEG;
+  const targetSpan = COMPACT_POLE_SPAN_DEG * DEG;
+  const a = (deltaNorth - targetSpan) / (deltaNorth * targetSpan);
+
+  return {
+    kind: "mercator_compact",
+    declaration: `MERCATOR COMPACT · CUT ${COMPACT_CUT_DEG}° · ARCTIC ${COMPACT_POLE_SPAN_DEG}°`,
+    maxLongitudeSpan: 360,
+    forward: ([lon, lat]) => [lon * DEG, mercatorY(compactWarp(clampLat(lat) * DEG, cut, a))],
+    inverse: ([x, y]) => {
+      const lat = compactUnwarp(mercatorPhi(y), cut, a) * RAD;
+      return [x * RAD, Math.max(-90, Math.min(90, lat))];
     },
-    inverse: ([x, y]) => [x * RAD, (2 * Math.atan(Math.exp(y)) - Math.PI / 2) * RAD],
   };
 }
 
@@ -137,6 +210,8 @@ export function projectionFor(kind: ProjectionKind, options?: {
   switch (kind) {
     case "mercator":
       return mercator();
+    case "mercator_compact":
+      return compactMercator();
     case "conic_conformal":
       return conicConformal(options?.parallels ?? [30, 60], options?.lon0 ?? 0);
     case "equirectangular":
@@ -182,6 +257,20 @@ function groundResolution(projection: Projection, scale: number, center: LonLat)
   if (planeDistance === 0) return Number.POSITIVE_INFINITY;
   const metres = delta * DEG * EARTH_RADIUS_M;
   return metres / (planeDistance * scale);
+}
+
+/**
+ * Ground distance per plane unit at `lat`, as a fraction of the equatorial
+ * value. On Mercator this is cos(lat). Maritime isolines multiply pixel
+ * distance by this so a 200-mile limit stays 200 miles when the projection's
+ * scale changes with latitude — including across the compact-Mercator fold,
+ * where the scale is no longer sec(lat).
+ */
+export function groundScaleAt(projection: Projection, lat: number): number {
+  const here = groundResolution(projection, 1, [0, clampLat(lat)]);
+  const equator = groundResolution(projection, 1, [0, 0]);
+  if (!Number.isFinite(here) || !Number.isFinite(equator) || equator === 0) return 1;
+  return here / equator;
 }
 
 /** Slippy-map zoom equivalent, so `min_zoom` filters work under any projection. */

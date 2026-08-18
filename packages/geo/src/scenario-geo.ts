@@ -62,7 +62,7 @@ export function contiguousZoneExistsInYear(year: number): boolean {
 }
 
 export const projectionSpecSchema = z.object({
-  kind: z.enum(["equirectangular", "mercator", "conic_conformal"]).default("equirectangular"),
+  kind: z.enum(["equirectangular", "mercator", "mercator_compact", "conic_conformal"]).default("equirectangular"),
   parallels: z.tuple([z.number(), z.number()]).optional(),
   lon0: z.number().optional(),
 });

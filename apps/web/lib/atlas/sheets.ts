@@ -50,22 +50,27 @@ export const SHEETS: SheetConfig[] = [
     // North to 84°, which is past Cape Morris Jesup, Ellesmere and Svalbard —
     // the usual 79° or 80° cut takes the top off Greenland and most of the
     // Canadian archipelago, and an arctic power whose territory is missing
-    // from the plate is a poor start for a game about territory. Mercator
-    // inflates all of it, which the title block declares.
+    // from the plate is a poor start for a game about territory.
     bbox: [-180, -58, 180, 84],
     register: "theatre",
     parties: ["CN", "RU", "IN", "PK", "IL", "PS", "MA", "AR", "GB", "TR", "GR", "UA"],
     brief:
       "Every boundary on earth, and 72 segments where at least one government reads the line differently from everyone else.",
-    // Mercator rather than the frame's own recommendation. A plate carrée
-    // world draws a degree of longitude the same width at 60° as at the
-    // equator, so every northern country comes out smeared sideways and
-    // squashed flat. Mercator is conformal: it lies about area — declared in
-    // the title block — but keeps each country the shape it actually is,
-    // which is the shape readers know. It also makes the maritime zones
-    // honest, because a circle of sea stays a circle under a conformal
-    // projection and the distance field is isotropic.
-    projection: { kind: "mercator" },
+    // Compact Mercator rather than the frame's own recommendation. A plate
+    // carrée world draws a degree of longitude the same width at 60° as at
+    // the equator, so every northern country comes out smeared sideways and
+    // squashed flat. Plain Mercator is conformal — it keeps each country the
+    // shape it actually is — but from 60°N to 84°N the scale roughly doubles,
+    // so Greenland becomes a tower, the Canadian archipelago a vertical smear,
+    // and Svalbard, Franz Josef Land and the rest of the Russian Arctic sit a
+    // third of the plate away from the coasts they belong to. That is what
+    // ate the view of every other nation.
+    //
+    // Compact Mercator is Mercator through 60°N, which is the lowest latitude
+    // of Greenland and Yukon, and a folded Arctic above it. France, Japan,
+    // India keep the shape they have on Mercator. The Arctic is no longer
+    // conformal, which the title block declares.
+    projection: { kind: "mercator_compact" },
     wraps: true,
   },
   {
