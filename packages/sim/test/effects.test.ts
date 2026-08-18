@@ -39,6 +39,7 @@ function world(): WorldState {
     beliefs: [],
     wars: [],
     tradeRoutes: [],
+    corridors: [],
     postures: {},
     flags: {},
     victory: {},

@@ -108,6 +108,9 @@ export type ScenarioLayer =
   | "territories"
   | "places"
   | "roads"
+  | "provinces"
+  | "cities"
+  | "rail"
   | "maritime_territorial"
   | "maritime_contiguous"
   | "maritime_eez"
@@ -141,6 +144,9 @@ export function resolveScenarioGeo(config: ScenarioGeoConfig): ResolvedScenarioG
   layers.push("airspace_sovereign");
   if (hasFir) layers.push("airspace_fir");
   if (roadEra !== "none") layers.push("roads");
+  if (year >= 2000) {
+    layers.push("provinces", "cities", "rail");
+  }
 
   return {
     year,
@@ -179,6 +185,10 @@ export function layerAbsenceReason(geo: ResolvedScenarioGeo, layer: ScenarioLaye
       return `No flight information regions in ${geo.year}. ICAO establishes them in 1947.`;
     case "roads":
       return `No trunk road network at theatre scale in ${geo.year}.`;
+    case "provinces":
+    case "cities":
+    case "rail":
+      return `No ${layer} layer in ${geo.year}. The 2026 dataset is a later plate.`;
     default:
       return `Not modelled for ${geo.year}.`;
   }

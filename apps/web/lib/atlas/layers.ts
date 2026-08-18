@@ -31,7 +31,14 @@ export type LayerName =
   | "lakes"
   | "rivers"
   | "canals"
-  | "bathymetry";
+  | "bathymetry"
+  | "provinces"
+  | "cities"
+  | "roads"
+  | "rail"
+  | "ports"
+  | "airports"
+  | "chokepoints";
 
 const BASE = "/geo/mapkit";
 const cache = new Map<string, Promise<LoadedLayer>>();

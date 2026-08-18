@@ -10,7 +10,7 @@
       "attribution": "Natural Earth. Free vector and raster map data @ naturalearthdata.com.",
       "required": false,
       "shareAlike": false,
-      "used": true
+      "used": false
     },
     {
       "id": "ne_50m_admin_0_countries",
@@ -20,7 +20,7 @@
       "attribution": "Natural Earth. Free vector and raster map data @ naturalearthdata.com.",
       "required": false,
       "shareAlike": false,
-      "used": true
+      "used": false
     },
     {
       "id": "ne_110m_admin_0_countries",
@@ -30,7 +30,7 @@
       "attribution": "Natural Earth. Free vector and raster map data @ naturalearthdata.com.",
       "required": false,
       "shareAlike": false,
-      "used": true
+      "used": false
     },
     {
       "id": "ne_50m_populated_places",
@@ -40,7 +40,7 @@
       "attribution": "Natural Earth. Free vector and raster map data @ naturalearthdata.com.",
       "required": false,
       "shareAlike": false,
-      "used": true
+      "used": false
     },
     {
       "id": "ne_50m_coastline",
@@ -50,7 +50,7 @@
       "attribution": "Natural Earth. Free vector and raster map data @ naturalearthdata.com.",
       "required": false,
       "shareAlike": false,
-      "used": true
+      "used": false
     },
     {
       "id": "ne_50m_ocean",
@@ -60,7 +60,7 @@
       "attribution": "Natural Earth. Free vector and raster map data @ naturalearthdata.com.",
       "required": false,
       "shareAlike": false,
-      "used": true
+      "used": false
     },
     {
       "id": "ne_50m_lakes",
@@ -70,7 +70,7 @@
       "attribution": "Natural Earth. Free vector and raster map data @ naturalearthdata.com.",
       "required": false,
       "shareAlike": false,
-      "used": true
+      "used": false
     },
     {
       "id": "ne_50m_rivers_lake_centerlines",
@@ -80,7 +80,7 @@
       "attribution": "Natural Earth. Free vector and raster map data @ naturalearthdata.com.",
       "required": false,
       "shareAlike": false,
-      "used": true
+      "used": false
     },
     {
       "id": "ne_10m_bathymetry_K_200",
@@ -90,7 +90,7 @@
       "attribution": "Natural Earth. Free vector and raster map data @ naturalearthdata.com.",
       "required": false,
       "shareAlike": false,
-      "used": true
+      "used": false
     },
     {
       "id": "marineregions_eez_v12",
@@ -171,6 +171,76 @@
       "required": true,
       "shareAlike": true,
       "used": false
+    },
+    {
+      "id": "geoboundaries_adm1",
+      "layer": "provinces",
+      "version": "geoBoundaries gbOpen current",
+      "license": "CC-BY-4.0",
+      "attribution": "Runfola D, et al. (2020). geoBoundaries: A global database of political administrative boundaries. PLoS ONE 15(4): e0231866. https://doi.org/10.1371/journal.pone.0231866",
+      "required": true,
+      "shareAlike": false,
+      "used": true
+    },
+    {
+      "id": "geonames_cities15000",
+      "layer": "cities",
+      "version": "GeoNames cities15000 dump",
+      "license": "CC-BY-4.0",
+      "attribution": "GeoNames geographical database. https://www.geonames.org/ \u2014 CC BY 4.0.",
+      "required": true,
+      "shareAlike": false,
+      "used": true
+    },
+    {
+      "id": "osm_slice_transport",
+      "layer": "roads",
+      "version": "Geofabrik OSM shapefile extracts, Stage 1 theatre",
+      "license": "ODbL-1.0",
+      "attribution": "\u00a9 OpenStreetMap contributors.",
+      "required": true,
+      "shareAlike": true,
+      "used": false
+    },
+    {
+      "id": "ne_10m_roads_strategic",
+      "layer": "roads",
+      "version": "Natural Earth 5.1.2, 10m roads, theatre clip of major/secondary highways",
+      "license": "public-domain",
+      "attribution": "Natural Earth. Free vector and raster map data @ naturalearthdata.com.",
+      "required": false,
+      "shareAlike": false,
+      "used": true
+    },
+    {
+      "id": "ne_10m_railroads",
+      "layer": "rail",
+      "version": "Natural Earth 5.1.2, 10m railroads, theatre clip",
+      "license": "public-domain",
+      "attribution": "Natural Earth. Free vector and raster map data @ naturalearthdata.com.",
+      "required": false,
+      "shareAlike": false,
+      "used": true
+    },
+    {
+      "id": "nga_wpi",
+      "layer": "ports",
+      "version": "World Port Index, NGA Pub 150",
+      "license": "public-domain",
+      "attribution": "National Geospatial-Intelligence Agency, World Port Index (Pub. 150). United States Government public domain.",
+      "required": false,
+      "shareAlike": false,
+      "used": true
+    },
+    {
+      "id": "ourairports",
+      "layer": "airports",
+      "version": "OurAirports nightly",
+      "license": "CC0-1.0",
+      "attribution": "OurAirports, CC0 public domain. https://ourairports.com/",
+      "required": false,
+      "shareAlike": false,
+      "used": true
     }
   ],
   "rejected": [
