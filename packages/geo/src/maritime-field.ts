@@ -80,9 +80,32 @@ export interface FieldOptions {
 function rasterizeLand(polygons: Point[][][], cols: number, rows: number, cellSize: number): Uint8Array {
   const mask = new Uint8Array(cols * rows);
   const crossings: number[] = [];
+
+  // Each polygon's own row span, so a scanline only visits the polygons it can
+  // actually cross. Without this every row walks every vertex on earth, which
+  // at world scale is the single most expensive thing a zone pass does.
+  const spans: Array<{ rings: Point[][]; first: number; last: number }> = [];
+  for (const rings of polygons) {
+    let top = Infinity;
+    let bottom = -Infinity;
+    for (const ring of rings) {
+      for (const point of ring) {
+        if (point[1] < top) top = point[1];
+        if (point[1] > bottom) bottom = point[1];
+      }
+    }
+    if (!Number.isFinite(top)) continue;
+    const first = Math.max(0, Math.ceil(top / cellSize - 0.5));
+    const last = Math.min(rows - 1, Math.floor(bottom / cellSize - 0.5));
+    if (first > last) continue;
+    spans.push({ rings, first, last });
+  }
+
   for (let row = 0; row < rows; row++) {
     const y = (row + 0.5) * cellSize;
-    for (const rings of polygons) {
+    for (const span of spans) {
+      if (row < span.first || row > span.last) continue;
+      const rings = span.rings;
       crossings.length = 0;
       for (const ring of rings) {
         for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) {

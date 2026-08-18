@@ -142,7 +142,7 @@ const ZOOM_RANGE = 24;
  * follows the reader, so the same budget buys world-scale zones at world zoom
  * and harbour-scale zones close in.
  */
-const MARITIME_CELL_BUDGET = 60_000;
+const MARITIME_CELL_BUDGET = 48_000;
 
 /**
  * How long the view must hold still before the zones are recomputed for it.
@@ -153,7 +153,15 @@ const MARITIME_CELL_BUDGET = 60_000;
  * position because it is geographic geometry, just coarser than the new zoom
  * deserves until the next pass lands.
  */
-const MARITIME_SETTLE_MS = 260;
+const MARITIME_SETTLE_MS = 110;
+
+/**
+ * How far the view may drift before the zones are recomputed for it: a fraction
+ * of the shorter side in pan, and this many octaves in zoom. The frame's
+ * overhang is sized from both, so drift within these bounds is already covered.
+ */
+const ZONE_DRIFT_FRACTION = 0.18;
+const ZONE_DRIFT_OCTAVES = 0.15;
 
 export function Sheet(props: SheetProps) {
   const {
@@ -493,8 +501,10 @@ export function Sheet(props: SheetProps) {
   // only meaningful paired with the scale it was measured at — zoomed in, the
   // offset is tens of thousands of pixels, so rounding the scale even slightly
   // while keeping the offset puts the computed frame somewhere else entirely.
-  // Held still instead by refusing immaterial updates: a nudge is not worth a
-  // recomputation, a quarter-octave of zoom or a third of a screen of pan is.
+  // Held still instead by refusing immaterial updates. The thresholds are what
+  // the frame's overhang is sized against below: a view allowed to drift
+  // further than the frame reaches shows the frame's own edge as a straight
+  // line across the water, with no zones at all past it.
   const [zoneView, setZoneView] = useState<Camera | null>(null);
   useEffect(() => {
     const id = setTimeout(() => {
@@ -503,7 +513,8 @@ export function Sheet(props: SheetProps) {
         if (!previous) return next;
         const growth = next.k / previous.k;
         const moved = Math.hypot(next.x - previous.x * growth, next.y - previous.y * growth);
-        const material = Math.abs(Math.log2(growth)) > 0.2 || moved > Math.min(width, height) / 3;
+        const material =
+          Math.abs(Math.log2(growth)) > ZONE_DRIFT_OCTAVES || moved > Math.min(width, height) * ZONE_DRIFT_FRACTION;
         return material ? next : previous;
       });
     }, MARITIME_SETTLE_MS);
@@ -514,8 +525,56 @@ export function Sheet(props: SheetProps) {
   const viewX = zoneView?.x ?? camera.x;
   const viewY = zoneView?.y ?? camera.y;
 
+  /**
+   * Land in the projection's own plane units, once, with each polygon's extent
+   * alongside it.
+   *
+   * A zone pass needs land in the frame's pixels, and the pixels change every
+   * pass while the plane coordinates never do — the two differ by one uniform
+   * scale and offset. Projecting properly means a logarithm and a tangent per
+   * vertex; doing that for every polygon on earth on every pass is most of what
+   * a pass used to cost. Done once, a pass is a multiply and an add, and the
+   * extents let it skip whole polygons before touching their vertices.
+   */
+  const landPlane = useMemo(() => {
+    const source = layers.countries;
+    if (!source) return [];
+    const out: Array<{ iso: string; rings: Point[][]; x0: number; y0: number; x1: number; y1: number }> = [];
+    for (const feature of source.features) {
+      const iso = String(feature.properties.iso_a3 ?? "");
+      const geometry = feature.geometry as { type: string; coordinates: unknown };
+      const polygons: unknown[] =
+        geometry?.type === "Polygon"
+          ? [geometry.coordinates]
+          : geometry?.type === "MultiPolygon"
+            ? (geometry.coordinates as unknown[])
+            : [];
+      for (const polygon of polygons) {
+        if (!Array.isArray(polygon)) continue;
+        const rings: Point[][] = [];
+        let x0 = Infinity;
+        let y0 = Infinity;
+        let x1 = -Infinity;
+        let y1 = -Infinity;
+        for (const ring of polygon as LonLat[][]) {
+          const plane = ring.map((p) => projection.forward(p));
+          for (const [x, y] of plane) {
+            if (!Number.isFinite(x) || !Number.isFinite(y)) continue;
+            if (x < x0) x0 = x;
+            if (x > x1) x1 = x;
+            if (y < y0) y0 = y;
+            if (y > y1) y1 = y;
+          }
+          rings.push(plane);
+        }
+        if (rings.length > 0 && Number.isFinite(x0)) out.push({ iso, rings, x0, y0, x1, y1 });
+      }
+    }
+    return out;
+  }, [layers.countries, projection]);
+
   const maritime = useMemo(() => {
-    if (!showMaritime || !layers.countries) return null;
+    if (!showMaritime || landPlane.length === 0) return null;
 
     const scale = baseViewport.scale * viewK;
     // Nautical miles to pixels at this scale, measured at the equator; the
@@ -523,15 +582,29 @@ export function Sheet(props: SheetProps) {
     const equator: Viewport = { ...baseViewport, scale, center: [baseViewport.center[0], 0] };
     const pixelsPerNm = 1.852 / kmPerPixel(equator);
 
-    // The frame reaches past the viewport by more than the widest zone, so a
-    // coast just off screen still casts its water into view.
-    // Reach far enough that land off screen still casts water into view. The
-    // scale of a conformal projection grows with latitude, so the same 200 miles
-    // is that many more pixels the further from the equator the frame sits.
+    // The frame overhangs the viewport for two separate reasons, and needs
+    // room for both at once.
+    //
+    // Reach: a coast up to 200 miles off screen still casts water into view,
+    // and a conformal projection's scale grows with latitude, so that same 200
+    // miles is more pixels the further from the equator the frame sits.
+    //
+    // Drift: the view is allowed to move without earning a recomputation, and
+    // it may move again while one is pending. Whatever the thresholds above
+    // tolerate, the frame has to already cover — otherwise panning reveals the
+    // frame's edge as a straight line with empty water past it.
     const stretch = Math.max(0.3, Math.cos(Math.max(-80, Math.min(80, baseViewport.center[1])) * (Math.PI / 180)));
-    const margin = Math.min(900, Math.ceil((200 * pixelsPerNm) / stretch) + 24);
-    const frameWidth = width + margin * 2;
-    const frameHeight = height + margin * 2;
+    const reach = Math.min(900, Math.ceil((200 * pixelsPerNm) / stretch));
+    // Half a viewport of slack in each direction, which is more than the
+    // thresholds tolerate and more than a flick travels before the next pass
+    // lands. It costs resolution, not time: the cell budget is fixed, so a
+    // larger frame spends the same cells on bigger ones.
+    const drift = Math.min(width, height) * ZONE_DRIFT_FRACTION + 24;
+    const slack = Math.max(Math.min(width, height) * 0.5, drift);
+    const marginX = Math.ceil(reach + slack);
+    const marginY = Math.ceil(reach + slack);
+    const frameWidth = width + marginX * 2;
+    const frameHeight = height + marginY * 2;
     let cellSize = width < 700 ? 4 : 5;
     while ((frameWidth / cellSize) * (frameHeight / cellSize) > MARITIME_CELL_BUDGET) cellSize += 1;
 
@@ -544,68 +617,53 @@ export function Sheet(props: SheetProps) {
       height: frameHeight,
       scale,
       translate: [
-        baseViewport.translate[0] * viewK + viewX + margin,
-        baseViewport.translate[1] * viewK + viewY + margin,
+        baseViewport.translate[0] * viewK + viewX + marginX,
+        baseViewport.translate[1] * viewK + viewY + marginY,
       ],
     };
-    const bounds = viewportBounds(ref);
-    const toRef: Projector = (lonLat: LonLat) => project(ref, lonLat);
+    // Plane units to this frame's pixels: the affine step that replaces
+    // reprojecting, and the reason a pass can afford to run on every settle.
+    const [tx, ty] = ref.translate;
+    const toFrame = (plane: Point, shift: number): Point => [
+      (plane[0] + shift) * scale + tx,
+      ty - plane[1] * scale,
+    ];
 
-    // A wrapping sheet is entered from either side, so each feature is offered
-    // at three longitudes and kept wherever it lands inside the frame. That is
+    // A wrapping sheet is entered from either side, so each polygon is offered
+    // at three longitudes and kept wherever it lands inside the frame. One
+    // period is a constant offset in plane units, so this costs nothing. It is
     // also what makes the zones continuous across the antimeridian: the field
     // sees Chukotka's coast while computing Alaska's water.
-    const shifts = sheet.wraps ? [-360, 0, 360] : [0];
-    const pad = margin;
-    const outside = (box: [number, number, number, number]): boolean =>
-      box[2] < -pad || box[0] > frameWidth + pad || box[3] < -pad || box[1] > frameHeight + pad;
+    const period = sheet.wraps
+      ? projection.forward([180, 0])[0] - projection.forward([-180, 0])[0]
+      : 0;
+    const shifts = sheet.wraps ? [-period, 0, period] : [0];
+    const pad = Math.max(marginX, marginY);
 
     // Polygon nesting is preserved rather than flattened to a ring list: the
     // land mask unions polygons and only applies even-odd within one, which is
     // what keeps a shared border from cancelling into a sliver of phantom sea.
     const landPolygons: Point[][][] = [];
-    const coasts: Array<{ id: string; points: Point[] }> = [];
-    for (const feature of layers.countries.features) {
-      const iso = String(feature.properties.iso_a3 ?? "");
-      const geometry = feature.geometry as { type: string; coordinates: unknown };
-      const source: unknown[] =
-        geometry?.type === "Polygon"
-          ? [geometry.coordinates]
-          : geometry?.type === "MultiPolygon"
-            ? (geometry.coordinates as unknown[])
-            : [];
-      if (source.length === 0) continue;
-
-      const kept: Point[][][] = [];
+    const byState = new Map<string, Point[]>();
+    for (const polygon of landPlane) {
       for (const shift of shifts) {
-        if (feature.bbox && (feature.bbox[2] + shift < bounds[0] || feature.bbox[0] + shift > bounds[2])) continue;
-        for (const polygon of source) {
-          if (!Array.isArray(polygon)) continue;
-          const rings: Point[][] = [];
-          let x0 = Infinity;
-          let y0 = Infinity;
-          let x1 = -Infinity;
-          let y1 = -Infinity;
-          for (const ring of polygon as LonLat[][]) {
-            const projected = ring.map((p): Point => toRef([p[0] + shift, p[1]]));
-            for (const [x, y] of projected) {
-              if (x < x0) x0 = x;
-              if (x > x1) x1 = x;
-              if (y < y0) y0 = y;
-              if (y > y1) y1 = y;
-            }
-            rings.push(projected);
-          }
-          if (rings.length === 0 || outside([x0, y0, x1, y1])) continue;
-          kept.push(rings);
-        }
+        // The polygon's own extent, carried into the frame, decides whether any
+        // of its vertices are worth transforming.
+        const bx0 = (polygon.x0 + shift) * scale + tx;
+        const bx1 = (polygon.x1 + shift) * scale + tx;
+        const by0 = ty - polygon.y1 * scale;
+        const by1 = ty - polygon.y0 * scale;
+        if (bx1 < -pad || bx0 > frameWidth + pad || by1 < -pad || by0 > frameHeight + pad) continue;
+
+        const rings = polygon.rings.map((ring) => ring.map((p) => toFrame(p, shift)));
+        landPolygons.push(rings);
+        const points = byState.get(polygon.iso) ?? [];
+        for (const ring of rings) points.push(...densify(ring, 6));
+        byState.set(polygon.iso, points);
       }
-      if (kept.length === 0) continue;
-      landPolygons.push(...kept);
-      const points: Point[] = [];
-      for (const rings of kept) for (const ring of rings) points.push(...densify(ring, 6));
-      if (points.length > 4) coasts.push({ id: iso, points });
     }
+    const coasts: Array<{ id: string; points: Point[] }> = [];
+    for (const [id, points] of byState) if (points.length > 4) coasts.push({ id, points });
     if (coasts.length === 0) return null;
 
     const field = buildMaritimeField({ width: frameWidth, height: frameHeight, cellSize, coasts, landPolygons });
@@ -632,10 +690,10 @@ export function Sheet(props: SheetProps) {
     // Field coordinates are the settled view's screen coordinates plus the
     // margin, and the group these paths sit in is already carrying base space
     // to the screen, so this undoes exactly the settled camera.
-    const transform = `scale(${1 / viewK}) translate(${-(viewX + margin)},${-(viewY + margin)})`;
+    const transform = `scale(${1 / viewK}) translate(${-(viewX + marginX)},${-(viewY + marginY)})`;
 
     return { limits, transform };
-  }, [showMaritime, layers.countries, baseViewport, viewK, viewX, viewY, width, height, sheet.wraps, era]);
+  }, [showMaritime, landPlane, projection, baseViewport, viewK, viewX, viewY, width, height, sheet.wraps, era]);
 
   const graticule = useMemo(() => {
     // A wrapping sheet draws its grid over one period only. The frame is wider
@@ -689,17 +747,6 @@ export function Sheet(props: SheetProps) {
               opacity={0.55}
             />
           ))}
-        </g>
-      ) : null}
-
-      {maritime ? (
-        <g className="maritime" transform={maritime.transform}>
-          {/* Widest zone first: each nearer band of water is darker, so the
-              ladder reads seaward without a single line being drawn. */}
-          {[...maritime.limits].reverse().map(({ zone, path }) => {
-            const ink = zoneAsWater(zone);
-            return ink.fill ? <path key={zone} d={path} fill={ink.fill} fillRule="evenodd" /> : null;
-          })}
         </g>
       ) : null}
 
@@ -846,6 +893,27 @@ export function Sheet(props: SheetProps) {
 
       <g clipPath="url(#sheet-frame)">
         <rect width={width} height={height} fill="var(--sea)" />
+
+        {/* Water first, and once — not per repeat.
+            The zones are computed for the view rather than for the sheet, so
+            they neither need repeating nor tolerate being clipped to one
+            period: a zone straddling the antimeridian would have the far half
+            clipped away by the copy it belongs to and redrawn a whole period
+            off by the next, which reads as the water simply stopping in a
+            straight line down the seam. Drawn once, under the land, it lands
+            where it is. */}
+        {maritime ? (
+          <g transform={cameraTransform}>
+            <g className="maritime" transform={maritime.transform}>
+              {/* Widest zone first: each nearer band of water is darker, so the
+                  ladder reads seaward without a single line being drawn. */}
+              {[...maritime.limits].reverse().map(({ zone, path }) => {
+                const ink = zoneAsWater(zone);
+                return ink.fill ? <path key={zone} d={path} fill={ink.fill} fillRule="evenodd" /> : null;
+              })}
+            </g>
+          </g>
+        ) : null}
 
         {Array.from({ length: repeats }, (_, i) => (
           <g key={i} transform={cameraTransform}>
