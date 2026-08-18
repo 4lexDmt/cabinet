@@ -485,26 +485,25 @@ export function Sheet(props: SheetProps) {
     const { viewport: ref, width: refWidth, height: refHeight, cellSize } = maritimeReference;
     const toRef: Projector = (lonLat: LonLat) => project(ref, lonLat);
 
-    const rings: Point[][] = [];
+    // Polygon nesting is preserved rather than flattened to a ring list: the
+    // land mask unions polygons and only applies even-odd within one, which is
+    // what keeps a shared border from cancelling into a sliver of phantom sea.
+    const landPolygons: Point[][][] = [];
     const coasts: Array<{ id: string; points: Point[] }> = [];
     for (const feature of layers.countries.features) {
       const iso = String(feature.properties.iso_a3 ?? "");
-      const projected: Point[][] = [];
-      const walk = (node: unknown, depth: number): void => {
-        if (!Array.isArray(node)) return;
-        if (depth === 1) {
-          projected.push((node as LonLat[]).map((p) => toRef(p)));
-          return;
-        }
-        for (const child of node) walk(child, depth - 1);
-      };
+      const polygons: Point[][][] = [];
       const geometry = feature.geometry as { type: string; coordinates: unknown };
-      if (geometry?.type === "Polygon") walk(geometry.coordinates, 2);
-      else if (geometry?.type === "MultiPolygon") walk(geometry.coordinates, 3);
-      if (projected.length === 0) continue;
-      rings.push(...projected);
+      const toRings = (polygon: unknown): Point[][] =>
+        Array.isArray(polygon) ? (polygon as LonLat[][]).map((ring) => ring.map((p) => toRef(p))) : [];
+      if (geometry?.type === "Polygon") polygons.push(toRings(geometry.coordinates));
+      else if (geometry?.type === "MultiPolygon") {
+        for (const polygon of geometry.coordinates as unknown[]) polygons.push(toRings(polygon));
+      }
+      if (polygons.length === 0) continue;
+      landPolygons.push(...polygons);
       const points: Point[] = [];
-      for (const ring of projected) points.push(...densify(ring, 6));
+      for (const rings of polygons) for (const ring of rings) points.push(...densify(ring, 6));
       if (points.length > 4) coasts.push({ id: iso, points });
     }
     if (coasts.length === 0) return null;
@@ -514,7 +513,7 @@ export function Sheet(props: SheetProps) {
       height: refHeight,
       cellSize,
       coasts,
-      landRings: rings,
+      landPolygons,
     });
 
     // A conformal projection's scale grows away from the equator, so a fixed

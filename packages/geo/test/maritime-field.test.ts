@@ -43,12 +43,23 @@ function twoIslands() {
     width: 500,
     height: 300,
     cellSize: 4,
-    landRings: [left, right],
+    landPolygons: [[left], [right]],
     coasts: [
       { id: "WEST", points: densify(left, 4) },
       { id: "EAST", points: densify(right, 4) },
     ],
   });
+}
+
+/** A square, as one polygon's single ring. */
+function square(x0: number, y0: number, x1: number, y1: number): Point[] {
+  return [
+    [x0, y0],
+    [x1, y0],
+    [x1, y1],
+    [x0, y1],
+    [x0, y0],
+  ];
 }
 
 describe("the distance field", () => {
@@ -133,6 +144,59 @@ describe("zone bands", () => {
   });
 });
 
+describe("the land mask", () => {
+  const landAt = (field: ReturnType<typeof twoIslands>, x: number, y: number) =>
+    field.owner[Math.floor(y / field.cellSize) * field.cols + Math.floor(x / field.cellSize)];
+
+  it("keeps land where two polygons overlap", () => {
+    // Neighbours share a border, so their edges are duplicated. Filling every
+    // ring in one even-odd pass cancels the overlap into phantom sea, and
+    // along a geometric border that sliver is straight and hundreds of miles
+    // long — a twelve mile limit then draws it across the middle of a desert.
+    const field = buildMaritimeField({
+      width: 400,
+      height: 200,
+      cellSize: 4,
+      landPolygons: [[square(40, 40, 200, 160)], [square(120, 40, 280, 160)]],
+      coasts: [{ id: "A", points: densify(square(40, 40, 280, 160), 4) }],
+    });
+    expect(landAt(field, 160, 100)).toBe(LAND);
+    expect(landAt(field, 60, 100)).toBe(LAND);
+    expect(landAt(field, 260, 100)).toBe(LAND);
+  });
+
+  it("does not fill the sea between two separate polygons", () => {
+    // The other half of the same bug: crossings from unrelated polygons sorted
+    // into one list get paired against each other, so a scanline leaving one
+    // island and entering another fills the channel between them as land.
+    const field = buildMaritimeField({
+      width: 500,
+      height: 200,
+      cellSize: 4,
+      landPolygons: [[square(40, 60, 140, 140)], [square(360, 60, 460, 140)]],
+      coasts: [
+        { id: "WEST", points: densify(square(40, 60, 140, 140), 4) },
+        { id: "EAST", points: densify(square(360, 60, 460, 140), 4) },
+      ],
+    });
+    expect(landAt(field, 90, 100)).toBe(LAND);
+    expect(landAt(field, 400, 100)).toBe(LAND);
+    expect(landAt(field, 250, 100)).not.toBe(LAND);
+  });
+
+  it("still cuts a lake out of the polygon that contains it", () => {
+    const field = buildMaritimeField({
+      width: 300,
+      height: 300,
+      cellSize: 4,
+      landPolygons: [[square(40, 40, 260, 260), square(120, 120, 180, 180)]],
+      coasts: [{ id: "A", points: densify(square(40, 40, 260, 260), 4) }],
+    });
+    expect(landAt(field, 60, 150)).toBe(LAND);
+    expect(landAt(field, 150, 150)).not.toBe(LAND);
+  });
+});
+
 describe("zone limit lines", () => {
   const field = twoIslands();
 
@@ -211,15 +275,7 @@ describe("median lines", () => {
       width: 400,
       height: 200,
       cellSize: 8,
-      landRings: [
-        [
-          [10, 40],
-          [40, 40],
-          [40, 160],
-          [10, 160],
-          [10, 40],
-        ],
-      ],
+      landPolygons: [[square(10, 40, 40, 160)]],
       coasts: [
         {
           id: "ONLY",
@@ -279,6 +335,36 @@ describe("marching squares", () => {
       for (const [x, y] of ring) {
         expect(Number.isFinite(x)).toBe(true);
         expect(Number.isFinite(y)).toBe(true);
+      }
+    }
+  });
+
+  it("closes every ring it returns, on a field full of saddles", () => {
+    // The failure this guards is loud and specific. A contour that comes back
+    // as an open chain gets closed by whoever draws it, with one straight line
+    // from its last vertex to its first — on a world sheet, a line from
+    // Greenland to the Caribbean. It happens when a crossing has two
+    // successors or none, which is what a single reversed saddle segment does.
+    const width = 40;
+    const height = 40;
+    const values = new Float32Array(width * height);
+    // A checkerboard-ish interference pattern: as many saddle cells as
+    // possible, which is where the ambiguity lives.
+    for (let y = 0; y < height; y++) {
+      for (let x = 0; x < width; x++) {
+        values[y * width + x] = Math.sin(x * 1.1) * Math.cos(y * 0.9) + Math.sin((x + y) * 0.5) * 0.4;
+      }
+    }
+    for (const threshold of [-0.6, -0.2, 0, 0.15, 0.5]) {
+      const rings = marchingSquares(values, width, height, threshold);
+      expect(rings.length).toBeGreaterThan(0);
+      for (const ring of rings) {
+        const first = ring[0]!;
+        const last = ring[ring.length - 1]!;
+        // Consecutive crossings are at most one cell apart, so a closed ring's
+        // ends are adjacent. Anything more is a chord.
+        const gap = Math.hypot(first[0] - last[0], first[1] - last[1]);
+        expect(gap, `threshold ${threshold}, ring of ${ring.length}`).toBeLessThanOrEqual(1.5);
       }
     }
   });

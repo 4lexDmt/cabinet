@@ -48,37 +48,58 @@ export interface FieldOptions {
   /** Grid resolution in pixels. Smaller is smoother and slower. */
   cellSize?: number;
   coasts: CoastSamples[];
-  /** Closed land rings in pixel space, used to mask the sea. */
-  landRings: Point[][];
+  /**
+   * Land in pixel space, as one entry per POLYGON, each entry being that
+   * polygon's own closed rings — outer ring first, holes after. The nesting
+   * matters: see `rasterizeLand`.
+   */
+  landPolygons: Point[][][];
 }
 
 /**
- * Scanline polygon fill.
+ * Scanline polygon fill, one polygon at a time, unioned.
  *
- * Even-odd rather than nonzero, because Natural Earth rings are not reliably
- * wound and even-odd gives lakes and enclosed seas for free.
+ * Even-odd WITHIN a polygon, because Natural Earth rings are not reliably wound
+ * and even-odd gives that polygon's lakes and enclosed seas for free. Union
+ * ACROSS polygons, which is the part that has to be done separately.
+ *
+ * Filling every ring on earth in a single even-odd pass looks equivalent and is
+ * not, in two ways that both show up as long straight lines in the sea:
+ *
+ * - Adjacent countries share a border, so their edges are duplicated. Two
+ *   coincident edges cancel under even-odd, opening a sliver of phantom sea
+ *   along the shared border. Along a geometric border — Libya/Chad, Egypt/Sudan
+ *   — that sliver is dead straight and hundreds of miles long, and the twelve
+ *   mile limit dutifully traces it across the Sahara.
+ *
+ * - Worse, crossings from unrelated polygons get sorted into one list and
+ *   paired off against each other. A scanline that leaves Tunisia and enters
+ *   Turkey pairs those two crossings and fills the Mediterranean between them
+ *   as land.
  */
-function rasterizeLand(rings: Point[][], cols: number, rows: number, cellSize: number): Uint8Array {
+function rasterizeLand(polygons: Point[][][], cols: number, rows: number, cellSize: number): Uint8Array {
   const mask = new Uint8Array(cols * rows);
   const crossings: number[] = [];
   for (let row = 0; row < rows; row++) {
     const y = (row + 0.5) * cellSize;
-    crossings.length = 0;
-    for (const ring of rings) {
-      for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) {
-        const a = ring[j]!;
-        const b = ring[i]!;
-        if (a[1] === b[1]) continue;
-        if (y < Math.min(a[1], b[1]) || y >= Math.max(a[1], b[1])) continue;
-        crossings.push(a[0] + ((y - a[1]) / (b[1] - a[1])) * (b[0] - a[0]));
+    for (const rings of polygons) {
+      crossings.length = 0;
+      for (const ring of rings) {
+        for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) {
+          const a = ring[j]!;
+          const b = ring[i]!;
+          if (a[1] === b[1]) continue;
+          if (y < Math.min(a[1], b[1]) || y >= Math.max(a[1], b[1])) continue;
+          crossings.push(a[0] + ((y - a[1]) / (b[1] - a[1])) * (b[0] - a[0]));
+        }
       }
-    }
-    if (crossings.length < 2) continue;
-    crossings.sort((p, q) => p - q);
-    for (let k = 0; k + 1 < crossings.length; k += 2) {
-      const from = Math.max(0, Math.ceil(crossings[k]! / cellSize - 0.5));
-      const to = Math.min(cols - 1, Math.floor(crossings[k + 1]! / cellSize - 0.5));
-      for (let col = from; col <= to; col++) mask[row * cols + col] = 1;
+      if (crossings.length < 2) continue;
+      crossings.sort((p, q) => p - q);
+      for (let k = 0; k + 1 < crossings.length; k += 2) {
+        const from = Math.max(0, Math.ceil(crossings[k]! / cellSize - 0.5));
+        const to = Math.min(cols - 1, Math.floor(crossings[k + 1]! / cellSize - 0.5));
+        for (let col = from; col <= to; col++) mask[row * cols + col] = 1;
+      }
     }
   }
   return mask;
@@ -120,7 +141,7 @@ export function buildMaritimeField(options: FieldOptions): MaritimeField {
 
   const owner = new Int16Array(cols * rows).fill(UNCLAIMED);
   const distance = new Float32Array(cols * rows).fill(Number.POSITIVE_INFINITY);
-  const land = rasterizeLand(options.landRings, cols, rows, cellSize);
+  const land = rasterizeLand(options.landPolygons, cols, rows, cellSize);
 
   if (samples.length === 0) {
     for (let i = 0; i < land.length; i++) if (land[i]) owner[i] = LAND;
