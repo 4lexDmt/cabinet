@@ -145,24 +145,29 @@ export const ZONE_INK: Record<MaritimeZone, ZoneInk> = {
 };
 
 /**
- * The same ladder when the zones are the subject of the sheet rather than
- * context for it.
+ * The same ladder read as water rather than as annotation.
  *
- * The weights above are set for a plate carrying boundaries, settlements and
- * terrain, where the maritime wash has to stay out of the way. A sheet whose
- * only subjects are political and maritime limits has no competition to defer
- * to, and at those weights the limits read as smudges on the sea. Same ink,
- * same dash grammar — a dotted EEZ is still a claim edge — carried at full
- * strength, with the dot spacing opened up enough to survive being drawn along
- * a coastline rather than across open water.
+ * A dashed limit line is the right treatment on a plate carrying boundaries,
+ * settlements and terrain, where the maritime ladder is context and has to stay
+ * out of the way. It is the wrong treatment when the zones are the subject:
+ * dashes at world scale read as broken lines littering the ocean rather than as
+ * jurisdiction, and the thing a reader actually wants to see is how far out
+ * each state's water reaches.
+ *
+ * So the zones become sea instead — the same seaward-diminishing sequence, but
+ * carried by depth of water. Sovereignty is the darkest, resource rights the
+ * faintest, the high seas the paper's own sea tone. No dash: an area of water
+ * does not need an outline to say where it ends, because the next tone does it.
  */
-export function emphasiseZone(ink: ZoneInk): ZoneInk {
-  return {
-    ...ink,
-    strokeWidth: ink.strokeWidth === WEIGHT.thin ? WEIGHT.line : ink.strokeWidth,
-    dash: ink.dash === "1 3" ? "2.4 2.6" : ink.dash,
-    opacity: 1,
+export function zoneAsWater(zone: MaritimeZone): ZoneInk {
+  const depth: Record<MaritimeZone, string | null> = {
+    internal: "rgba(31,63,77,.42)",
+    territorial: "rgba(31,63,77,.30)",
+    contiguous: "rgba(31,63,77,.19)",
+    eez: "rgba(31,63,77,.10)",
+    high_seas: null,
   };
+  return { fill: depth[zone], stroke: null, strokeWidth: null, dash: null, opacity: 1 };
 }
 
 /** Median line where two zones meet — a genuine equidistance line, so it is drawn as one. */

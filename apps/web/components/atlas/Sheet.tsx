@@ -22,11 +22,9 @@ import type { MouseEvent as ReactMouseEvent, PointerEvent as ReactPointerEvent }
 import {
   BOUNDARY_INK,
   NEUTRAL_OBSERVER,
-  ZONE_INK,
   buildMaritimeField,
   densify,
   emphasise,
-  emphasiseZone,
   fitBounds,
   geometryPath,
   kmPerPixel,
@@ -34,6 +32,7 @@ import {
   readBoundary,
   unproject,
   viewportBounds,
+  zoneAsWater,
   zoneBands,
   zoneLimitPath,
   type BBox,
@@ -67,7 +66,7 @@ export interface SheetProps {
 
 const GRATICULE_STEPS = [1, 2, 5, 10, 15, 30];
 
-function graticulePath(bounds: BBox, project: Projector, step: number): string {
+function graticulePath(bounds: BBox, project: Projector, step: number, wrapped = false): string {
   const [w, s, e, n] = bounds;
   let out = "";
   const line = (points: LonLat[]) => {
@@ -78,7 +77,10 @@ function graticulePath(bounds: BBox, project: Projector, step: number): string {
     });
   };
   const start = (value: number) => Math.ceil(value / step) * step;
-  for (let lon = start(w); lon <= e; lon += step) {
+  // The east edge's meridian is the west edge's on a wrapping sheet, so drawing
+  // both puts a double-weight line down the seam.
+  const lastLon = wrapped ? e - step / 2 : e;
+  for (let lon = start(w); lon <= lastLon; lon += step) {
     const points: LonLat[] = [];
     for (let lat = Math.max(-89, s); lat <= Math.min(89, n); lat += 1) points.push([lon, lat]);
     line(points);
@@ -198,20 +200,30 @@ export function Sheet(props: SheetProps) {
   }, [projector, sheet.bbox]);
 
   /**
+   * One period of longitude in the fixed projection's pixels. A wrapping sheet
+   * repeats every `period`, so panning east off Chukotka arrives at Alaska.
+   */
+  const period = sheet.wraps ? Math.abs(sheetRect.x1 - sheetRect.x0) : 0;
+
+  /**
    * The floor on zoom: the scale at which the sheet still covers the whole
-   * viewport, in both axes.
+   * viewport.
    *
    * `fitBounds` fits the sheet *inside* the frame, which on a tall phone leaves
    * the world as a strip with empty sea above and below it. A slippy map does
    * not do that — it never lets you see past the edge of the world — so the
    * floor is the covering scale, not the containing one, and the reader pans
    * along the long axis instead of zooming out into nothing.
+   *
+   * A wrapping sheet covers horizontally at any scale, by repeating, so only
+   * its vertical extent constrains the floor.
    */
   const minK = useMemo(() => {
     const spanX = Math.max(sheetRect.x1 - sheetRect.x0, 1e-9);
     const spanY = Math.max(sheetRect.y1 - sheetRect.y0, 1e-9);
-    return Math.max(width / spanX, height / spanY);
-  }, [sheetRect, width, height]);
+    const vertical = height / spanY;
+    return sheet.wraps ? vertical : Math.max(width / spanX, vertical);
+  }, [sheetRect, width, height, sheet.wraps]);
 
   const clampK = useCallback((k: number) => Math.min(minK * ZOOM_RANGE, Math.max(minK, k)), [minK]);
 
@@ -221,11 +233,26 @@ export function Sheet(props: SheetProps) {
       const { x0, x1, y0, y1 } = sheetRect;
       const mapW = (x1 - x0) * k;
       const mapH = (y1 - y0) * k;
-      const x = mapW <= width ? (width - mapW) / 2 - x0 * k : Math.min(-x0 * k, Math.max(width - x1 * k, cam.x));
+      // East-west is normalised rather than clamped when the sheet wraps. The
+      // reader can travel forever in one direction; only the offset within a
+      // single period is kept, so the copy drawn first always starts within one
+      // period to the left of the frame and the numbers never grow.
+      let x: number;
+      if (sheet.wraps) {
+        const screenPeriod = period * k;
+        const westEdgeAtZero = -x0 * k;
+        const lowest = westEdgeAtZero - screenPeriod;
+        const offset = (((cam.x - lowest) % screenPeriod) + screenPeriod) % screenPeriod;
+        x = lowest + offset;
+      } else if (mapW <= width) {
+        x = (width - mapW) / 2 - x0 * k;
+      } else {
+        x = Math.min(-x0 * k, Math.max(width - x1 * k, cam.x));
+      }
       const y = mapH <= height ? (height - mapH) / 2 - y0 * k : Math.min(-y0 * k, Math.max(height - y1 * k, cam.y));
       return { k, x, y };
     },
-    [clampK, sheetRect, width, height],
+    [clampK, sheetRect, width, height, sheet.wraps, period],
   );
 
   /** The minimum framing, centred. Where a sheet opens, and where it re-homes. */
@@ -508,6 +535,31 @@ export function Sheet(props: SheetProps) {
     }
     if (coasts.length === 0) return null;
 
+    // A conformal projection's scale grows away from the equator, so a fixed
+    // number of pixels is a shorter distance on the ground the further north
+    // it sits. Correcting per row is what keeps a 200-mile limit 200 miles
+    // wide off Norway as well as off Somalia.
+    const equatorial: Viewport = { ...ref, center: [ref.center[0], 0] };
+    const refPixelsPerNm = 1.852 / kmPerPixel(equatorial);
+
+    // On a wrapping sheet the distance field has to wrap too. Without this the
+    // field believes the world ends at the antimeridian, and every zone that
+    // straddles it — the Aleutians, Fiji, Chukotka — is computed against a
+    // coastline missing everything on the far side, leaving a notch in the
+    // water exactly at the seam where the two copies meet.
+    if (sheet.wraps) {
+      const refPeriod = refWidth;
+      const reach = 240 * refPixelsPerNm;
+      for (const coast of coasts) {
+        const shifted: Point[] = [];
+        for (const point of coast.points) {
+          if (point[0] < reach) shifted.push([point[0] + refPeriod, point[1]]);
+          else if (point[0] > refPeriod - reach) shifted.push([point[0] - refPeriod, point[1]]);
+        }
+        coast.points.push(...shifted);
+      }
+    }
+
     const field = buildMaritimeField({
       width: refWidth,
       height: refHeight,
@@ -515,13 +567,6 @@ export function Sheet(props: SheetProps) {
       coasts,
       landPolygons,
     });
-
-    // A conformal projection's scale grows away from the equator, so a fixed
-    // number of pixels is a shorter distance on the ground the further north
-    // it sits. Correcting per row is what keeps a 200-mile limit 200 miles
-    // wide off Norway as well as off Somalia.
-    const equatorial: Viewport = { ...ref, center: [ref.center[0], 0] };
-    const refPixelsPerNm = 1.852 / kmPerPixel(equatorial);
     const rowGround: number[] = [];
     for (let row = 0; row < Math.ceil(refHeight / cellSize); row++) {
       const [, lat] = unproject(ref, [refWidth / 2, (row + 0.5) * cellSize]);
@@ -547,10 +592,15 @@ export function Sheet(props: SheetProps) {
     return { limits, transform };
   }, [showMaritime, layers.countries, maritimeReference, baseViewport, era]);
 
-  const graticule = useMemo(
-    () => graticulePath(frame, projector, pickGraticuleStep(frame[2] - frame[0])),
-    [frame, projector],
-  );
+  const graticule = useMemo(() => {
+    // A wrapping sheet draws its grid over one period only. The frame is wider
+    // than the sheet, so grid drawn to the frame's edges would be redrawn over
+    // the neighbouring copy.
+    const bounds: BBox = sheet.wraps
+      ? [sheet.bbox[0], frame[1], sheet.bbox[2], frame[3]]
+      : frame;
+    return graticulePath(bounds, projector, pickGraticuleStep(bounds[2] - bounds[0]), sheet.wraps);
+  }, [frame, projector, sheet.wraps, sheet.bbox]);
 
   useEffect(() => {
     onMeasured({ placed: 0, dropped: 0, kmPerPx, declaration: projection.declaration });
@@ -575,6 +625,138 @@ export function Sheet(props: SheetProps) {
   };
 
   const cameraTransform = `translate(${camera.x},${camera.y}) scale(${camera.k})`;
+
+  // How many copies of the sheet it takes to cover the frame. One more than
+  // strictly fits, because the first copy starts up to a period to the left.
+  const repeats = sheet.wraps && period > 0 ? Math.ceil(width / (period * camera.k)) + 1 : 1;
+
+  const content = (
+    <>
+      {showPhysical && layers.bathymetry ? (
+        <g opacity={demoted.has("physical") ? 0.4 : 1}>
+          {layers.bathymetry.features.filter(inFrame).map((feature, i) => (
+            <path
+              key={`bath-${i}`}
+              d={geometryPath(feature.geometry as never, projector)}
+              fill="var(--sea-deep)"
+              opacity={0.55}
+            />
+          ))}
+        </g>
+      ) : null}
+
+      {maritime ? (
+        <g className="maritime" transform={maritime.transform}>
+          {/* Widest zone first: each nearer band of water is darker, so the
+              ladder reads seaward without a single line being drawn. */}
+          {[...maritime.limits].reverse().map(({ zone, path }) => {
+            const ink = zoneAsWater(zone);
+            return ink.fill ? <path key={zone} d={path} fill={ink.fill} fillRule="evenodd" /> : null;
+          })}
+        </g>
+      ) : null}
+
+      <path
+        d={graticule}
+        fill="none"
+        stroke="var(--ink-5)"
+        strokeWidth="var(--w-hair)"
+        opacity={0.5}
+        vectorEffect="non-scaling-stroke"
+      />
+
+      <g className="land">
+        {countries.map((country) => (
+          <path
+            key={country.iso3 || country.name}
+            d={country.path}
+            fill={fillFor(country.iso3)}
+            onClick={() => selectUnlessDragged(country.iso3)}
+          >
+            <title>{country.name}</title>
+          </path>
+        ))}
+      </g>
+
+      {showPhysical && layers.lakes ? (
+        <g>
+          {layers.lakes.features.filter(inFrame).map((feature, i) => (
+            <path key={`lake-${i}`} d={geometryPath(feature.geometry as never, projector)} fill="var(--sea)" />
+          ))}
+        </g>
+      ) : null}
+
+      {showPhysical && layers.rivers ? (
+        <g>
+          {layers.rivers.features.filter(inFrame).map((feature, i) => (
+            <path
+              key={`river-${i}`}
+              d={geometryPath(feature.geometry as never, projector)}
+              fill="none"
+              stroke="var(--sea-deep)"
+              strokeWidth={Math.max(0.4, Number(feature.properties.width ?? 1) * 0.5)}
+              opacity={0.85}
+              vectorEffect="non-scaling-stroke"
+            />
+          ))}
+        </g>
+      ) : null}
+
+      {layers.coastline ? (
+        <g>
+          {layers.coastline.features.filter(inFrame).map((feature, i) => (
+            <path
+              key={`coast-${i}`}
+              d={geometryPath(feature.geometry as never, projector)}
+              fill="none"
+              stroke="var(--ink-2)"
+              strokeWidth="var(--w-line)"
+              strokeLinejoin="round"
+              vectorEffect="non-scaling-stroke"
+            />
+          ))}
+        </g>
+      ) : null}
+
+      <g className="boundaries">
+        {boundaries.map((boundary) => {
+          const specs =
+            showDispute && boundary.dissents
+              ? emphasise(BOUNDARY_INK[boundary.cls])
+              : BOUNDARY_INK[boundary.cls];
+          return (
+            <g key={boundary.id} data-class={boundary.cls}>
+              {specs.map((spec, i) => (
+                <path
+                  key={i}
+                  d={boundary.path}
+                  fill="none"
+                  stroke={spec.stroke}
+                  strokeWidth={spec.width}
+                  strokeDasharray={spec.dash ?? undefined}
+                  strokeLinecap="butt"
+                  opacity={spec.opacity}
+                  transform={spec.offset ? `translate(0,${spec.offset})` : undefined}
+                  vectorEffect="non-scaling-stroke"
+                />
+              ))}
+              {showDispute && boundary.dissents ? (
+                <path
+                  d={boundary.path}
+                  fill="none"
+                  stroke="var(--breach)"
+                  strokeWidth="5.5"
+                  strokeDasharray="1 6"
+                  opacity={0.75}
+                  vectorEffect="non-scaling-stroke"
+                />
+              ) : null}
+            </g>
+          );
+        })}
+      </g>
+    </>
+  );
 
   return (
     <svg
@@ -602,156 +784,30 @@ export function Sheet(props: SheetProps) {
         <clipPath id="sheet-frame">
           <rect x="0" y="0" width={width} height={height} />
         </clipPath>
+        {/* One period exactly. Each repeat is clipped to the sheet's own extent
+            so nothing is drawn twice where two copies meet: the zone washes are
+            translucent, and a strip of doubled alpha down the seam is visible
+            as a line even though the geometry either side of it is right. */}
+        <clipPath id="sheet-extent">
+          <rect
+            x={sheetRect.x0}
+            y={sheetRect.y0}
+            width={sheetRect.x1 - sheetRect.x0}
+            height={sheetRect.y1 - sheetRect.y0}
+          />
+        </clipPath>
       </defs>
 
       <g clipPath="url(#sheet-frame)">
         <rect width={width} height={height} fill="var(--sea)" />
 
-        <g transform={cameraTransform}>
-          {showPhysical && layers.bathymetry ? (
-            <g opacity={demoted.has("physical") ? 0.4 : 1}>
-              {layers.bathymetry.features.filter(inFrame).map((feature, i) => (
-                <path
-                  key={`bath-${i}`}
-                  d={geometryPath(feature.geometry as never, projector)}
-                  fill="var(--sea-deep)"
-                  opacity={0.55}
-                />
-              ))}
+        {Array.from({ length: repeats }, (_, i) => (
+          <g key={i} transform={cameraTransform}>
+            <g transform={i === 0 ? undefined : `translate(${i * period},0)`}>
+              <g clipPath="url(#sheet-extent)">{content}</g>
             </g>
-          ) : null}
-
-          {maritime ? (
-            <g className="maritime" transform={maritime.transform}>
-              {/* Widest limit first, so the territorial sea reads over the EEZ
-                  rather than under it. */}
-              {[...maritime.limits].reverse().map(({ zone, path }) => {
-                // Line-only means the limits ARE the subject here, so they are
-                // carried at full strength rather than as a wash's outline.
-                const ink = demoted.has("maritime")
-                  ? emphasiseZone(ZONE_INK[zone])
-                  : ZONE_INK[zone];
-                return (
-                  <g key={zone}>
-                    {demoted.has("maritime") || !ink.fill ? null : (
-                      <path d={path} fill={ink.fill} fillRule="evenodd" />
-                    )}
-                    <path
-                      d={path}
-                      fill="none"
-                      stroke={ink.stroke ?? "none"}
-                      strokeWidth={ink.strokeWidth ?? undefined}
-                      strokeDasharray={ink.dash ?? undefined}
-                      opacity={ink.opacity}
-                      vectorEffect="non-scaling-stroke"
-                    />
-                  </g>
-                );
-              })}
-            </g>
-          ) : null}
-
-          <path
-            d={graticule}
-            fill="none"
-            stroke="var(--ink-5)"
-            strokeWidth="var(--w-hair)"
-            opacity={0.5}
-            vectorEffect="non-scaling-stroke"
-          />
-
-          <g className="land">
-            {countries.map((country) => (
-              <path
-                key={country.iso3 || country.name}
-                d={country.path}
-                fill={fillFor(country.iso3)}
-                onClick={() => selectUnlessDragged(country.iso3)}
-                style={{ cursor: "pointer" }}
-              >
-                <title>{country.name}</title>
-              </path>
-            ))}
           </g>
-
-          {showPhysical && layers.lakes ? (
-            <g>
-              {layers.lakes.features.filter(inFrame).map((feature, i) => (
-                <path key={`lake-${i}`} d={geometryPath(feature.geometry as never, projector)} fill="var(--sea)" />
-              ))}
-            </g>
-          ) : null}
-
-          {showPhysical && layers.rivers ? (
-            <g>
-              {layers.rivers.features.filter(inFrame).map((feature, i) => (
-                <path
-                  key={`river-${i}`}
-                  d={geometryPath(feature.geometry as never, projector)}
-                  fill="none"
-                  stroke="var(--sea-deep)"
-                  strokeWidth={Math.max(0.4, Number(feature.properties.width ?? 1) * 0.5)}
-                  opacity={0.85}
-                  vectorEffect="non-scaling-stroke"
-                />
-              ))}
-            </g>
-          ) : null}
-
-          {layers.coastline ? (
-            <g>
-              {layers.coastline.features.filter(inFrame).map((feature, i) => (
-                <path
-                  key={`coast-${i}`}
-                  d={geometryPath(feature.geometry as never, projector)}
-                  fill="none"
-                  stroke="var(--ink-2)"
-                  strokeWidth="var(--w-line)"
-                  strokeLinejoin="round"
-                  vectorEffect="non-scaling-stroke"
-                />
-              ))}
-            </g>
-          ) : null}
-
-          <g className="boundaries">
-            {boundaries.map((boundary) => {
-              const specs =
-                showDispute && boundary.dissents
-                  ? emphasise(BOUNDARY_INK[boundary.cls])
-                  : BOUNDARY_INK[boundary.cls];
-              return (
-                <g key={boundary.id} data-class={boundary.cls}>
-                  {specs.map((spec, i) => (
-                    <path
-                      key={i}
-                      d={boundary.path}
-                      fill="none"
-                      stroke={spec.stroke}
-                      strokeWidth={spec.width}
-                      strokeDasharray={spec.dash ?? undefined}
-                      strokeLinecap="butt"
-                      opacity={spec.opacity}
-                      transform={spec.offset ? `translate(0,${spec.offset})` : undefined}
-                      vectorEffect="non-scaling-stroke"
-                    />
-                  ))}
-                  {showDispute && boundary.dissents ? (
-                    <path
-                      d={boundary.path}
-                      fill="none"
-                      stroke="var(--breach)"
-                      strokeWidth="5.5"
-                      strokeDasharray="1 6"
-                      opacity={0.75}
-                      vectorEffect="non-scaling-stroke"
-                    />
-                  ) : null}
-                </g>
-              );
-            })}
-          </g>
-        </g>
+        ))}
       </g>
 
       {/* Neatline. A sheet has an edge; a viewport does not. Fixed to the

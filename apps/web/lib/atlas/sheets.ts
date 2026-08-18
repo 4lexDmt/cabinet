@@ -31,6 +31,12 @@ export interface SheetConfig {
   brief: string;
   /** Explicit projection override; otherwise the frame chooses. */
   projection?: { kind?: ProjectionKind; parallels?: [number, number]; lon0?: number };
+  /**
+   * Whether east and west edges are the same meridian, so the sheet repeats
+   * horizontally instead of ending. Only true for a frame that spans a full
+   * 360°: anything narrower would repeat with a gap in it.
+   */
+  wraps?: boolean;
 }
 
 export const SHEETS: SheetConfig[] = [
@@ -38,7 +44,9 @@ export const SHEETS: SheetConfig[] = [
     id: "world",
     label: "The world",
     scale: "1:110M",
-    bbox: [-179, -58, 179, 79],
+    // The full 360°, not -179..179: the sheet has to carry a whole period of
+    // longitude for its east edge to meet its west one when it repeats.
+    bbox: [-180, -58, 180, 79],
     register: "theatre",
     parties: ["CN", "RU", "IN", "PK", "IL", "PS", "MA", "AR", "GB", "TR", "GR", "UA"],
     brief:
@@ -52,6 +60,7 @@ export const SHEETS: SheetConfig[] = [
     // honest, because a circle of sea stays a circle under a conformal
     // projection and the distance field is isotropic.
     projection: { kind: "mercator" },
+    wraps: true,
   },
   {
     id: "kashmir",

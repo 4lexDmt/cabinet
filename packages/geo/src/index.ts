@@ -115,8 +115,8 @@ export {
   WEIGHT,
   ZONE_INK,
   emphasise,
-  emphasiseZone,
   inkLedger,
+  zoneAsWater,
 } from "./cartography.ts";
 export type { InkLedger, OverlayCost, PlaceMark, StrokeSpec, ZoneInk } from "./cartography.ts";
 
