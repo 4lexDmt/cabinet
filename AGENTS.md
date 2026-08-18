@@ -105,3 +105,38 @@ flight information regions before 1947, and no motorway network before the
   those must be human acts or betrayal loses its moral weight
 - Never add unit micromanagement UI
 - Never resolve combat in a single tick — engagements span multiple ticks
+
+## Cursor Cloud specific instructions
+
+Monorepo of npm workspaces (`apps/*`, `packages/*`), Node 22 / npm 10. The
+startup update script runs `npm install`, so dependencies are already present.
+
+Services (run each in its own long-lived terminal):
+
+- Web app (`@cabinet/web`): `npm run dev` — Next.js (Turbopack) on port 3000.
+  Routes of note: `/` (lobby), `/join`, `/briefing`, `/channels`, `/pacts`,
+  `/atlas`.
+- Tick worker (`@cabinet/tick-worker`): `npm run dev:worker` — a standalone
+  long-lived Node loop (NOT serverless), run via `tsx`. It only logs
+  `tick.complete` when a match with `status: "active"` exists.
+
+Non-obvious gotchas:
+
+- Storage defaults to a shared on-disk file store at `.data/cabinet.json`
+  (git-ignored) when `DATABASE_URL` is unset. Both the web app and the tick
+  worker read/write the SAME file, so a match created in the web UI is picked
+  up and advanced by a running worker. Delete `.data/cabinet.json` to reset all
+  game state. Postgres (Supabase, `packages/db/migrations/001_initial.sql`) is
+  optional and not needed for local dev.
+- The worker's default `TICK_INTERVAL_MS` is 600000 (10 min). Export a small
+  value (e.g. `TICK_INTERVAL_MS=5000`) when you want to watch it tick locally.
+  The web rail's "Resolve this sitting" button (POST `/api/tick`) advances a
+  match on demand without waiting for the worker.
+- Tests: `npm test` (Vitest, ~35s). The determinism suite
+  (`packages/sim/test/determinism.test.ts`) alone runs ~34s (1000-tick hashes)
+  — this is expected, not a hang.
+- There is no ESLint/lint script. The nearest static check is a typecheck:
+  `npx tsc --noEmit -p apps/web/tsconfig.json` (strict mode is on repo-wide).
+- Offline map tiles under `apps/web/public/geo/mapkit` are built by
+  `infra/tiles` (Python, offline) and are committed; do not rebuild them at
+  request time.
