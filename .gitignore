@@ -10,8 +10,3 @@ coverage
 .DS_Store
 tsconfig.tsbuildinfo
 apps/web/next-env.d.ts
-infra/tiles/.cache
-infra/tiles/build
-__pycache__/
-*.pyc
-

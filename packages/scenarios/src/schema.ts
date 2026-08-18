@@ -132,19 +132,6 @@ export const scenarioSchema = z.object({
     cascade_depth_cap: z.number().int().min(1).max(8),
   }),
   geo: scenarioGeoSchema.optional(),
-  corridors: z
-    .array(
-      z.object({
-        id: z.string(),
-        a: z.string(),
-        b: z.string(),
-        travel_ticks: z.number().int().positive(),
-        kind: z.string().min(1),
-        gauge_from: z.number().int().positive().optional(),
-        gauge_to: z.number().int().positive().optional(),
-      }),
-    )
-    .default([]),
 });
 
 export type ScenarioConfig = z.infer<typeof scenarioSchema>;

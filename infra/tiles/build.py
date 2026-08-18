@@ -692,38 +692,10 @@ def build_territory_manifest() -> int:
     return covered
 
 
-def source_is_used(source: dict) -> bool:
-    """A source is used if we shipped a derived layer, not merely cached a download."""
-    sid = source["id"]
-    provenance = "unknown"
-    prov_path = CACHE / "transport_provenance.json"
-    if prov_path.exists():
-        try:
-            provenance = json.loads(prov_path.read_text()).get("source", "unknown")
-        except json.JSONDecodeError:
-            provenance = "unknown"
-    if sid == "geoboundaries_adm1":
-        return (OUT / "provinces.geojson").exists()
-    if sid == "geonames_cities15000":
-        return (OUT / "cities.geojson").exists()
-    if sid == "osm_slice_transport":
-        return provenance == "osm" and ((OUT / "roads.geojson").exists() or (OUT / "rail.geojson").exists())
-    if sid == "ne_10m_roads_strategic":
-        return provenance == "natural_earth" and (OUT / "roads.geojson").exists()
-    if sid == "ne_10m_railroads":
-        return provenance == "natural_earth" and (OUT / "rail.geojson").exists()
-    if sid == "nga_wpi":
-        return (OUT / "ports.geojson").exists()
-    if sid == "ourairports":
-        return (OUT / "airports.geojson").exists()
-    if source.get("manual_download"):
-        return (CACHE / f"{sid}.geojson").exists()
-    return (CACHE / f"{sid}.geojson").exists()
-
-
 def write_attribution(manifest: dict) -> None:
     entries = []
     for source in manifest["sources"]:
+        path = CACHE / f"{source['id']}.geojson"
         entries.append(
             {
                 "id": source["id"],
@@ -733,7 +705,7 @@ def write_attribution(manifest: dict) -> None:
                 "attribution": source["attribution"],
                 "required": bool(source.get("attribution_required")),
                 "shareAlike": bool(source.get("share_alike")),
-                "used": source_is_used(source),
+                "used": path.exists(),
             }
         )
     payload = {

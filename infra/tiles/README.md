@@ -23,10 +23,6 @@ Reproduced verbatim because these are legal obligations, not courtesies.
 | Overture divisions | **ODbL** | *© OpenStreetMap contributors.* Attribution **and share-alike** on derived databases. |
 | Overture transportation | **ODbL** | *© OpenStreetMap contributors.* Attribution **and share-alike**. |
 | geoBoundaries | CC BY 4.0 | Cite Runfola et al. 2020. |
-| GeoNames | CC BY 4.0 | *GeoNames geographical database.* |
-| OSM / Geofabrik (roads, rail) | **ODbL** | *© OpenStreetMap contributors.* Attribution **and share-alike**. Separate basemap. |
-| World Port Index | US Government PD | None required. |
-| OurAirports | CC0 | None required. |
 | GRIP4 | **Disputed — verify** | Reported as ODbL (FAO), CC-0 (GLOBIO) and CC BY 4.0 (Earth Engine catalog). Verify at `globio.info` before shipping; assume ODbL if unresolved. |
 | **GADM** | **Non-commercial** | **Do not use.** Widely recommended, and disqualifying for a product with a paid tier. |
 
@@ -46,46 +42,9 @@ every Overture/OSM-derived layer as a **separately attributed basemap**, and kee
 game state — territories, control, beliefs — in **our own layer**. The two never
 merge into one database.
 
-Stage 1 keeps ODbL roads and rail as a separately attributed basemap next to
-game-state provinces, cities, ports, airports and `corridors.json`. When a
-Geofabrik extract cannot be retrieved the pipeline falls back to a Natural
-Earth 10m theatre clip (public domain) rather than shipping empty geometry;
-the OSM row stays `used: false` and `shareAlike: true`. Attribution lists
-every used source.
-
----
-
-## Stage 1 — Eastern Europe / Black Sea (2026)
-
-Theatre: Poland, Romania, Ukraine, Turkey, Russia. Frame `[14, 36, 50, 56]`.
-The Bosphorus is the chokepoint; the Danish Straits stay on the Baltic sheet.
-
-```
-make world          # fetch Stage 1 sources + build provinces/cities/corridors
-make fetch-world    # geoBoundaries, GeoNames, OSM extract, WPI, OurAirports
-make build-world    # needs shapely (`pip install -r requirements.txt`)
-```
-
-`make fetch` now also runs `fetch_world.py`. Sources with a `fetch` key in
-`sources.json` are **not** pulled by `fetch.sh` (their URLs are APIs or dumps,
-not the Natural Earth GeoJSON the checksum file covers). Failures are loud:
-an empty layer is worse than a missing one.
-
-Roster and ADM recipes live in `config/nations.json`. Adding a Stage 2 nation
-is an ISO code and a recipe, not an engine change.
-
-| Layer | Licence | Role |
-|---|---|---|
-| `provinces.geojson` | CC BY 4.0 (geoBoundaries) | Aggregated ADM1. Game state. |
-| `cities.geojson` | CC BY 4.0 (GeoNames) | 1–3 cities per province. Game nodes. |
-| `corridors.json` | ours | Integer graph. No coordinates. Tick path reads this. |
-| `roads.geojson` / `rail.geojson` | ODbL, or Natural Earth PD if OSM cannot be fetched | Separately attributed basemap. Never dissolved into provinces. |
-| `ports.geojson` | US Gov PD (WPI) | Transfer nodes. |
-| `airports.geojson` | CC0 (OurAirports) | Transfer nodes. |
-
-Caps the build itself enforces: Turkey ≤ 12 (NUTS-1), Romania ≤ 8 (development
-regions), Russia in-slice ≤ 8 (federal districts). Crimea is one polygon,
-control-flagged, Ukrainian geography on the neutral plate.
+Everything the app currently ships is public-domain Natural Earth, so it carries
+no obligation at all today. That is a deliberate starting position, not an
+accident.
 
 ---
 

@@ -81,18 +81,6 @@ export interface Formation {
   destination: string | null;
   strength: number;
   inTransit: boolean;
-  /** Remaining travel on the corridor graph. 0 when idle or teleporting. */
-  ticks_remaining: number;
-}
-
-export interface Corridor {
-  id: string;
-  a: string;
-  b: string;
-  travel_ticks: number;
-  kind: string;
-  gauge_from?: number;
-  gauge_to?: number;
 }
 
 export interface Pact {
@@ -179,7 +167,6 @@ export interface WorldState {
   beliefs: Belief[];
   wars: War[];
   tradeRoutes: TradeRoute[];
-  corridors: Corridor[];
   postures: Record<string, Posture>;
   flags: Record<string, number | string | boolean>;
   victory: Record<string, unknown>;

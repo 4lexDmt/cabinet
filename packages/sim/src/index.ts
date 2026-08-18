@@ -2,7 +2,6 @@ export type {
   AdvisorTemplate,
   Belief,
   BeliefSource,
-  Corridor,
   EffectRule,
   Formation,
   GameEvent,
@@ -24,7 +23,6 @@ export type {
 } from "./types.ts";
 
 export { tick, PHASES } from "./tick.ts";
-export { shortestCorridorPath } from "./corridor.ts";
 export { createRng, mixSeed } from "./rng.ts";
 export { forceOf } from "./force.ts";
 export { stableStringify, cloneState } from "./serialize.ts";

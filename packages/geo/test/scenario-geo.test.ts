@@ -124,16 +124,6 @@ describe("resolveScenarioGeo", () => {
     expect(withEez.hasEez).toBe(true);
     expect(layerPermitted(withEez, "maritime_eez")).toBe(true);
   });
-
-  it("2026 permits provinces, cities and gauged rail", () => {
-    const resolved = resolveScenarioGeo(stub(2026));
-    expect(resolved.roadEra).toBe("motorway");
-    expect(layerPermitted(resolved, "roads")).toBe(true);
-    expect(layerPermitted(resolved, "provinces")).toBe(true);
-    expect(layerPermitted(resolved, "cities")).toBe(true);
-    expect(layerPermitted(resolved, "rail")).toBe(true);
-    expect(layerPermitted(resolved, "maritime_eez")).toBe(true);
-  });
 });
 
 describe("catalog geo blocks", () => {

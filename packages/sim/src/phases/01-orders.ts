@@ -1,5 +1,4 @@
 import type { Order, Pact, TickContext } from "../types.ts";
-import { shortestCorridorPath } from "../corridor.ts";
 import {
   adjustNation,
   emit,
@@ -181,24 +180,14 @@ function orderMove(ctx: TickContext, order: Order): void {
   const formation = ctx.state.formations[formationId];
   if (!formation || formation.nationId !== order.nationId) return;
   if (!ctx.state.territories[destination]) return;
-  const corridors = ctx.state.corridors;
-  let ticksRemaining = 0;
-  if (corridors.length > 0) {
-    const path = shortestCorridorPath(corridors, formation.location, destination);
-    if (!path) {
-      ctx.warnings.push(`move_formation rejected: no corridor path ${formation.location} -> ${destination}`);
-      return;
-    }
-    ticksRemaining = path.cost;
-  }
   putFormation(
     ctx,
-    { ...formation, destination, inTransit: true, ticks_remaining: ticksRemaining },
+    { ...formation, destination, inTransit: true },
     {
       type: "formation.ordered_to_move",
       actor_id: order.nationId,
       subject_ids: [formationId, destination],
-      payload: { formation_id: formationId, from: formation.location, to: destination, travel_ticks: ticksRemaining },
+      payload: { formation_id: formationId, from: formation.location, to: destination },
       visibility_rule: visibilityNations([order.nationId]),
       cause_event_id: null,
     },

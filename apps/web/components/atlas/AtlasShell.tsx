@@ -4,11 +4,11 @@
  * The instrument, reduced to its base plate.
  *
  * No sheet switcher, no perspective switcher, no overlay toggles, no
- * buttons anywhere. Production opens the 2026 Eastern Europe / Black Sea
- * plate so provinces, cities and strategic roads are on the instrument.
- * The chrome-free world plate remains at `/atlas?sheet=world`. Reading is
- * still interactive (scroll or pinch to zoom, drag to pan); the frame
- * itself is not a control.
+ * buttons anywhere. One frame — the world, from nobody's desk — showing
+ * only political boundaries and the two maritime zones that are actually
+ * sovereignty-adjacent: the territorial sea and the exclusive economic
+ * zone. Reading is still interactive (scroll or pinch to zoom, drag to
+ * pan); the frame itself is not a control.
  */
 
 import { useEffect, useMemo, useRef, useState } from "react";
@@ -18,20 +18,7 @@ import { loadLayers, type LayerName, type LoadedLayer } from "@/lib/atlas/layers
 import type { OverlayId } from "@/lib/atlas/overlays";
 import { projectionOf, sheetById } from "@/lib/atlas/sheets";
 
-const WORLD_LAYERS: LayerName[] = ["countries", "boundaries", "coastline", "canals"];
-const SLICE_LAYERS: LayerName[] = [
-  "countries",
-  "boundaries",
-  "coastline",
-  "canals",
-  "provinces",
-  "cities",
-  "roads",
-  "rail",
-  "ports",
-  "airports",
-  "chokepoints",
-];
+const LAYERS: LayerName[] = ["countries", "boundaries", "coastline", "canals"];
 
 // Political holds the sheet's area ink; maritime is always demoted to line
 // only, which is exactly what "maritime borders" (rather than a maritime
@@ -40,14 +27,9 @@ const ACTIVE: OverlayId[] = ["political", "maritime"];
 const DEMOTED = new Set<OverlayId>(["maritime"]);
 const ERA: MaritimeEra = UNCLOS_ERA;
 
-export function AtlasShell({ sheetId }: { sheetId?: string }) {
-  const sheet = useMemo(
-    () => sheetById(sheetId && sheetId.length > 0 ? sheetId : "ee_black_sea_2026"),
-    [sheetId],
-  );
+export function AtlasShell() {
+  const sheet = useMemo(() => sheetById("world"), []);
   const projection = useMemo(() => projectionOf(sheet), [sheet]);
-  const isSlice = sheet.id === "ee_black_sea_2026";
-  const layerNames = isSlice ? SLICE_LAYERS : WORLD_LAYERS;
 
   const [layers, setLayers] = useState<Record<string, LoadedLayer | undefined>>({});
   const [error, setError] = useState<string | null>(null);
@@ -57,9 +39,7 @@ export function AtlasShell({ sheetId }: { sheetId?: string }) {
 
   useEffect(() => {
     let cancelled = false;
-    setLayers({});
-    setError(null);
-    loadLayers(layerNames)
+    loadLayers(LAYERS)
       .then((loaded) => {
         if (cancelled) return;
         setLayers((current) => {
@@ -74,7 +54,7 @@ export function AtlasShell({ sheetId }: { sheetId?: string }) {
     return () => {
       cancelled = true;
     };
-  }, [layerNames]);
+  }, []);
 
   useEffect(() => {
     const node = stageRef.current;
@@ -120,11 +100,7 @@ export function AtlasShell({ sheetId }: { sheetId?: string }) {
             ) : (
               <span>
                 <b>LOADING GEOMETRY…</b>
-                <small>
-                  {isSlice
-                    ? "geoBoundaries · GeoNames · OSM transport · Natural Earth"
-                    : "Natural Earth 1:50m and 1:10m · public domain"}
-                </small>
+                <small>Natural Earth 1:50m and 1:10m · public domain</small>
               </span>
             )}
           </div>

@@ -19,7 +19,6 @@ describe("event completeness", () => {
       beliefs: [],
       wars: [],
       tradeRoutes: [],
-      corridors: [],
       postures: {},
       flags: {},
       victory: {},

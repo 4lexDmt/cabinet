@@ -27,7 +27,7 @@ npm run dev       # Next.js on :3000
 
 Open `/`, pick a table from the catalog, sit as a nation (the rail switches chairs for local playtest). Draft an instrument, transmit a cable, resolve a sitting.
 
-The atlas — a sheet you can read from any government's desk — is at `/atlas`. Production opens the 2026 Eastern Europe / Black Sea plate: aggregated provinces, cities, and strategic roads. The world plate is `/atlas?sheet=world`.
+The atlas — a sheet you can read from any government's desk — is at `/atlas`. Kashmir is the default sheet: one geometry, three readings of the Line of Control.
 
 The tick worker is a **standalone Node process**, not serverless:
 
