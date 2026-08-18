@@ -35,6 +35,42 @@ function layer(name: string): Feature[] {
   return (JSON.parse(readFileSync(path, "utf8")) as { features: Feature[] }).features;
 }
 
+describe("generated canals", () => {
+  const features = layer("canals");
+
+  function vertices(feature: Feature): Array<[number, number]> {
+    const geometry = feature.geometry;
+    if (!geometry) return [];
+    const lines =
+      geometry.type === "LineString"
+        ? [geometry.coordinates as Array<[number, number]>]
+        : (geometry.coordinates as Array<Array<[number, number]>>);
+    return lines.flat();
+  }
+
+  it("carries the canals that join two seas, and nothing else", () => {
+    const names = new Set(features.map((f) => String(f.properties.name)));
+    expect(names).toContain("Suez Canal");
+    expect(names).toContain("Panama Canal");
+    // Natural Earth files these among the rivers; nothing else should follow
+    // them across.
+    for (const name of names) expect(name).toMatch(/Canal$/);
+  });
+
+  it("carries Suez the whole way across the isthmus", () => {
+    // The point of the layer: without a line reaching from the Mediterranean
+    // to the Gulf of Suez, Sinai is simply part of Egypt at every zoom this
+    // sheet reaches. Port Said sits at 31.26°N, Suez at 29.97°N.
+    const suez = features.filter((f) => f.properties.name === "Suez Canal").flatMap(vertices);
+    expect(suez.length).toBeGreaterThan(1);
+    const lats = suez.map(([, lat]) => lat);
+    expect(Math.max(...lats)).toBeGreaterThan(31.2);
+    expect(Math.min(...lats)).toBeLessThan(30.1);
+    for (const [lon] of suez) expect(lon).toBeGreaterThan(32.2);
+    for (const [lon] of suez) expect(lon).toBeLessThan(32.7);
+  });
+});
+
 describe("generated boundaries", () => {
   const features = layer("boundaries");
 

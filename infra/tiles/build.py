@@ -499,6 +499,13 @@ def build_places(scalerank_max: int = 6) -> int:
     return len(features)
 
 
+"""
+Canals that join two seas, and therefore shorten a voyage rather than water a
+field. Named explicitly because Natural Earth files them among the rivers.
+"""
+SHIP_CANALS = {"Suez Canal", "Panama Canal", "Kiel Canal"}
+
+
 def build_physical(source_id: str, name: str, tolerance: float, keep: Callable[[dict], bool] | None = None,
                    properties: Callable[[dict], dict] | None = None) -> int:
     raw = read_source(source_id)
@@ -752,6 +759,19 @@ def main() -> int:
                 "name": prop(p, "name", default=None),
                 "width": round(num(prop(p, "strokeweig", "strokeweight", default=1), 1), 2),
             },
+        )
+        # Ship canals, from the same source but on their own layer and at their
+        # own tolerance, because they are not rivers in any sense this game
+        # cares about. A canal that joins two seas is a chokepoint: it decides
+        # whether a fleet is one week from a theatre or five, and Suez in
+        # particular is the only thing that separates Sinai from Egypt on a
+        # sheet at this scale. Both sit at scalerank 6, below the river cut,
+        # so selecting them by rank would mean dragging in every minor river
+        # on earth to reach them.
+        build_physical(
+            "ne_50m_rivers_lake_centerlines", "canals", tolerance=0.004,
+            keep=lambda p: (prop(p, "name", default="") or "") in SHIP_CANALS,
+            properties=lambda p: {"name": prop(p, "name", default=None)},
         )
         build_physical("ne_10m_bathymetry_K_200", "bathymetry", tolerance=0.06)
     if want("maritime"):
