@@ -100,6 +100,33 @@ function pickGraticuleStep(spanDegrees: number): number {
   return 30;
 }
 
+/**
+ * The smallest a polygon may be drawn, in square screen pixels. Below this an
+ * island is a dot that carries no shape and no information.
+ */
+const MIN_ISLAND_PIXELS = 7;
+
+function pathOfRing(ring: Point[]): string {
+  let out = "";
+  for (let i = 0; i < ring.length; i++) {
+    const [x, y] = ring[i]!;
+    if (!Number.isFinite(x) || !Number.isFinite(y)) continue;
+    out += `${out === "" || i === 0 ? "M" : "L"}${x.toFixed(1)},${y.toFixed(1)}`;
+  }
+  return out ? `${out}Z` : "";
+}
+
+/** Shoelace. Sign is winding, which is not interesting here; size is. */
+function ringArea(ring: Point[]): number {
+  let twice = 0;
+  for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) {
+    const a = ring[j]!;
+    const b = ring[i]!;
+    twice += a[0] * b[1] - b[0] * a[1];
+  }
+  return Math.abs(twice) / 2;
+}
+
 /** Deterministic, so the same country is the same tone on every load. */
 function countryKey(iso3: string): number {
   let hash = 0;
@@ -427,15 +454,66 @@ export function Sheet(props: SheetProps) {
   );
 
   // ── land ──────────────────────────────────────────────────────────────────
-  const countries = useMemo(() => {
+  //
+  // Kept per POLYGON rather than per country, each with the area it covers, so
+  // an island too small to read can be left out. At world scale a pixel is
+  // twenty-five kilometres across: every atoll in the Pacific is a speck of
+  // dirt on the plate that says nothing except that something is there.
+  const countryParts = useMemo(() => {
     const source = layers.countries;
     if (!source) return [];
-    return source.features.filter(inFrame).map((feature) => ({
-      iso3: String(feature.properties.iso_a3 ?? feature.properties.name ?? ""),
-      name: String(feature.properties.name ?? "—"),
-      path: geometryPath(feature.geometry as never, projector),
-    }));
+    return source.features.filter(inFrame).map((feature) => {
+      const geometry = feature.geometry as { type: string; coordinates: unknown };
+      const polygons: unknown[] =
+        geometry?.type === "Polygon"
+          ? [geometry.coordinates]
+          : geometry?.type === "MultiPolygon"
+            ? (geometry.coordinates as unknown[])
+            : [];
+      const parts: Array<{ path: string; area: number }> = [];
+      for (const polygon of polygons) {
+        if (!Array.isArray(polygon)) continue;
+        let path = "";
+        let area = 0;
+        (polygon as LonLat[][]).forEach((ring, index) => {
+          const projected = ring.map((p) => projector(p));
+          path += pathOfRing(projected);
+          if (index === 0) area = ringArea(projected);
+        });
+        if (path) parts.push({ path, area });
+      }
+      // Largest first, so the rule below can always keep a state's mainland.
+      parts.sort((a, b) => b.area - a.area);
+      return {
+        iso3: String(feature.properties.iso_a3 ?? feature.properties.name ?? ""),
+        name: String(feature.properties.name ?? "—"),
+        parts,
+      };
+    });
   }, [layers.countries, inFrame, projector]);
+
+  /**
+   * The smallest area, in the fixed projection's units, that still earns ink at
+   * the zoom actually on screen. Quantised by octave so a gesture does not
+   * rebuild every path on the plate.
+   */
+  const zoomOctave = Math.pow(2, Math.round(Math.log2(camera.k)));
+  const islandFloor = MIN_ISLAND_PIXELS / (zoomOctave * zoomOctave);
+
+  const countries = useMemo(
+    () =>
+      countryParts.map((country) => ({
+        iso3: country.iso3,
+        name: country.name,
+        // A state is never erased outright, however small: its largest polygon
+        // always draws. What goes is the scatter around it.
+        path: country.parts
+          .filter((part, index) => index === 0 || part.area >= islandFloor)
+          .map((part) => part.path)
+          .join(""),
+      })),
+    [countryParts, islandFloor],
+  );
 
   // ── boundaries, read from one desk ────────────────────────────────────────
   const boundaries = useMemo<DrawnBoundary[]>(() => {
@@ -464,6 +542,33 @@ export function Sheet(props: SheetProps) {
     }
     return out;
   }, [layers.boundaries, inFrame, projector, observer, register.zoom]);
+
+  // Coastline, held with the size of what it encloses so the same island rule
+  // applies to it. A coast drawn around an island that is not drawn reads as a
+  // stray mark in open water.
+  const coastlineParts = useMemo(() => {
+    const source = layers.coastline;
+    if (!source) return [];
+    const out: Array<{ path: string; extent: number }> = [];
+    for (const feature of source.features.filter(inFrame)) {
+      const path = geometryPath(feature.geometry as never, projector);
+      if (!path) continue;
+      const box = feature.bbox;
+      let extent = Infinity;
+      if (box) {
+        const [x0, y0] = projector([box[0], box[1]]);
+        const [x1, y1] = projector([box[2], box[3]]);
+        extent = Math.abs((x1 - x0) * (y1 - y0));
+      }
+      out.push({ path, extent });
+    }
+    return out;
+  }, [layers.coastline, inFrame, projector]);
+
+  const coastline = useMemo(
+    () => coastlineParts.filter((line) => line.extent >= islandFloor).map((line) => line.path),
+    [coastlineParts, islandFloor],
+  );
 
   /** Countries touching a line this desk does not read as an ordinary border. */
   const unsettled = useMemo(() => {
@@ -539,7 +644,15 @@ export function Sheet(props: SheetProps) {
   const landPlane = useMemo(() => {
     const source = layers.countries;
     if (!source) return [];
-    const out: Array<{ iso: string; rings: Point[][]; x0: number; y0: number; x1: number; y1: number }> = [];
+    const out: Array<{
+      iso: string;
+      rings: Point[][];
+      area: number;
+      x0: number;
+      y0: number;
+      x1: number;
+      y1: number;
+    }> = [];
     for (const feature of source.features) {
       const iso = String(feature.properties.iso_a3 ?? "");
       const geometry = feature.geometry as { type: string; coordinates: unknown };
@@ -556,6 +669,7 @@ export function Sheet(props: SheetProps) {
         let y0 = Infinity;
         let x1 = -Infinity;
         let y1 = -Infinity;
+        let area = 0;
         for (const ring of polygon as LonLat[][]) {
           const plane = ring.map((p) => projection.forward(p));
           for (const [x, y] of plane) {
@@ -565,9 +679,10 @@ export function Sheet(props: SheetProps) {
             if (y < y0) y0 = y;
             if (y > y1) y1 = y;
           }
+          if (rings.length === 0) area = ringArea(plane);
           rings.push(plane);
         }
-        if (rings.length > 0 && Number.isFinite(x0)) out.push({ iso, rings, x0, y0, x1, y1 });
+        if (rings.length > 0 && Number.isFinite(x0)) out.push({ iso, rings, area, x0, y0, x1, y1 });
       }
     }
     return out;
@@ -643,9 +758,15 @@ export function Sheet(props: SheetProps) {
     // Polygon nesting is preserved rather than flattened to a ring list: the
     // land mask unions polygons and only applies even-odd within one, which is
     // what keeps a shared border from cancelling into a sliver of phantom sea.
+    // An island the sheet does not draw casts no water either: a two hundred
+    // mile zone around nothing visible is the most confusing thing this plate
+    // could show.
+    const zoneIslandFloor = MIN_ISLAND_PIXELS / (scale * scale);
+
     const landPolygons: Point[][][] = [];
     const byState = new Map<string, Point[]>();
     for (const polygon of landPlane) {
+      if (polygon.area < zoneIslandFloor) continue;
       for (const shift of shifts) {
         // The polygon's own extent, carried into the frame, decides whether any
         // of its vertices are worth transforming.
@@ -796,12 +917,12 @@ export function Sheet(props: SheetProps) {
         </g>
       ) : null}
 
-      {layers.coastline ? (
+      {coastline.length > 0 ? (
         <g>
-          {layers.coastline.features.filter(inFrame).map((feature, i) => (
+          {coastline.map((line, i) => (
             <path
               key={`coast-${i}`}
-              d={geometryPath(feature.geometry as never, projector)}
+              d={line}
               fill="none"
               stroke="var(--ink-2)"
               strokeWidth="var(--w-line)"
@@ -809,6 +930,42 @@ export function Sheet(props: SheetProps) {
               vectorEffect="non-scaling-stroke"
             />
           ))}
+        </g>
+      ) : null}
+
+      {/* Ship canals. Water, drawn over the land it cuts through, because that
+          is what they are and what they are for: without the Suez line, Sinai
+          is simply part of Egypt at every zoom this sheet reaches. */}
+      {layers.canals ? (
+        <g className="canals">
+          {layers.canals.features.map((feature, i) => {
+            const d = geometryPath(feature.geometry as never, projector);
+            const name = String(feature.properties.name ?? "Canal");
+            return (
+              <g key={`canal-${i}`}>
+                {/* Banks, then water. A single pale line on pale ground is not
+                    a canal, it is a scratch. */}
+                <path
+                  d={d}
+                  fill="none"
+                  stroke="var(--ink-3)"
+                  strokeWidth={3.6}
+                  strokeLinecap="round"
+                  vectorEffect="non-scaling-stroke"
+                />
+                <path
+                  d={d}
+                  fill="none"
+                  stroke="var(--sea)"
+                  strokeWidth={2}
+                  strokeLinecap="round"
+                  vectorEffect="non-scaling-stroke"
+                >
+                  <title>{name}</title>
+                </path>
+              </g>
+            );
+          })}
         </g>
       ) : null}
 

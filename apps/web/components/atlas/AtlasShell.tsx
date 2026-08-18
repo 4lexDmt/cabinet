@@ -18,7 +18,7 @@ import { loadLayers, type LayerName, type LoadedLayer } from "@/lib/atlas/layers
 import type { OverlayId } from "@/lib/atlas/overlays";
 import { projectionOf, sheetById } from "@/lib/atlas/sheets";
 
-const LAYERS: LayerName[] = ["countries", "boundaries", "coastline"];
+const LAYERS: LayerName[] = ["countries", "boundaries", "coastline", "canals"];
 
 // Political holds the sheet's area ink; maritime is always demoted to line
 // only, which is exactly what "maritime borders" (rather than a maritime

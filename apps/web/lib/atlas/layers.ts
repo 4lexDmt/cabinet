@@ -30,6 +30,7 @@ export type LayerName =
   | "ocean"
   | "lakes"
   | "rivers"
+  | "canals"
   | "bathymetry";
 
 const BASE = "/geo/mapkit";

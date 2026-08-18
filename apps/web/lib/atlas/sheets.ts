@@ -46,7 +46,13 @@ export const SHEETS: SheetConfig[] = [
     scale: "1:110M",
     // The full 360°, not -179..179: the sheet has to carry a whole period of
     // longitude for its east edge to meet its west one when it repeats.
-    bbox: [-180, -58, 180, 79],
+    //
+    // North to 84°, which is past Cape Morris Jesup, Ellesmere and Svalbard —
+    // the usual 79° or 80° cut takes the top off Greenland and most of the
+    // Canadian archipelago, and an arctic power whose territory is missing
+    // from the plate is a poor start for a game about territory. Mercator
+    // inflates all of it, which the title block declares.
+    bbox: [-180, -58, 180, 84],
     register: "theatre",
     parties: ["CN", "RU", "IN", "PK", "IL", "PS", "MA", "AR", "GB", "TR", "GR", "UA"],
     brief:
