@@ -20,8 +20,8 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { MouseEvent as ReactMouseEvent, PointerEvent as ReactPointerEvent } from "react";
 import {
-  BOUNDARY_INK,
   NEUTRAL_OBSERVER,
+  PLAIN_BOUNDARY_INK,
   buildMaritimeField,
   densify,
   emphasise,
@@ -137,18 +137,23 @@ interface Camera {
 const ZOOM_RANGE = 24;
 
 /**
- * The reference frame the maritime zones are computed in.
- *
- * Deliberately NOT the viewport. Zones are built from a raster distance field,
- * so their fidelity is set by how many cells cover the sheet — compute them
- * against a phone's viewport and a 200-mile limit is barely a cell wide, while
- * a 12-mile one is a fraction of one. Fixing the frame to the sheet instead of
- * the device means a phone and a desktop get the same zones, computed once, and
- * the camera transform scales them like any other geometry.
+ * Grid cells to spend on one maritime pass. Cost is roughly linear in this, so
+ * it is a budget rather than a resolution: the frame the cells are spread over
+ * follows the reader, so the same budget buys world-scale zones at world zoom
+ * and harbour-scale zones close in.
  */
-const MARITIME_REFERENCE_WIDTH = 1600;
-/** Grid cells to spend on the reference frame. Cost is roughly linear in this. */
-const MARITIME_REFERENCE_CELLS = 56_000;
+const MARITIME_CELL_BUDGET = 60_000;
+
+/**
+ * How long the view must hold still before the zones are recomputed for it.
+ *
+ * The zones are the expensive thing on this sheet — a per-cell nearest
+ * coastline search — so they are computed for a SETTLED view, never per frame.
+ * While a gesture is in flight the previous pass stays on screen, correct in
+ * position because it is geographic geometry, just coarser than the new zoom
+ * deserves until the next pass lands.
+ */
+const MARITIME_SETTLE_MS = 260;
 
 export function Sheet(props: SheetProps) {
   const {
@@ -482,35 +487,78 @@ export function Sheet(props: SheetProps) {
   // between them is implicit in the geometry. One isoline per limit therefore
   // says everything a per-state pass would, at two marching-squares passes
   // instead of several hundred.
-  const maritimeReference = useMemo(() => {
-    const [w, s, e, n] = sheet.bbox;
-    // Square probe first: its scale is set by the sheet's longer axis, which
-    // gives the sheet's own aspect without needing the projection's internals.
-    const probe = fitBounds(projection, sheet.bbox, MARITIME_REFERENCE_WIDTH, MARITIME_REFERENCE_WIDTH);
-    const corners = [
-      project(probe, [w, s]),
-      project(probe, [w, n]),
-      project(probe, [e, s]),
-      project(probe, [e, n]),
-    ];
-    const xs = corners.map((c) => c[0]);
-    const ys = corners.map((c) => c[1]);
-    const spanX = Math.max(...xs) - Math.min(...xs);
-    const spanY = Math.max(...ys) - Math.min(...ys);
-    const refWidth = Math.max(64, Math.round(spanX));
-    const refHeight = Math.max(64, Math.round(spanY));
-    return {
-      viewport: fitBounds(projection, sheet.bbox, refWidth, refHeight),
-      width: refWidth,
-      height: refHeight,
-      cellSize: Math.max(2, Math.round(Math.sqrt((refWidth * refHeight) / MARITIME_REFERENCE_CELLS))),
-    };
-  }, [projection, sheet.bbox]);
+  // The view the zones were last computed for.
+  //
+  // Kept as the exact camera it was captured from, never rounded. An offset is
+  // only meaningful paired with the scale it was measured at — zoomed in, the
+  // offset is tens of thousands of pixels, so rounding the scale even slightly
+  // while keeping the offset puts the computed frame somewhere else entirely.
+  // Held still instead by refusing immaterial updates: a nudge is not worth a
+  // recomputation, a quarter-octave of zoom or a third of a screen of pan is.
+  const [zoneView, setZoneView] = useState<Camera | null>(null);
+  useEffect(() => {
+    const id = setTimeout(() => {
+      setZoneView((previous) => {
+        const next = { k: camera.k, x: camera.x, y: camera.y };
+        if (!previous) return next;
+        const growth = next.k / previous.k;
+        const moved = Math.hypot(next.x - previous.x * growth, next.y - previous.y * growth);
+        const material = Math.abs(Math.log2(growth)) > 0.2 || moved > Math.min(width, height) / 3;
+        return material ? next : previous;
+      });
+    }, MARITIME_SETTLE_MS);
+    return () => clearTimeout(id);
+  }, [camera.k, camera.x, camera.y, width, height]);
+
+  const viewK = zoneView?.k ?? camera.k;
+  const viewX = zoneView?.x ?? camera.x;
+  const viewY = zoneView?.y ?? camera.y;
 
   const maritime = useMemo(() => {
     if (!showMaritime || !layers.countries) return null;
-    const { viewport: ref, width: refWidth, height: refHeight, cellSize } = maritimeReference;
+
+    const scale = baseViewport.scale * viewK;
+    // Nautical miles to pixels at this scale, measured at the equator; the
+    // per-row correction below carries it to every other latitude.
+    const equator: Viewport = { ...baseViewport, scale, center: [baseViewport.center[0], 0] };
+    const pixelsPerNm = 1.852 / kmPerPixel(equator);
+
+    // The frame reaches past the viewport by more than the widest zone, so a
+    // coast just off screen still casts its water into view.
+    // Reach far enough that land off screen still casts water into view. The
+    // scale of a conformal projection grows with latitude, so the same 200 miles
+    // is that many more pixels the further from the equator the frame sits.
+    const stretch = Math.max(0.3, Math.cos(Math.max(-80, Math.min(80, baseViewport.center[1])) * (Math.PI / 180)));
+    const margin = Math.min(900, Math.ceil((200 * pixelsPerNm) / stretch) + 24);
+    const frameWidth = width + margin * 2;
+    const frameHeight = height + margin * 2;
+    let cellSize = width < 700 ? 4 : 5;
+    while ((frameWidth / cellSize) * (frameHeight / cellSize) > MARITIME_CELL_BUDGET) cellSize += 1;
+
+    // The settled view's own viewport, offset by the margin, so the field's
+    // coordinates are screen coordinates and the algorithm's pixel-scale
+    // heuristics mean what they say at every zoom.
+    const ref: Viewport = {
+      ...baseViewport,
+      width: frameWidth,
+      height: frameHeight,
+      scale,
+      translate: [
+        baseViewport.translate[0] * viewK + viewX + margin,
+        baseViewport.translate[1] * viewK + viewY + margin,
+      ],
+    };
+    const bounds = viewportBounds(ref);
     const toRef: Projector = (lonLat: LonLat) => project(ref, lonLat);
+
+    // A wrapping sheet is entered from either side, so each feature is offered
+    // at three longitudes and kept wherever it lands inside the frame. That is
+    // also what makes the zones continuous across the antimeridian: the field
+    // sees Chukotka's coast while computing Alaska's water.
+    const shifts = sheet.wraps ? [-360, 0, 360] : [0];
+    const pad = margin;
+    const outside = (box: [number, number, number, number]): boolean =>
+      box[2] < -pad || box[0] > frameWidth + pad || box[3] < -pad || box[1] > frameHeight + pad;
 
     // Polygon nesting is preserved rather than flattened to a ring list: the
     // land mask unions polygons and only applies even-odd within one, which is
@@ -519,57 +567,56 @@ export function Sheet(props: SheetProps) {
     const coasts: Array<{ id: string; points: Point[] }> = [];
     for (const feature of layers.countries.features) {
       const iso = String(feature.properties.iso_a3 ?? "");
-      const polygons: Point[][][] = [];
       const geometry = feature.geometry as { type: string; coordinates: unknown };
-      const toRings = (polygon: unknown): Point[][] =>
-        Array.isArray(polygon) ? (polygon as LonLat[][]).map((ring) => ring.map((p) => toRef(p))) : [];
-      if (geometry?.type === "Polygon") polygons.push(toRings(geometry.coordinates));
-      else if (geometry?.type === "MultiPolygon") {
-        for (const polygon of geometry.coordinates as unknown[]) polygons.push(toRings(polygon));
+      const source: unknown[] =
+        geometry?.type === "Polygon"
+          ? [geometry.coordinates]
+          : geometry?.type === "MultiPolygon"
+            ? (geometry.coordinates as unknown[])
+            : [];
+      if (source.length === 0) continue;
+
+      const kept: Point[][][] = [];
+      for (const shift of shifts) {
+        if (feature.bbox && (feature.bbox[2] + shift < bounds[0] || feature.bbox[0] + shift > bounds[2])) continue;
+        for (const polygon of source) {
+          if (!Array.isArray(polygon)) continue;
+          const rings: Point[][] = [];
+          let x0 = Infinity;
+          let y0 = Infinity;
+          let x1 = -Infinity;
+          let y1 = -Infinity;
+          for (const ring of polygon as LonLat[][]) {
+            const projected = ring.map((p): Point => toRef([p[0] + shift, p[1]]));
+            for (const [x, y] of projected) {
+              if (x < x0) x0 = x;
+              if (x > x1) x1 = x;
+              if (y < y0) y0 = y;
+              if (y > y1) y1 = y;
+            }
+            rings.push(projected);
+          }
+          if (rings.length === 0 || outside([x0, y0, x1, y1])) continue;
+          kept.push(rings);
+        }
       }
-      if (polygons.length === 0) continue;
-      landPolygons.push(...polygons);
+      if (kept.length === 0) continue;
+      landPolygons.push(...kept);
       const points: Point[] = [];
-      for (const rings of polygons) for (const ring of rings) points.push(...densify(ring, 6));
+      for (const rings of kept) for (const ring of rings) points.push(...densify(ring, 6));
       if (points.length > 4) coasts.push({ id: iso, points });
     }
     if (coasts.length === 0) return null;
 
+    const field = buildMaritimeField({ width: frameWidth, height: frameHeight, cellSize, coasts, landPolygons });
+
     // A conformal projection's scale grows away from the equator, so a fixed
-    // number of pixels is a shorter distance on the ground the further north
-    // it sits. Correcting per row is what keeps a 200-mile limit 200 miles
-    // wide off Norway as well as off Somalia.
-    const equatorial: Viewport = { ...ref, center: [ref.center[0], 0] };
-    const refPixelsPerNm = 1.852 / kmPerPixel(equatorial);
-
-    // On a wrapping sheet the distance field has to wrap too. Without this the
-    // field believes the world ends at the antimeridian, and every zone that
-    // straddles it — the Aleutians, Fiji, Chukotka — is computed against a
-    // coastline missing everything on the far side, leaving a notch in the
-    // water exactly at the seam where the two copies meet.
-    if (sheet.wraps) {
-      const refPeriod = refWidth;
-      const reach = 240 * refPixelsPerNm;
-      for (const coast of coasts) {
-        const shifted: Point[] = [];
-        for (const point of coast.points) {
-          if (point[0] < reach) shifted.push([point[0] + refPeriod, point[1]]);
-          else if (point[0] > refPeriod - reach) shifted.push([point[0] - refPeriod, point[1]]);
-        }
-        coast.points.push(...shifted);
-      }
-    }
-
-    const field = buildMaritimeField({
-      width: refWidth,
-      height: refHeight,
-      cellSize,
-      coasts,
-      landPolygons,
-    });
+    // number of pixels is a shorter distance on the ground the further north it
+    // sits. Correcting per row is what keeps a 200-mile limit 200 miles wide
+    // off Norway as well as off Somalia.
     const rowGround: number[] = [];
-    for (let row = 0; row < Math.ceil(refHeight / cellSize); row++) {
-      const [, lat] = unproject(ref, [refWidth / 2, (row + 0.5) * cellSize]);
+    for (let row = 0; row < field.rows; row++) {
+      const [, lat] = unproject(ref, [frameWidth / 2, (row + 0.5) * cellSize]);
       rowGround.push(Math.cos(Math.max(-85, Math.min(85, lat)) * (Math.PI / 180)));
     }
     const groundScale = (row: number) => rowGround[row] ?? 1;
@@ -578,19 +625,17 @@ export function Sheet(props: SheetProps) {
     for (const band of zoneBands(era)) {
       if (band.zone !== "territorial" && band.zone !== "eez") continue;
       const outerNm = band.outerNm ?? band.innerNm;
-      const path = zoneLimitPath(field, outerNm * refPixelsPerNm, groundScale);
+      const path = zoneLimitPath(field, outerNm * pixelsPerNm, groundScale);
       if (path) limits.push({ zone: band.zone, path });
     }
 
-    // Reference space to base space is one uniform affine step, because both
-    // are the same projection at different scales.
-    const ratio = baseViewport.scale / ref.scale;
-    const transform = `translate(${baseViewport.translate[0] - ref.translate[0] * ratio},${
-      baseViewport.translate[1] - ref.translate[1] * ratio
-    }) scale(${ratio})`;
+    // Field coordinates are the settled view's screen coordinates plus the
+    // margin, and the group these paths sit in is already carrying base space
+    // to the screen, so this undoes exactly the settled camera.
+    const transform = `scale(${1 / viewK}) translate(${-(viewX + margin)},${-(viewY + margin)})`;
 
     return { limits, transform };
-  }, [showMaritime, layers.countries, maritimeReference, baseViewport, era]);
+  }, [showMaritime, layers.countries, baseViewport, viewK, viewX, viewY, width, height, sheet.wraps, era]);
 
   const graticule = useMemo(() => {
     // A wrapping sheet draws its grid over one period only. The frame is wider
@@ -617,7 +662,9 @@ export function Sheet(props: SheetProps) {
       return "var(--land)";
     }
     if (politicalHolder) {
-      if (unsettled.has(iso3)) return "var(--uncertainty-wash)";
+      // No wash for a state touching an unsettled line: an olive tint on a
+      // handful of countries is a claim about them, and a plate with no legend
+      // gives a reader no way to read it as one.
       // A whisper of variation so adjacent states separate without colouring in.
       return countryKey(iso3) % 2 === 0 ? "var(--land)" : "var(--land-out)";
     }
@@ -720,10 +767,9 @@ export function Sheet(props: SheetProps) {
 
       <g className="boundaries">
         {boundaries.map((boundary) => {
-          const specs =
-            showDispute && boundary.dissents
-              ? emphasise(BOUNDARY_INK[boundary.cls])
-              : BOUNDARY_INK[boundary.cls];
+          const specs = showDispute && boundary.dissents
+            ? emphasise(PLAIN_BOUNDARY_INK[boundary.cls])
+            : PLAIN_BOUNDARY_INK[boundary.cls];
           return (
             <g key={boundary.id} data-class={boundary.cls}>
               {specs.map((spec, i) => (

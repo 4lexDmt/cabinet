@@ -97,6 +97,25 @@ export function emphasise(specs: StrokeSpec[]): StrokeSpec[] {
   return specs.map((s) => (s.width === WEIGHT.med ? { ...s, width: WEIGHT.heavy } : s));
 }
 
+/**
+ * Every boundary as one plain line, whatever its class.
+ *
+ * The treatments above argue about the status of a line — an olive casing for a
+ * line two governments disagree about, a struck-through line for one nobody
+ * recognises. That argument only lands where a reader can see it explained. On
+ * a plate with no legend and no perspective control, the casings read as
+ * coloured smears along ordinary borders rather than as claims, so a sheet in
+ * that register asks for one line and gets one line.
+ */
+export const PLAIN_BOUNDARY_INK: Record<BoundaryClass, StrokeSpec[]> = {
+  international: [{ stroke: TOKEN.ink, width: WEIGHT.med, dash: null }],
+  disputed: [{ stroke: TOKEN.ink, width: WEIGHT.med, dash: null }],
+  line_of_control: [{ stroke: TOKEN.ink, width: WEIGHT.med, dash: null }],
+  unrecognized: [{ stroke: TOKEN.ink, width: WEIGHT.line, dash: null }],
+  administrative: [{ stroke: TOKEN.ink, width: WEIGHT.line, dash: null }],
+  indefinite: [{ stroke: TOKEN.ink, width: WEIGHT.line, dash: null }],
+};
+
 export interface ZoneInk {
   fill: string | null;
   stroke: string | null;
