@@ -2,6 +2,9 @@ export type {
   AdvisorTemplate,
   Belief,
   BeliefSource,
+  Building,
+  BuildingDef,
+  Corridor,
   EffectRule,
   Formation,
   GameEvent,
@@ -14,6 +17,7 @@ export type {
   PactStatus,
   PactTerms,
   PredicateName,
+  Site,
   Territory,
   TickOptions,
   TickResult,
@@ -32,3 +36,4 @@ export { beliefsOf } from "./phases/06-intel.ts";
 export { renderBriefing } from "./briefing/render.ts";
 export { obligationProse, assembleTreatyBody, roman } from "./prose.ts";
 export { eventVisibleTo, visibilityNations, visibilityPublic } from "./context.ts";
+export { monthOf, shortestPath } from "./corridor.ts";

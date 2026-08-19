@@ -40,5 +40,29 @@ export const advisorTemplateSchema = z.object({
 
 export const advisorFileSchema = z.array(advisorTemplateSchema);
 
+export const buildingDefSchema = z.object({
+  id: z.string().min(1),
+  pillar: z.enum(["economy", "standing", "intelligence", "logistics"]),
+  slots: z.number().int().positive(),
+  economy: z.number().int().optional(),
+  standing_internal: z.number().int().optional(),
+  standing_external: z.number().int().optional(),
+  intelligence_capacity: z.number().int().optional(),
+  supply: z.number().int().optional(),
+  requires: z.enum(["hydro", "coast"]).optional(),
+  corridor_bonus: z.number().int().optional(),
+});
+
+export const buildingFileSchema = z.object({
+  city_economy_cap: z.object({
+    "1": z.number().int().positive(),
+    "2": z.number().int().positive(),
+    "3": z.number().int().positive(),
+  }),
+  buildings: z.array(buildingDefSchema),
+});
+
 export type EffectRuleData = z.infer<typeof effectRuleSchema>;
 export type AdvisorTemplateData = z.infer<typeof advisorTemplateSchema>;
+export type BuildingDefData = z.infer<typeof buildingDefSchema>;
+export type BuildingFile = z.infer<typeof buildingFileSchema>;

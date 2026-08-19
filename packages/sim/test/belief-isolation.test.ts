@@ -30,6 +30,6 @@ describe("belief isolation", () => {
 describe("delegation limits", () => {
   it("Posture.delegation cannot include break_pact or declare_war at the type level", () => {
     const types = read("src/types.ts");
-    expect(types).toMatch(/Exclude<OrderKind, "break_pact" \| "declare_war">/);
+    expect(types).toMatch(/Exclude<OrderKind, "break_pact" \| "declare_war" \| "construct_upstream">/);
   });
 });

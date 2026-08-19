@@ -250,3 +250,16 @@ export type {
   WaterAsset,
   WaterNote,
 } from "./schema.ts";
+
+export {
+  NAVIGABLE_LAKE,
+  chordCrossesWater,
+  citySiteId,
+  compileCorridors,
+  compileSites,
+  haversineKm,
+  lakeRadiusKm,
+  tier1Chokepoints,
+  volgaProvinceChain,
+} from "./corridors.ts";
+export type { CorridorDraft, CorridorMode, SiteDraft } from "./corridors.ts";

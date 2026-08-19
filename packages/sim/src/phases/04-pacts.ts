@@ -60,6 +60,31 @@ export const PREDICATES: Record<PredicateName, Predicate> = {
     const paid = state.flags[`tribute_paid:${obligation.party}:${to}:${state.tick}`];
     return paid === true || paid === amount;
   },
+  maintain_minimum_flow(state, obligation) {
+    const water = obligation.target;
+    if (!water) return true;
+    const minimum = Number(obligation.params?.flow ?? 1);
+    const raw = state.flags[`flow:${water}`];
+    if (raw === undefined) return true;
+    return Number(raw) >= minimum;
+  },
+  not_construct_upstream_of(state, obligation) {
+    const water = obligation.target;
+    if (!water) return true;
+    return state.flags[`upstream_impound:${water}`] !== obligation.party;
+  },
+  share_hydrological_data(state, obligation) {
+    const water = obligation.target;
+    if (!water) return true;
+    const shared = Number(state.flags[`hydro_data:${obligation.party}:${water}`] ?? -99);
+    return shared >= state.tick - 1;
+  },
+  permit_navigation(state, obligation) {
+    const traveler = obligation.target;
+    if (!traveler) return true;
+    const denied = state.flags[`navigation_denied:${obligation.party}:${traveler}`];
+    return denied !== true && denied !== 1;
+  },
 };
 
 export function phasePacts(ctx: TickContext): void {

@@ -148,8 +148,13 @@ export function loadWorld(config: ScenarioConfig, matchId: string, seed: number)
       secret_pact_leak_base_chance_mille: Math.round(config.tuning.secret_pact_leak_base_chance * 10_000),
       standing_penalty_on_breach: config.tuning.standing_penalty_on_breach,
       cascade_depth_cap: config.tuning.cascade_depth_cap,
+      start_month: config.tuning.start_month,
+      ticks_per_month: config.tuning.ticks_per_month,
     },
     lastEventSeq: 0,
+    corridors: Object.fromEntries(config.corridors.map((c) => [c.id, c])),
+    sites: Object.fromEntries(config.sites.map((s) => [s.id, s])),
+    buildings: Object.fromEntries(config.buildings.map((b) => [b.id, b])),
   };
 }
 
