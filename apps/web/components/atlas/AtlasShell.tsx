@@ -27,8 +27,8 @@ const ACTIVE: OverlayId[] = ["political", "maritime"];
 const DEMOTED = new Set<OverlayId>(["maritime"]);
 const ERA: MaritimeEra = UNCLOS_ERA;
 
-export function AtlasShell() {
-  const sheet = useMemo(() => sheetById("world"), []);
+export function AtlasShell({ sheetId }: { sheetId?: string }) {
+  const sheet = useMemo(() => sheetById(sheetId && sheetId.length > 0 ? sheetId : "world"), [sheetId]);
   const projection = useMemo(() => projectionOf(sheet), [sheet]);
 
   const [layers, setLayers] = useState<Record<string, LoadedLayer | undefined>>({});

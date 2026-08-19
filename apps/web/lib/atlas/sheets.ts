@@ -134,6 +134,18 @@ export const SHEETS: SheetConfig[] = [
     brief:
       "Crimea renders differently from Kyiv's desk and from Moscow's. Both readings are shipped in the same file, on the same geometry.",
   },
+  {
+    id: "tier1",
+    label: "Tier 1 gazetteer",
+    scale: "1:110M",
+    bbox: [-180, -58, 180, 84],
+    register: "theatre",
+    parties: ["US", "RU", "CN", "IN", "BR", "ID", "DE", "GB", "FR", "JP", "TR", "IR", "SA", "NG"],
+    brief:
+      "Fourteen named theatres as centroids and Delaunay adjacency, not dissolved ADM1 polygons. Lakes are sized by area; shared water carries the hostility stroke because it is contested, not because it is decorative.",
+    projection: { kind: "mercator_compact" },
+    wraps: true,
+  },
 ];
 
 export function sheetById(id: string): SheetConfig {

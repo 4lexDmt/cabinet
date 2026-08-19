@@ -48,6 +48,7 @@ import {
 import type { LoadedFeature, LoadedLayer } from "@/lib/atlas/layers";
 import type { OverlayId } from "@/lib/atlas/overlays";
 import { registerOf, type SheetConfig } from "@/lib/atlas/sheets";
+import { GazetteerOverlay } from "./GazetteerOverlay";
 
 export interface SheetProps {
   sheet: SheetConfig;
@@ -895,6 +896,10 @@ export function Sheet(props: SheetProps) {
           </path>
         ))}
       </g>
+
+      {sheet.id === "tier1" ? (
+        <GazetteerOverlay projector={projector} relativeK={camera.k / minK} />
+      ) : null}
 
       {showPhysical && layers.lakes ? (
         <g>
