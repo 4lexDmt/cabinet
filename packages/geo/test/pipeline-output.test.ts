@@ -239,6 +239,20 @@ describe("tier-1 incorporated provinces", () => {
     expect(byId.get("de-be")).toBeDefined();
     expect(byId.get("de-bb")).toBeDefined();
   });
+
+  it("labels each province from a point inside the dissolved polygon, not the seat", () => {
+    for (const feature of features) {
+      const label = feature.properties.label as [number, number] | undefined;
+      expect(label, String(feature.properties.id)).toBeDefined();
+      expect(label).toHaveLength(2);
+      expect(Number.isFinite(label![0]), String(feature.properties.id)).toBe(true);
+      expect(Number.isFinite(label![1]), String(feature.properties.id)).toBe(true);
+    }
+    const illinois = byId.get("us-illinois")!;
+    const [lon, lat] = illinois.properties.label as [number, number];
+    // Seat is Chicago on the lake; the interior label must not sit on it.
+    expect(Math.hypot(lon - -87.65, lat - 41.85)).toBeGreaterThan(1.2);
+  });
 });
 
 describe("territory manifest", () => {

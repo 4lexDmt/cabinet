@@ -142,7 +142,7 @@ export const SHEETS: SheetConfig[] = [
     register: "theatre",
     parties: ["US", "RU", "CN", "IN", "BR", "ID", "DE", "GB", "FR", "JP", "TR", "IR", "SA", "NG"],
     brief:
-      "Fourteen named theatres as incorporated provinces: one outline per gazetteer province, dissolved from real ADM1, with city names that appear as you zoom. Province lines are thinner than the international boundary. There are no roads on this plate.",
+      "Fourteen named theatres as incorporated provinces: one outline per gazetteer province, dissolved from real ADM1. Lakes and rivers are Natural Earth shorelines and centerlines. City names appear with zoom and never stack on one another. Province lines are thinner than the international boundary. There are no roads on this plate.",
     projection: { kind: "mercator_compact" },
     wraps: true,
   },

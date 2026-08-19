@@ -505,6 +505,7 @@ def main() -> int:
         geom = polygonal(geom.simplify(0.035, preserve_topology=True)) or geom
         payload = mapping(geom)
         payload["coordinates"] = round_coords(payload["coordinates"], 4)
+        label = geom.representative_point()
         features_out.append(
             {
                 "type": "Feature",
@@ -514,6 +515,7 @@ def main() -> int:
                     "iso": province["iso"],
                     "seat": province["seat"],
                     "merged_from": province.get("merged_from") or [],
+                    "label": [round(float(label.x), 4), round(float(label.y), 4)],
                 },
                 "geometry": payload,
             }

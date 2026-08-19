@@ -101,7 +101,7 @@
   font-family: Roboto, "Product Sans", Arial, Helvetica, sans-serif;
   paint-order: stroke fill;
   stroke: var(--gmaps-halo);
-  stroke-width: 3.4px;
+  stroke-width: 2.6px;
   stroke-linejoin: round;
   stroke-linecap: round;
   pointer-events: none;
@@ -109,7 +109,7 @@
 }
 .gazetteer-city-t3 {
   fill: var(--gmaps-city-major);
-  font-size: 13px;
+  font-size: 12.5px;
   font-weight: 600;
   letter-spacing: 0.01em;
 }
@@ -125,9 +125,9 @@
 }
 .gazetteer-province-label {
   fill: var(--gmaps-province-label);
-  font-size: 11px;
+  font-size: 9.5px;
   font-weight: 500;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.08em;
 }
 .gazetteer-province-border {
   pointer-events: visiblePainted;

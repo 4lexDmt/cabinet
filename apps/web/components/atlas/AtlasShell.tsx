@@ -18,7 +18,8 @@ import { loadLayers, type LayerName, type LoadedLayer } from "@/lib/atlas/layers
 import type { OverlayId } from "@/lib/atlas/overlays";
 import { projectionOf, sheetById } from "@/lib/atlas/sheets";
 
-const LAYERS: LayerName[] = ["countries", "boundaries", "coastline", "canals"];
+const BASE_LAYERS: LayerName[] = ["countries", "boundaries", "coastline", "canals"];
+const TIER1_WATER: LayerName[] = ["lakes", "rivers"];
 
 // Political holds the sheet's area ink; maritime is always demoted to line
 // only, which is exactly what "maritime borders" (rather than a maritime
@@ -39,7 +40,8 @@ export function AtlasShell({ sheetId }: { sheetId?: string }) {
 
   useEffect(() => {
     let cancelled = false;
-    loadLayers(LAYERS)
+    const names: LayerName[] = sheet.id === "tier1" ? [...BASE_LAYERS, ...TIER1_WATER] : BASE_LAYERS;
+    loadLayers(names)
       .then((loaded) => {
         if (cancelled) return;
         setLayers((current) => {
@@ -54,7 +56,7 @@ export function AtlasShell({ sheetId }: { sheetId?: string }) {
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [sheet.id]);
 
   useEffect(() => {
     const node = stageRef.current;

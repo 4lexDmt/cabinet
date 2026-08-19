@@ -226,10 +226,16 @@ export type { Tier1Iso } from "./gazetteer.ts";
 
 export {
   GAZETTEER_ZOOM,
+  PROVINCE_LABEL_RANK,
+  cityFontSize,
+  cityMarkRadius,
+  cityRank,
   cityVisible,
+  placeGazetteerLabels,
   provinceBordersVisible,
   provinceLabelsVisible,
 } from "./gazetteer-zoom.ts";
+export type { GazetteerLabelInput, GazetteerLabelPlaced } from "./gazetteer-zoom.ts";
 
 export {
   chokepointFileSchema,

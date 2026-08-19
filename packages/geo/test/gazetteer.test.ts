@@ -4,6 +4,7 @@ import {
   GAZETTEER_ZOOM,
   ISLAND_PROVINCES,
   PROVINCE_COUNT_BANDS,
+  PROVINCE_LABEL_RANK,
   SHARED_LAKE_IDS,
   SHARED_RIVER_IDS,
   TIER1_ISOS,
@@ -11,9 +12,11 @@ import {
   bordersOf,
   buildCapacityOf,
   citiesOf,
+  cityRank,
   cityVisible,
   gazetteer,
   lakesOf,
+  placeGazetteerLabels,
   provinceBordersVisible,
   provinceById,
   provinceLabelsVisible,
@@ -169,6 +172,101 @@ describe("google-maps zoom gates", () => {
   it("lets a capital appear before a non-capital of the same tier", () => {
     expect(cityVisible(GAZETTEER_ZOOM.capital, 1, true)).toBe(true);
     expect(cityVisible(GAZETTEER_ZOOM.capital, 1, false)).toBe(false);
+  });
+});
+
+describe("gazetteer label collision", () => {
+  it("keeps the higher-rank city and drops the overlapping name", () => {
+    const placed = placeGazetteerLabels(
+      [
+        {
+          id: "manchester",
+          kind: "city",
+          name: "Manchester",
+          x: 10,
+          y: 10,
+          rank: cityRank(2, false, 2_700_000),
+          fontSize: 11,
+          markRadius: 2.4,
+          showMark: true,
+        },
+        {
+          id: "liverpool",
+          kind: "city",
+          name: "Liverpool",
+          x: 10.02,
+          y: 10.01,
+          rank: cityRank(2, false, 900_000),
+          fontSize: 11,
+          markRadius: 2.4,
+          showMark: true,
+        },
+      ],
+      8,
+    );
+    expect(placed.map((p) => p.id)).toEqual(["manchester"]);
+  });
+
+  it("drops a province name that sits on a city", () => {
+    const placed = placeGazetteerLabels(
+      [
+        {
+          id: "chicago",
+          kind: "city",
+          name: "Chicago",
+          x: 0,
+          y: 0,
+          rank: cityRank(3, false, 9_440_000),
+          fontSize: 12.5,
+          markRadius: 3.2,
+          showMark: true,
+        },
+        {
+          id: "illinois",
+          kind: "province",
+          name: "Illinois",
+          x: 0,
+          y: 0,
+          rank: PROVINCE_LABEL_RANK,
+          fontSize: 9.5,
+          markRadius: 0,
+          showMark: false,
+        },
+      ],
+      6,
+    );
+    expect(placed.map((p) => p.id)).toEqual(["chicago"]);
+  });
+
+  it("keeps a province name that sits in the interior, away from the city", () => {
+    const placed = placeGazetteerLabels(
+      [
+        {
+          id: "chicago",
+          kind: "city",
+          name: "Chicago",
+          x: 0,
+          y: 0,
+          rank: cityRank(3, false, 9_440_000),
+          fontSize: 12.5,
+          markRadius: 3.2,
+          showMark: true,
+        },
+        {
+          id: "illinois",
+          kind: "province",
+          name: "Illinois",
+          x: 40,
+          y: 0,
+          rank: PROVINCE_LABEL_RANK,
+          fontSize: 9.5,
+          markRadius: 0,
+          showMark: false,
+        },
+      ],
+      6,
+    );
+    expect(placed.map((p) => p.id).sort()).toEqual(["chicago", "illinois"]);
   });
 });
 

@@ -5,24 +5,25 @@
  *
  * Incorporated provinces are dissolved ADM1 polygons — New England is one
  * outline, not six states. Those lines are thinner and paler than the
- * international boundary drawn later in the same sheet, the same split
- * Google Maps makes between admin and country. Roads are not drawn.
- * Labels live in screen pixels (inverse-scaled) so names keep size while
- * the plate zooms, and they appear / disappear by zoom like Google Maps.
+ * international boundary drawn later in the same sheet. Roads are not
+ * drawn. Lakes and rivers are real Natural Earth geometry on the sheet
+ * itself, not ellipses or waypoint chords. Labels live in screen pixels
+ * and are greedily placed so two names never occupy the same spot.
  */
 
 import { useEffect, useMemo, useState } from "react";
 import {
-  TOKEN,
   countries,
   geometryPath,
-  uniqueLakes,
-  uniqueRivers,
-  waterNoteOf,
+  cityFontSize,
+  cityMarkRadius,
+  cityRank,
   cityVisible,
+  placeGazetteerLabels,
   provinceBordersVisible,
   provinceLabelsVisible,
-  GAZETTEER_ZOOM,
+  PROVINCE_LABEL_RANK,
+  type GazetteerLabelInput,
   type LonLat,
   type Projector,
 } from "@cabinet/geo";
@@ -34,27 +35,12 @@ function projected(projector: Projector, coord: LonLat): { x: number; y: number 
   return { x, y };
 }
 
-function lakeAxes(projector: Projector, centroid: LonLat, radiusKm: number): { rx: number; ry: number } {
-  const lat = centroid[1];
-  const cos = Math.max(0.2, Math.cos((lat * Math.PI) / 180));
-  const east = projected(projector, [centroid[0] + radiusKm / (111.32 * cos), centroid[1]]);
-  const north = projected(projector, [centroid[0], centroid[1] + radiusKm / 110.57]);
-  const centre = projected(projector, centroid);
-  if (!east || !north || !centre) return { rx: 2, ry: 2 };
-  return {
-    rx: Math.max(1.2, Math.abs(east.x - centre.x)),
-    ry: Math.max(1.2, Math.abs(north.y - centre.y)),
-  };
-}
-
-function polyPath(projector: Projector, course: LonLat[]): string {
-  let d = "";
-  course.forEach((pt, i) => {
-    const p = projected(projector, pt);
-    if (!p) return;
-    d += `${i === 0 ? "M" : "L"}${p.x.toFixed(2)},${p.y.toFixed(2)}`;
-  });
-  return d;
+function labelCoord(feature: { properties: Record<string, unknown> }): LonLat | null {
+  const raw = feature.properties.label;
+  if (Array.isArray(raw) && typeof raw[0] === "number" && typeof raw[1] === "number") {
+    return [raw[0], raw[1]];
+  }
+  return null;
 }
 
 export function GazetteerOverlay(props: {
@@ -81,10 +67,7 @@ export function GazetteerOverlay(props: {
     };
   }, []);
 
-  const lakes = useMemo(() => uniqueLakes(), []);
-  const rivers = useMemo(() => uniqueRivers(), []);
   const plate = useMemo(() => countries(), []);
-  const saudiAssets = useMemo(() => waterNoteOf("SAU")?.assets ?? [], []);
 
   const provincePaths = useMemo(() => {
     if (!admin) return [];
@@ -107,184 +90,113 @@ export function GazetteerOverlay(props: {
           tier: city.tier,
           capital: city.capital,
           port: city.port,
+          population: city.population,
         })),
       ),
     [plate],
   );
 
-  const provinces = useMemo(
-    () => plate.flatMap((country) => country.provinces.map((province) => ({ ...province, iso: country.iso }))),
-    [plate],
-  );
-
   if (part === "admin") {
-    const showBorders = provinceBordersVisible(relativeK);
-    const showLakes = relativeK >= GAZETTEER_ZOOM.lakes;
-    const showRivers = relativeK >= GAZETTEER_ZOOM.rivers;
+    if (!provinceBordersVisible(relativeK)) return null;
     return (
       <g className="gazetteer gazetteer-admin" pointerEvents="visiblePainted">
-        {showLakes
-          ? lakes.map((lake) => {
-              const centre = projected(projector, lake.centroid);
-              if (!centre) return null;
-              const { rx, ry } = lakeAxes(projector, lake.centroid, Math.sqrt(lake.area_km2 / Math.PI));
-              const title = [
-                lake.name,
-                `${Math.round(lake.area_km2).toLocaleString()} km²`,
-                lake.max_depth_m ? `${lake.max_depth_m} m` : null,
-                lake.navigable,
-                lake.riparian.join(", "),
-                lake.note,
-              ]
-                .filter(Boolean)
-                .join(" · ");
-              return (
-                <ellipse
-                  key={lake.id}
-                  cx={centre.x}
-                  cy={centre.y}
-                  rx={rx}
-                  ry={ry}
-                  fill={TOKEN.sea}
-                  stroke={lake.shared ? TOKEN.hostility : TOKEN.seaDeep}
-                  strokeWidth={lake.shared ? 2.4 : 1}
-                  opacity={0.92}
-                  vectorEffect="non-scaling-stroke"
-                >
-                  <title>{title}</title>
-                </ellipse>
-              );
-            })
-          : null}
-
-        {showRivers
-          ? rivers.map((river) => {
-              const d = polyPath(projector, river.course);
-              if (!d) return null;
-              const navigable = river.navigable_km > 0;
-              const title = [
-                river.name,
-                `${river.length_km} km`,
-                navigable ? `${river.navigable_km} km navigable` : "not navigable",
-                river.riparian.join(", "),
-                river.note,
-              ]
-                .filter(Boolean)
-                .join(" · ");
-              return (
-                <g key={river.id}>
-                  <path
-                    d={d}
-                    fill="none"
-                    stroke={TOKEN.paper}
-                    strokeWidth={4}
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    vectorEffect="non-scaling-stroke"
-                  />
-                  <path
-                    d={d}
-                    fill="none"
-                    stroke={TOKEN.ink}
-                    strokeWidth={1.6}
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeDasharray={navigable ? undefined : "4 3"}
-                    vectorEffect="non-scaling-stroke"
-                  >
-                    <title>{title}</title>
-                  </path>
-                </g>
-              );
-            })
-          : null}
-
-        {showBorders
-          ? provincePaths.map((province) => (
-              <path
-                key={province.id}
-                d={province.path}
-                className="gazetteer-province-border"
-                fill="none"
-                stroke="var(--gmaps-admin)"
-                strokeWidth={0.75}
-                strokeLinejoin="round"
-                vectorEffect="non-scaling-stroke"
-              >
-                <title>{province.name}</title>
-              </path>
-            ))
-          : null}
+        {provincePaths.map((province) => (
+          <path
+            key={province.id}
+            d={province.path}
+            className="gazetteer-province-border"
+            fill="none"
+            stroke="var(--gmaps-admin)"
+            strokeWidth={0.75}
+            strokeLinejoin="round"
+            vectorEffect="non-scaling-stroke"
+          >
+            <title>{province.name}</title>
+          </path>
+        ))}
       </g>
     );
   }
 
-  const showProvinceNames = provinceLabelsVisible(relativeK);
-  const showSaudi = relativeK >= GAZETTEER_ZOOM.saudiAssets;
+  const candidates = useMemo(() => {
+    const out: GazetteerLabelInput[] = [];
+    for (const city of cities) {
+      if (!cityVisible(relativeK, city.tier, city.capital)) continue;
+      const p = projected(projector, city.coord);
+      if (!p) continue;
+      out.push({
+        id: city.id,
+        kind: "city",
+        name: city.name,
+        x: p.x,
+        y: p.y,
+        rank: cityRank(city.tier, city.capital, city.population),
+        fontSize: cityFontSize(city.tier),
+        markRadius: cityMarkRadius(city.tier),
+        showMark: true,
+        capital: city.capital,
+        tier: city.tier,
+      });
+    }
+    if (admin && provinceLabelsVisible(relativeK)) {
+      for (const feature of admin.features) {
+        const coord = labelCoord(feature);
+        if (!coord) continue;
+        const p = projected(projector, coord);
+        if (!p) continue;
+        const name = String(feature.properties.name ?? "");
+        const id = String(feature.properties.id ?? name);
+        out.push({
+          id: `prov-${id}`,
+          kind: "province",
+          name,
+          x: p.x,
+          y: p.y,
+          rank: PROVINCE_LABEL_RANK,
+          fontSize: 9.5,
+          markRadius: 0,
+          showMark: false,
+        });
+      }
+    }
+    return out;
+  }, [admin, cities, projector, relativeK]);
+
+  const labels = useMemo(() => placeGazetteerLabels(candidates, cameraK), [candidates, cameraK]);
 
   return (
     <g className="gazetteer gazetteer-labels" pointerEvents="none">
-      {showSaudi
-        ? saudiAssets.map((asset) => {
-            const p = projected(projector, asset.coord);
-            if (!p) return null;
-            return (
-              <g key={asset.name} transform={`translate(${p.x},${p.y}) scale(${inv})`}>
-                <rect
-                  x={-3.2}
-                  y={-3.2}
-                  width={6.4}
-                  height={6.4}
-                  fill={TOKEN.paper}
-                  stroke={TOKEN.hostility}
-                  strokeWidth={1.2}
-                >
-                  <title>{`${asset.name} · ${asset.type}`}</title>
-                </rect>
-              </g>
-            );
-          })
-        : null}
-
-      {showProvinceNames
-        ? provinces.map((province) => {
-            const p = projected(projector, province.centroid);
-            if (!p) return null;
-            return (
-              <g key={`prov-${province.id}`} transform={`translate(${p.x},${p.y}) scale(${inv})`}>
-                <text className="gazetteer-province-label" textAnchor="middle" dy="0.35em">
-                  {province.name}
-                </text>
-              </g>
-            );
-          })
-        : null}
-
-      {cities.map((city) => {
-        if (!cityVisible(relativeK, city.tier, city.capital)) return null;
-        const p = projected(projector, city.coord);
-        if (!p) return null;
-        const major = city.tier >= 3;
-        const mid = city.tier === 2;
-        const r = major ? 3.4 : mid ? 2.6 : 2.1;
-        const klass = major ? "gazetteer-city-t3" : mid ? "gazetteer-city-t2" : "gazetteer-city-t1";
-        return (
-          <g key={city.id} transform={`translate(${p.x},${p.y}) scale(${inv})`}>
+      {labels.map((label) => (
+        <g key={label.id} transform={`translate(${label.x},${label.y}) scale(${inv})`}>
+          {label.showMark ? (
             <circle
-              r={r}
+              r={label.markRadius}
               className="gazetteer-city-mark"
-              fill={city.capital ? "var(--gmaps-city-major)" : "#fff"}
+              fill={label.capital ? "var(--gmaps-city-major)" : "#fff"}
               stroke="var(--gmaps-city-major)"
-              strokeWidth={city.capital ? 1.6 : 1.15}
+              strokeWidth={label.capital ? 1.5 : 1.1}
             >
-              <title>{`${city.name}${city.capital ? " · capital" : ""}${city.port ? " · port" : ""}`}</title>
+              <title>{label.name}</title>
             </circle>
-            <text className={`gazetteer-city ${klass}`} x={r + 4} y={4}>
-              {city.name}
-            </text>
-          </g>
-        );
-      })}
+          ) : null}
+          <text
+            className={
+              label.kind === "province"
+                ? "gazetteer-province-label"
+                : label.tier === 3
+                  ? "gazetteer-city gazetteer-city-t3"
+                  : label.tier === 2
+                    ? "gazetteer-city gazetteer-city-t2"
+                    : "gazetteer-city gazetteer-city-t1"
+            }
+            x={label.dx}
+            y={label.dy}
+            textAnchor={label.textAnchor}
+          >
+            {label.name}
+          </text>
+        </g>
+      ))}
     </g>
   );
 }

@@ -897,6 +897,47 @@ export function Sheet(props: SheetProps) {
         ))}
       </g>
 
+      {sheet.id === "tier1" || showPhysical ? (
+        layers.lakes ? (
+          <g className="lakes">
+            {layers.lakes.features.filter(inFrame).map((feature, i) => (
+              <path
+                key={`lake-${i}`}
+                d={geometryPath(feature.geometry as never, projector)}
+                fill="var(--sea)"
+                stroke="var(--sea-deep)"
+                strokeWidth={0.35}
+                vectorEffect="non-scaling-stroke"
+              >
+                <title>{String(feature.properties.name ?? "Lake")}</title>
+              </path>
+            ))}
+          </g>
+        ) : null
+      ) : null}
+
+      {sheet.id === "tier1" || showPhysical ? (
+        layers.rivers ? (
+          <g className="rivers">
+            {layers.rivers.features.filter(inFrame).map((feature, i) => (
+              <path
+                key={`river-${i}`}
+                d={geometryPath(feature.geometry as never, projector)}
+                fill="none"
+                stroke="var(--sea-deep)"
+                strokeWidth={Math.max(0.7, Number(feature.properties.width ?? 1) * 0.9)}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                opacity={0.95}
+                vectorEffect="non-scaling-stroke"
+              >
+                <title>{String(feature.properties.name ?? "River")}</title>
+              </path>
+            ))}
+          </g>
+        ) : null
+      ) : null}
+
       {sheet.id === "tier1" ? (
         <GazetteerOverlay
           part="admin"
@@ -904,30 +945,6 @@ export function Sheet(props: SheetProps) {
           relativeK={camera.k / minK}
           cameraK={camera.k}
         />
-      ) : null}
-
-      {showPhysical && layers.lakes ? (
-        <g>
-          {layers.lakes.features.filter(inFrame).map((feature, i) => (
-            <path key={`lake-${i}`} d={geometryPath(feature.geometry as never, projector)} fill="var(--sea)" />
-          ))}
-        </g>
-      ) : null}
-
-      {showPhysical && layers.rivers ? (
-        <g>
-          {layers.rivers.features.filter(inFrame).map((feature, i) => (
-            <path
-              key={`river-${i}`}
-              d={geometryPath(feature.geometry as never, projector)}
-              fill="none"
-              stroke="var(--sea-deep)"
-              strokeWidth={Math.max(0.4, Number(feature.properties.width ?? 1) * 0.5)}
-              opacity={0.85}
-              vectorEffect="non-scaling-stroke"
-            />
-          ))}
-        </g>
       ) : null}
 
       {coastline.length > 0 ? (
