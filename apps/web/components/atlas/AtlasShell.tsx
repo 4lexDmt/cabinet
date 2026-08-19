@@ -4,11 +4,10 @@
  * The instrument, reduced to its base plate.
  *
  * No sheet switcher, no perspective switcher, no overlay toggles, no
- * buttons anywhere. One frame — the world, from nobody's desk — showing
- * only political boundaries and the two maritime zones that are actually
- * sovereignty-adjacent: the territorial sea and the exclusive economic
- * zone. Reading is still interactive (scroll or pinch to zoom, drag to
- * pan); the frame itself is not a control.
+ * buttons anywhere. `/atlas` opens the Tier-1 gazetteer: incorporated
+ * provinces, real water, city names. Other sheets remain available as
+ * `?sheet=`. Reading is still interactive (scroll or pinch to zoom,
+ * drag to pan); the frame itself is not a control.
  */
 
 import { useEffect, useMemo, useRef, useState } from "react";
@@ -16,7 +15,7 @@ import { NEUTRAL_OBSERVER, UNCLOS_ERA, type MaritimeEra } from "@cabinet/geo";
 import { Sheet } from "./Sheet";
 import { loadLayers, type LayerName, type LoadedLayer } from "@/lib/atlas/layers";
 import type { OverlayId } from "@/lib/atlas/overlays";
-import { projectionOf, sheetById } from "@/lib/atlas/sheets";
+import { projectionOf, sheetById, DEFAULT_SHEET_ID } from "@/lib/atlas/sheets";
 
 const BASE_LAYERS: LayerName[] = ["countries", "boundaries", "coastline", "canals"];
 const TIER1_WATER: LayerName[] = ["lakes", "rivers"];
@@ -29,7 +28,7 @@ const DEMOTED = new Set<OverlayId>(["maritime"]);
 const ERA: MaritimeEra = UNCLOS_ERA;
 
 export function AtlasShell({ sheetId }: { sheetId?: string }) {
-  const sheet = useMemo(() => sheetById(sheetId && sheetId.length > 0 ? sheetId : "world"), [sheetId]);
+  const sheet = useMemo(() => sheetById(sheetId && sheetId.length > 0 ? sheetId : DEFAULT_SHEET_ID), [sheetId]);
   const projection = useMemo(() => projectionOf(sheet), [sheet]);
 
   const [layers, setLayers] = useState<Record<string, LoadedLayer | undefined>>({});
