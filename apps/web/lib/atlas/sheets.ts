@@ -148,8 +148,10 @@ export const SHEETS: SheetConfig[] = [
   },
 ];
 
+export const DEFAULT_SHEET_ID = "tier1";
+
 export function sheetById(id: string): SheetConfig {
-  return SHEETS.find((s) => s.id === id) ?? SHEETS[0]!;
+  return SHEETS.find((s) => s.id === id) ?? SHEETS.find((s) => s.id === DEFAULT_SHEET_ID) ?? SHEETS[0]!;
 }
 
 export function registerOf(sheet: SheetConfig): ZoomRegister {
