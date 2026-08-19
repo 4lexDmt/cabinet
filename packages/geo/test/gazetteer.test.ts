@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
   BUILD_CAPACITY,
+  GAZETTEER_ZOOM,
   ISLAND_PROVINCES,
   PROVINCE_COUNT_BANDS,
   SHARED_LAKE_IDS,
@@ -10,9 +11,12 @@ import {
   bordersOf,
   buildCapacityOf,
   citiesOf,
+  cityVisible,
   gazetteer,
   lakesOf,
+  provinceBordersVisible,
   provinceById,
+  provinceLabelsVisible,
   provincesOf,
   riversOf,
   sharedWaters,
@@ -133,6 +137,38 @@ describe("tier-1 gazetteer", () => {
     );
     expect(listings).toEqual({ provinces: 283, cities: 140, lakes: 53, rivers: 48 });
     expect(uniqueLakes()).toHaveLength(52);
+  });
+});
+
+describe("google-maps zoom gates", () => {
+  it("hides provinces and lesser cities on the world plate", () => {
+    expect(provinceBordersVisible(1)).toBe(false);
+    expect(provinceLabelsVisible(1)).toBe(false);
+    expect(cityVisible(1, 3, false)).toBe(true);
+    expect(cityVisible(1, 2, false)).toBe(false);
+    expect(cityVisible(1, 1, false)).toBe(false);
+  });
+
+  it("shows megacities before province outlines, then outlines before names", () => {
+    expect(cityVisible(GAZETTEER_ZOOM.cityT3, 3, false)).toBe(true);
+    expect(provinceBordersVisible(GAZETTEER_ZOOM.cityT3)).toBe(false);
+    expect(provinceBordersVisible(GAZETTEER_ZOOM.provinceBorders)).toBe(true);
+    expect(provinceLabelsVisible(GAZETTEER_ZOOM.provinceBorders)).toBe(false);
+    expect(provinceLabelsVisible(GAZETTEER_ZOOM.provinceLabels)).toBe(true);
+    expect(cityVisible(GAZETTEER_ZOOM.cityT2, 2, false)).toBe(true);
+    expect(cityVisible(GAZETTEER_ZOOM.cityT1 - 0.1, 1, false)).toBe(false);
+    expect(cityVisible(GAZETTEER_ZOOM.cityT1, 1, false)).toBe(true);
+  });
+
+  it("drops province names at high zoom so cities dominate", () => {
+    expect(provinceLabelsVisible(GAZETTEER_ZOOM.provinceLabelsUntil)).toBe(false);
+    expect(cityVisible(GAZETTEER_ZOOM.provinceLabelsUntil, 1, false)).toBe(true);
+    expect(provinceBordersVisible(GAZETTEER_ZOOM.provinceLabelsUntil)).toBe(true);
+  });
+
+  it("lets a capital appear before a non-capital of the same tier", () => {
+    expect(cityVisible(GAZETTEER_ZOOM.capital, 1, true)).toBe(true);
+    expect(cityVisible(GAZETTEER_ZOOM.capital, 1, false)).toBe(false);
   });
 });
 

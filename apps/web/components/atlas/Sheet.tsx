@@ -898,7 +898,12 @@ export function Sheet(props: SheetProps) {
       </g>
 
       {sheet.id === "tier1" ? (
-        <GazetteerOverlay projector={projector} relativeK={camera.k / minK} />
+        <GazetteerOverlay
+          part="admin"
+          projector={projector}
+          relativeK={camera.k / minK}
+          cameraK={camera.k}
+        />
       ) : null}
 
       {showPhysical && layers.lakes ? (
@@ -1013,6 +1018,15 @@ export function Sheet(props: SheetProps) {
           );
         })}
       </g>
+
+      {sheet.id === "tier1" ? (
+        <GazetteerOverlay
+          part="labels"
+          projector={projector}
+          relativeK={camera.k / minK}
+          cameraK={camera.k}
+        />
+      ) : null}
     </>
   );
 

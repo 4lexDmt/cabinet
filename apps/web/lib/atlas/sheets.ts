@@ -142,7 +142,7 @@ export const SHEETS: SheetConfig[] = [
     register: "theatre",
     parties: ["US", "RU", "CN", "IN", "BR", "ID", "DE", "GB", "FR", "JP", "TR", "IR", "SA", "NG"],
     brief:
-      "Fourteen named theatres as centroids and Delaunay adjacency, not dissolved ADM1 polygons. Lakes are sized by area; shared water carries the hostility stroke because it is contested, not because it is decorative.",
+      "Fourteen named theatres as incorporated provinces: one outline per gazetteer province, dissolved from real ADM1, with city names that appear as you zoom. Province lines are thinner than the international boundary. There are no roads on this plate.",
     projection: { kind: "mercator_compact" },
     wraps: true,
   },

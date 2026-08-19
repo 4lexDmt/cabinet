@@ -88,6 +88,16 @@
       "note": "200m shelf break only. Depth banding suits the cold institutional palette; deeper bands are available and unused at theatre zoom."
     },
     {
+      "id": "ne_10m_admin_1_states_provinces",
+      "layer": "tier1_provinces",
+      "url": "https://raw.githubusercontent.com/nvkelso/natural-earth-vector/v5.1.2/geojson/ne_10m_admin_1_states_provinces.geojson",
+      "version": "Natural Earth 5.1.2, 10m cultural",
+      "license": "public-domain",
+      "attribution": "Natural Earth. Free vector and raster map data @ naturalearthdata.com.",
+      "attribution_required": false,
+      "note": "Dissolved offline by dissolve_tier1_provinces.py into the gazetteer's incorporated provinces. Internal ADM1 lines inside a merge (Maine inside New England) are not shipped."
+    },
+    {
       "id": "marineregions_eez_v12",
       "layer": "maritime_eez",
       "url": "https://www.marineregions.org/download_file.php?name=World_EEZ_v12_20231025_LR.zip",

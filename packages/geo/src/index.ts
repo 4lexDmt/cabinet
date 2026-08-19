@@ -225,6 +225,13 @@ export {
 export type { Tier1Iso } from "./gazetteer.ts";
 
 export {
+  GAZETTEER_ZOOM,
+  cityVisible,
+  provinceBordersVisible,
+  provinceLabelsVisible,
+} from "./gazetteer-zoom.ts";
+
+export {
   chokepointFileSchema,
   chokepointSchema,
   citySchema,

@@ -31,7 +31,8 @@ export type LayerName =
   | "lakes"
   | "rivers"
   | "canals"
-  | "bathymetry";
+  | "bathymetry"
+  | "tier1_provinces";
 
 const BASE = "/geo/mapkit";
 const cache = new Map<string, Promise<LoadedLayer>>();

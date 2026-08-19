@@ -43,5 +43,10 @@
     "id": "ne_10m_bathymetry_K_200",
     "sha256": "5c6c182da8608153ea2dce22dfb32c987e5390e0bd4a122266143ba181a7b636",
     "url": "https://raw.githubusercontent.com/nvkelso/natural-earth-vector/v5.1.2/geojson/ne_10m_bathymetry_K_200.geojson"
+  },
+  {
+    "id": "ne_10m_admin_1_states_provinces",
+    "sha256": "22d0e3ad85eb3e27f17cabf8ba2d50e554fbc27a87796ff891d958185da62fb5",
+    "url": "https://raw.githubusercontent.com/nvkelso/natural-earth-vector/v5.1.2/geojson/ne_10m_admin_1_states_provinces.geojson"
   }
 ]

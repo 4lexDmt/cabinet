@@ -1,8 +1,10 @@
 /**
- * Tier-1 named gazetteer. Centroids and adjacency, not ADM1 polygons.
+ * Tier-1 named gazetteer. Centroids, adjacency and named water.
  *
- * Static import — this package performs no I/O. Validate at load; throw on
- * a malformed file so a silent schema drift cannot reach the plate.
+ * ADM1 polygons are not stored here — they are dissolved offline into
+ * `apps/web/public/geo/mapkit/tier1_provinces.geojson`. This package
+ * performs no I/O. Validate at load; throw on a malformed file so a
+ * silent schema drift cannot reach the plate.
  */
 
 import raw from "../data/tier1-complete.json";
