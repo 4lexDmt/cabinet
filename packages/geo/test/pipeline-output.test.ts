@@ -17,6 +17,7 @@ import {
   createRegistry,
   readBoundary,
   NEUTRAL_OBSERVER,
+  allProvinces,
 } from "../src/index.ts";
 
 const repoRoot = join(dirname(fileURLToPath(import.meta.url)), "..", "..", "..");
@@ -206,6 +207,51 @@ describe("attribution sidecar", () => {
   it("records why GADM is refused", () => {
     const gadm = raw.rejected.find((r) => r.id === "gadm");
     expect(gadm?.reason).toMatch(/commercial/i);
+  });
+});
+
+describe("tier-1 incorporated provinces", () => {
+  const features = layer("tier1_provinces");
+  const byId = new Map(features.map((f) => [String(f.properties.id), f]));
+
+  it("ships one polygon per gazetteer province, not per raw ADM1", () => {
+    expect(features).toHaveLength(283);
+    const ids = features.map((f) => String(f.properties.id)).sort();
+    const gazetteerIds = allProvinces().map((p) => p.id).sort();
+    expect(ids).toEqual(gazetteerIds);
+  });
+
+  it("dissolves New England into one outline", () => {
+    const feature = byId.get("us-newengland");
+    expect(feature, "us-newengland").toBeDefined();
+    expect(feature!.geometry?.type).toMatch(/Polygon/);
+    const merged = feature!.properties.merged_from as string[];
+    expect(merged).toEqual(expect.arrayContaining(["ME", "NH", "VT", "MA", "RI", "CT"]));
+  });
+
+  it("splits California on the documented CA-N / CA-S line, not at the state line", () => {
+    expect(byId.get("us-norcal")?.geometry).toBeTruthy();
+    expect(byId.get("us-socal")?.geometry).toBeTruthy();
+    expect(byId.has("us-california")).toBe(false);
+  });
+
+  it("keeps Berlin distinct from Brandenburg", () => {
+    expect(byId.get("de-be")).toBeDefined();
+    expect(byId.get("de-bb")).toBeDefined();
+  });
+
+  it("labels each province from a point inside the dissolved polygon, not the seat", () => {
+    for (const feature of features) {
+      const label = feature.properties.label as [number, number] | undefined;
+      expect(label, String(feature.properties.id)).toBeDefined();
+      expect(label).toHaveLength(2);
+      expect(Number.isFinite(label![0]), String(feature.properties.id)).toBe(true);
+      expect(Number.isFinite(label![1]), String(feature.properties.id)).toBe(true);
+    }
+    const illinois = byId.get("us-illinois")!;
+    const [lon, lat] = illinois.properties.label as [number, number];
+    // Seat is Chicago on the lake; the interior label must not sit on it.
+    expect(Math.hypot(lon - -87.65, lat - 41.85)).toBeGreaterThan(1.2);
   });
 });
 

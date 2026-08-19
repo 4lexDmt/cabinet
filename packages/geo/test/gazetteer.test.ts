@@ -1,0 +1,286 @@
+import { describe, expect, it } from "vitest";
+import {
+  BUILD_CAPACITY,
+  GAZETTEER_ZOOM,
+  ISLAND_PROVINCES,
+  PROVINCE_COUNT_BANDS,
+  PROVINCE_LABEL_RANK,
+  SHARED_LAKE_IDS,
+  SHARED_RIVER_IDS,
+  TIER1_ISOS,
+  allProvinces,
+  bordersOf,
+  buildCapacityOf,
+  citiesOf,
+  cityRank,
+  cityVisible,
+  gazetteer,
+  lakesOf,
+  placeGazetteerLabels,
+  provinceBordersVisible,
+  provinceById,
+  provinceLabelsVisible,
+  provincesOf,
+  riversOf,
+  sharedWaters,
+  uniqueLakes,
+  uniqueRivers,
+  waterNoteOf,
+  type Tier1Iso,
+} from "../src/index.ts";
+
+describe("tier-1 gazetteer", () => {
+  it("loads and validates the shipped file", () => {
+    expect(gazetteer.version).toBe("3.0");
+    expect(gazetteer.countries.map((c) => c.iso)).toEqual([...TIER1_ISOS]);
+  });
+
+  it("province count bands", () => {
+    for (const iso of TIER1_ISOS) {
+      const [lo, hi] = PROVINCE_COUNT_BANDS[iso];
+      const count = provincesOf(iso).length;
+      expect(count, iso).toBeGreaterThanOrEqual(lo);
+      expect(count, iso).toBeLessThanOrEqual(hi);
+    }
+  });
+
+  it("city cap — ten per nation, every province id resolves", () => {
+    for (const iso of TIER1_ISOS) {
+      const cities = citiesOf(iso);
+      const ids = new Set(provincesOf(iso).map((p) => p.id));
+      expect(cities, iso).toHaveLength(10);
+      for (const city of cities) {
+        expect(ids.has(city.province), `${iso} ${city.name} -> ${city.province}`).toBe(true);
+      }
+    }
+  });
+
+  it("border symmetry", () => {
+    for (const province of allProvinces()) {
+      for (const neighbour of province.borders) {
+        const other = provinceById(neighbour);
+        expect(other, `${province.id} lists missing ${neighbour}`).toBeDefined();
+        expect(other!.borders, `${neighbour} must list ${province.id}`).toContain(province.id);
+      }
+    }
+  });
+
+  it("border non-emptiness — only Hawaii and Réunion are islands", () => {
+    const orphans = allProvinces().filter((p) => p.borders.length === 0).map((p) => p.id).sort();
+    expect(orphans).toEqual([...ISLAND_PROVINCES].sort());
+    expect(bordersOf("us-hawaii")).toEqual([]);
+    expect(bordersOf("fr-reu")).toEqual([]);
+  });
+
+  it("build slot totals", () => {
+    let grand = 0;
+    for (const iso of TIER1_ISOS) {
+      const cap = buildCapacityOf(iso);
+      expect(cap, iso).toBe(BUILD_CAPACITY[iso]);
+      grand += cap;
+    }
+    expect(grand).toBe(1227);
+  });
+
+  it("water referential integrity", () => {
+    const provinceIds = new Set(allProvinces().map((p) => p.id));
+    for (const iso of TIER1_ISOS) {
+      for (const lake of lakesOf(iso)) {
+        expect(provinceIds.has(lake.nearest_province), `${lake.id} nearest ${lake.nearest_province}`).toBe(
+          true,
+        );
+        for (const riparian of lake.riparian) {
+          expect(riparian).toMatch(/^[A-Z]{3}$/);
+        }
+      }
+      for (const river of riversOf(iso)) {
+        expect(river.course.length, river.id).toBeGreaterThanOrEqual(2);
+        for (const riparian of river.riparian) {
+          expect(riparian).toMatch(/^[A-Z]{3}$/);
+        }
+      }
+    }
+  });
+
+  it("shared-water count — nine lakes and the shipped rivers", () => {
+    const lakes = uniqueLakes().filter((l) => l.shared).map((l) => l.id);
+    const rivers = uniqueRivers().filter((r) => r.shared).map((r) => r.id);
+    expect(lakes).toEqual([...SHARED_LAKE_IDS].sort());
+    expect(rivers).toEqual([...SHARED_RIVER_IDS].sort());
+    const shared = sharedWaters();
+    expect(shared.filter((w) => w.id.startsWith("lk-"))).toHaveLength(9);
+    expect(shared.filter((w) => w.id.startsWith("rv-")).map((w) => w.id)).toEqual(
+      [...SHARED_RIVER_IDS].sort(),
+    );
+  });
+
+  it("Saudi Arabia carries a water_note rather than empty scenery", () => {
+    expect(lakesOf("SAU")).toEqual([]);
+    expect(riversOf("SAU")).toEqual([]);
+    const note = waterNoteOf("SAU");
+    expect(note).toBeDefined();
+    expect(note!.natural_lakes).toBe(0);
+    expect(note!.perennial_rivers).toBe(0);
+    expect(note!.assets.map((a) => a.type).sort()).toEqual(
+      ["desalination", "desalination", "desalination", "fossil_aquifer", "wadi", "wadi"].sort(),
+    );
+    expect(waterNoteOf("USA")).toBeUndefined();
+  });
+
+  it("listing totals match the human gazetteer", () => {
+    const listings = gazetteer.countries.reduce(
+      (acc, c) => {
+        acc.provinces += c.provinces.length;
+        acc.cities += c.cities.length;
+        acc.lakes += c.lakes.length;
+        acc.rivers += c.rivers.length;
+        return acc;
+      },
+      { provinces: 0, cities: 0, lakes: 0, rivers: 0 },
+    );
+    expect(listings).toEqual({ provinces: 283, cities: 140, lakes: 53, rivers: 48 });
+    expect(uniqueLakes()).toHaveLength(52);
+  });
+});
+
+describe("google-maps zoom gates", () => {
+  it("hides provinces and lesser cities on the world plate", () => {
+    expect(provinceBordersVisible(1)).toBe(false);
+    expect(provinceLabelsVisible(1)).toBe(false);
+    expect(cityVisible(1, 3, false)).toBe(true);
+    expect(cityVisible(1, 2, false)).toBe(false);
+    expect(cityVisible(1, 1, false)).toBe(false);
+  });
+
+  it("shows megacities before province outlines, then outlines before names", () => {
+    expect(cityVisible(GAZETTEER_ZOOM.cityT3, 3, false)).toBe(true);
+    expect(provinceBordersVisible(GAZETTEER_ZOOM.cityT3)).toBe(false);
+    expect(provinceBordersVisible(GAZETTEER_ZOOM.provinceBorders)).toBe(true);
+    expect(provinceLabelsVisible(GAZETTEER_ZOOM.provinceBorders)).toBe(false);
+    expect(provinceLabelsVisible(GAZETTEER_ZOOM.provinceLabels)).toBe(true);
+    expect(cityVisible(GAZETTEER_ZOOM.cityT2, 2, false)).toBe(true);
+    expect(cityVisible(GAZETTEER_ZOOM.cityT1 - 0.1, 1, false)).toBe(false);
+    expect(cityVisible(GAZETTEER_ZOOM.cityT1, 1, false)).toBe(true);
+  });
+
+  it("drops province names at high zoom so cities dominate", () => {
+    expect(provinceLabelsVisible(GAZETTEER_ZOOM.provinceLabelsUntil)).toBe(false);
+    expect(cityVisible(GAZETTEER_ZOOM.provinceLabelsUntil, 1, false)).toBe(true);
+    expect(provinceBordersVisible(GAZETTEER_ZOOM.provinceLabelsUntil)).toBe(true);
+  });
+
+  it("lets a capital appear before a non-capital of the same tier", () => {
+    expect(cityVisible(GAZETTEER_ZOOM.capital, 1, true)).toBe(true);
+    expect(cityVisible(GAZETTEER_ZOOM.capital, 1, false)).toBe(false);
+  });
+});
+
+describe("gazetteer label collision", () => {
+  it("keeps the higher-rank city and drops the overlapping name", () => {
+    const placed = placeGazetteerLabels(
+      [
+        {
+          id: "manchester",
+          kind: "city",
+          name: "Manchester",
+          x: 10,
+          y: 10,
+          rank: cityRank(2, false, 2_700_000),
+          fontSize: 11,
+          markRadius: 2.4,
+          showMark: true,
+        },
+        {
+          id: "liverpool",
+          kind: "city",
+          name: "Liverpool",
+          x: 10.02,
+          y: 10.01,
+          rank: cityRank(2, false, 900_000),
+          fontSize: 11,
+          markRadius: 2.4,
+          showMark: true,
+        },
+      ],
+      8,
+    );
+    expect(placed.map((p) => p.id)).toEqual(["manchester"]);
+  });
+
+  it("drops a province name that sits on a city", () => {
+    const placed = placeGazetteerLabels(
+      [
+        {
+          id: "chicago",
+          kind: "city",
+          name: "Chicago",
+          x: 0,
+          y: 0,
+          rank: cityRank(3, false, 9_440_000),
+          fontSize: 12.5,
+          markRadius: 3.2,
+          showMark: true,
+        },
+        {
+          id: "illinois",
+          kind: "province",
+          name: "Illinois",
+          x: 0,
+          y: 0,
+          rank: PROVINCE_LABEL_RANK,
+          fontSize: 9.5,
+          markRadius: 0,
+          showMark: false,
+        },
+      ],
+      6,
+    );
+    expect(placed.map((p) => p.id)).toEqual(["chicago"]);
+  });
+
+  it("keeps a province name that sits in the interior, away from the city", () => {
+    const placed = placeGazetteerLabels(
+      [
+        {
+          id: "chicago",
+          kind: "city",
+          name: "Chicago",
+          x: 0,
+          y: 0,
+          rank: cityRank(3, false, 9_440_000),
+          fontSize: 12.5,
+          markRadius: 3.2,
+          showMark: true,
+        },
+        {
+          id: "illinois",
+          kind: "province",
+          name: "Illinois",
+          x: 40,
+          y: 0,
+          rank: PROVINCE_LABEL_RANK,
+          fontSize: 9.5,
+          markRadius: 0,
+          showMark: false,
+        },
+      ],
+      6,
+    );
+    expect(placed.map((p) => p.id).sort()).toEqual(["chicago", "illinois"]);
+  });
+});
+
+describe("ice month parsing", () => {
+  it("maps gazetteer strings onto closed calendar months", async () => {
+    const { iceMonthsToClosed } = await import("../src/index.ts");
+    expect(iceMonthsToClosed(null)).toEqual([]);
+    expect(iceMonthsToClosed("none")).toEqual([]);
+    expect(iceMonthsToClosed("Jan-Mar")).toEqual([1, 2, 3]);
+    expect(iceMonthsToClosed("Nov-Mar (north)")).toEqual([11, 12, 1, 2, 3]);
+    expect(iceMonthsToClosed("Sep-Jun")).toEqual([9, 10, 11, 12, 1, 2, 3, 4, 5, 6]);
+    expect(iceMonthsToClosed("Dec-Apr")).toEqual([12, 1, 2, 3, 4]);
+  });
+});
+
+const _isoCheck: Tier1Iso = "USA";
+void _isoCheck;

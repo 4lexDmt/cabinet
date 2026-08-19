@@ -10,6 +10,10 @@ make tiles    # PMTiles, when a layer outgrows shipping raw GeoJSON
 
 Output lands in `apps/web/public/geo/mapkit/`.
 
+`make provinces` dissolves Natural Earth 10m admin-1 into the gazetteer's
+incorporated provinces (`tier1_provinces.geojson`). Needs shapely. Internal
+ADM1 lines inside a merge — Maine inside New England — are not shipped.
+
 ---
 
 ## Attribution — non-negotiable

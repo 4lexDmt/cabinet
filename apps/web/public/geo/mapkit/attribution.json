@@ -93,6 +93,16 @@
       "used": true
     },
     {
+      "id": "ne_10m_admin_1_states_provinces",
+      "layer": "tier1_provinces",
+      "version": "Natural Earth 5.1.2, 10m cultural",
+      "license": "public-domain",
+      "attribution": "Natural Earth. Free vector and raster map data @ naturalearthdata.com.",
+      "required": false,
+      "shareAlike": false,
+      "used": true
+    },
+    {
       "id": "marineregions_eez_v12",
       "layer": "maritime_eez",
       "version": "v12, 2023-10-25, low resolution (Visvalingam, 10% retention)",

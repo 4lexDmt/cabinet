@@ -1,0 +1,84 @@
+{
+  "chokepoints": [
+    {
+      "id": "canal-soo",
+      "name": "Soo Locks",
+      "from": "us-uppermidwest",
+      "to": "us-greatlakes",
+      "mode": "canal",
+      "km": 3,
+      "capacity": 1,
+      "closed_months": [1, 2, 3]
+    },
+    {
+      "id": "canal-welland",
+      "name": "Welland Canal",
+      "from": "us-greatlakes",
+      "to": "us-newyork",
+      "mode": "canal",
+      "km": 43,
+      "capacity": 1,
+      "closed_months": [1, 2, 3]
+    },
+    {
+      "id": "canal-stlawrence",
+      "name": "St. Lawrence Seaway",
+      "from": "us-greatlakes",
+      "to": "us-newengland",
+      "mode": "seaway",
+      "km": 370,
+      "capacity": 1,
+      "closed_months": [1, 2, 3]
+    },
+    {
+      "id": "canal-volga-don",
+      "name": "Volga–Don Canal",
+      "from": "ru-vol",
+      "to": "ru-ros",
+      "mode": "canal",
+      "km": 101,
+      "capacity": 1,
+      "closed_months": [12, 1, 2, 3]
+    },
+    {
+      "id": "canal-volga-baltic",
+      "name": "Volga–Baltic Canal",
+      "from": "ru-upv",
+      "to": "ru-spb",
+      "mode": "canal",
+      "km": 368,
+      "capacity": 1,
+      "closed_months": [11, 12, 1, 2, 3, 4]
+    },
+    {
+      "id": "canal-three-gorges",
+      "name": "Three Gorges ship lift",
+      "from": "cn-cq",
+      "to": "cn-hb",
+      "mode": "lock",
+      "km": 6,
+      "capacity": 1,
+      "closed_months": []
+    },
+    {
+      "id": "canal-tucurui",
+      "name": "Tucuruí lock",
+      "from": "br-pa",
+      "to": "br-am",
+      "mode": "lock",
+      "km": 8,
+      "capacity": 1,
+      "closed_months": []
+    },
+    {
+      "id": "canal-caledonian",
+      "name": "Caledonian Canal",
+      "from": "gb-hig",
+      "to": "gb-sct",
+      "mode": "canal",
+      "km": 97,
+      "capacity": 1,
+      "closed_months": []
+    }
+  ]
+}

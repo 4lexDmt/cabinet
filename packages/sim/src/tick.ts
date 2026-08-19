@@ -9,12 +9,14 @@ import { phasePacts } from "./phases/04-pacts.ts";
 import { phaseEffects } from "./phases/05-effects.ts";
 import { phaseIntel } from "./phases/06-intel.ts";
 import { phaseBriefings } from "./phases/07-briefings.ts";
+import { phaseWater } from "./phases/08-water.ts";
 
 export const PHASES = [
   phaseOrders,
   phaseMovement,
   phaseCombat,
   phasePacts,
+  phaseWater,
   phaseEffects,
   phaseIntel,
   phaseBriefings,

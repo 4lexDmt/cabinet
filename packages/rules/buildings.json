@@ -1,0 +1,21 @@
+{
+  "city_economy_cap": { "1": 12, "2": 24, "3": 40 },
+  "buildings": [
+    { "id": "industry", "pillar": "economy", "slots": 1, "economy": 6 },
+    { "id": "resource_extraction", "pillar": "economy", "slots": 1, "economy": 4 },
+    { "id": "port_capacity", "pillar": "economy", "slots": 1, "economy": 5, "requires": "coast" },
+    { "id": "airfield", "pillar": "economy", "slots": 1, "economy": 3 },
+    { "id": "hydro", "pillar": "economy", "slots": 1, "economy": 8, "requires": "hydro" },
+    { "id": "desalination", "pillar": "economy", "slots": 1, "economy": 6, "requires": "coast" },
+    { "id": "admin_centre", "pillar": "standing", "slots": 1, "standing_internal": 3 },
+    { "id": "diplomatic_mission", "pillar": "standing", "slots": 1, "standing_external": 3 },
+    { "id": "state_media", "pillar": "standing", "slots": 1, "standing_internal": 2 },
+    { "id": "civil_order", "pillar": "standing", "slots": 1, "standing_internal": 2 },
+    { "id": "signals", "pillar": "intelligence", "slots": 1, "intelligence_capacity": 4 },
+    { "id": "counter_intel", "pillar": "intelligence", "slots": 1, "intelligence_capacity": 3 },
+    { "id": "surveillance", "pillar": "intelligence", "slots": 1, "intelligence_capacity": 2 },
+    { "id": "supply_hub", "pillar": "logistics", "slots": 1, "supply": 4, "corridor_bonus": 1 },
+    { "id": "rail_yard", "pillar": "logistics", "slots": 1, "supply": 3, "corridor_bonus": 1 },
+    { "id": "road_depot", "pillar": "logistics", "slots": 1, "supply": 2, "corridor_bonus": 1 }
+  ]
+}

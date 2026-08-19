@@ -1,0 +1,46 @@
+[
+  {
+    "id": "impound_downstream_economy",
+    "trigger": "water.impounded",
+    "effects": [
+      {
+        "target": { "nation": "event.subject", "field": "economy" },
+        "delta": -8
+      }
+    ],
+    "emits": ["stat.changed"]
+  },
+  {
+    "id": "impound_actor_standing",
+    "trigger": "water.impounded",
+    "effects": [
+      {
+        "target": { "nation": "event.actor_id", "field": "standing_external" },
+        "delta": -6
+      }
+    ],
+    "emits": ["standing.changed"]
+  },
+  {
+    "id": "desiccation_economy",
+    "trigger": "water.desiccated",
+    "effects": [
+      {
+        "target": { "nation": "event.subject", "field": "economy" },
+        "delta": -1
+      }
+    ],
+    "emits": ["stat.changed"]
+  },
+  {
+    "id": "desiccation_internal",
+    "trigger": "water.desiccated",
+    "effects": [
+      {
+        "target": { "nation": "event.subject", "field": "standing_internal" },
+        "delta": -1
+      }
+    ],
+    "emits": ["standing.changed"]
+  }
+]

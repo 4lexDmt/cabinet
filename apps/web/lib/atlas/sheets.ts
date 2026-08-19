@@ -134,6 +134,18 @@ export const SHEETS: SheetConfig[] = [
     brief:
       "Crimea renders differently from Kyiv's desk and from Moscow's. Both readings are shipped in the same file, on the same geometry.",
   },
+  {
+    id: "tier1",
+    label: "Tier 1 gazetteer",
+    scale: "1:110M",
+    bbox: [-180, -58, 180, 84],
+    register: "theatre",
+    parties: ["US", "RU", "CN", "IN", "BR", "ID", "DE", "GB", "FR", "JP", "TR", "IR", "SA", "NG"],
+    brief:
+      "Fourteen named theatres as incorporated provinces: one outline per gazetteer province, dissolved from real ADM1. Lakes and rivers are Natural Earth shorelines and centerlines. City names appear with zoom and never stack on one another. Province lines are thinner than the international boundary. There are no roads on this plate.",
+    projection: { kind: "mercator_compact" },
+    wraps: true,
+  },
 ];
 
 export function sheetById(id: string): SheetConfig {

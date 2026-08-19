@@ -14,6 +14,13 @@ export const metadata: Metadata = {
   },
 };
 
-export default function AtlasPage() {
-  return <AtlasShell />;
+export default async function AtlasPage({
+  searchParams,
+}: {
+  searchParams?: Promise<{ sheet?: string | string[] }>;
+}) {
+  const params = searchParams ? await searchParams : {};
+  const raw = params.sheet;
+  const sheetId = Array.isArray(raw) ? raw[0] : raw;
+  return <AtlasShell sheetId={sheetId} />;
 }

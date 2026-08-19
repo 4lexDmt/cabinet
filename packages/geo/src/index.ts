@@ -196,3 +196,83 @@ export {
   zoneLimitPath,
 } from "./maritime-field.ts";
 export type { CoastSamples, FieldOptions, MaritimeField, ZoneBandPath } from "./maritime-field.ts";
+
+export {
+  BUILD_CAPACITY,
+  ISLAND_PROVINCES,
+  PROVINCE_COUNT_BANDS,
+  SHARED_LAKE_IDS,
+  SHARED_RIVER_IDS,
+  TIER1_ISOS,
+  allProvinces,
+  bordersOf,
+  buildCapacityOf,
+  citiesOf,
+  countries,
+  countryOf,
+  gazetteer,
+  iceMonthsToClosed,
+  isoOfProvince,
+  lakesOf,
+  provinceById,
+  provincesOf,
+  riversOf,
+  sharedWaters,
+  uniqueLakes,
+  uniqueRivers,
+  waterNoteOf,
+} from "./gazetteer.ts";
+export type { Tier1Iso } from "./gazetteer.ts";
+
+export {
+  GAZETTEER_ZOOM,
+  PROVINCE_LABEL_RANK,
+  cityFontSize,
+  cityMarkRadius,
+  cityRank,
+  cityVisible,
+  placeGazetteerLabels,
+  provinceBordersVisible,
+  provinceLabelsVisible,
+} from "./gazetteer-zoom.ts";
+export type { GazetteerLabelInput, GazetteerLabelPlaced } from "./gazetteer-zoom.ts";
+
+export {
+  chokepointFileSchema,
+  chokepointSchema,
+  citySchema,
+  countrySchema,
+  gazetteerSchema,
+  lakeSchema,
+  provinceSchema,
+  riverSchema,
+  waterNoteSchema,
+} from "./schema.ts";
+export type {
+  Chokepoint,
+  City,
+  Country,
+  Gazetteer,
+  InternationalLane,
+  Lake,
+  Navigable,
+  Province,
+  River,
+  RoadEdge,
+  RoadNode,
+  WaterAsset,
+  WaterNote,
+} from "./schema.ts";
+
+export {
+  NAVIGABLE_LAKE,
+  chordCrossesWater,
+  citySiteId,
+  compileCorridors,
+  compileSites,
+  haversineKm,
+  lakeRadiusKm,
+  tier1Chokepoints,
+  volgaProvinceChain,
+} from "./corridors.ts";
+export type { CorridorDraft, CorridorMode, SiteDraft } from "./corridors.ts";

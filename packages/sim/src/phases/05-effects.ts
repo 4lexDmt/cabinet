@@ -80,6 +80,14 @@ function conditionHolds(rule: EffectRule, ctx: TickContext, event: GameEvent): b
   if (rule.condition === "event.public") {
     return event.payload.secret !== true;
   }
+  if (rule.condition.startsWith("payload.")) {
+    const expr = rule.condition.slice("payload.".length);
+    const eq = expr.indexOf("=");
+    if (eq < 0) return true;
+    const key = expr.slice(0, eq);
+    const expected = expr.slice(eq + 1);
+    return String(event.payload[key] ?? "") === expected;
+  }
   void ctx;
   return true;
 }

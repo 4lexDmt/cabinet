@@ -1,11 +1,13 @@
 import type {
   Belief,
+  Building,
   Formation,
   GameEvent,
   Nation,
   NationNumericField,
   Order,
   Pact,
+  Site,
   TickContext,
   TickOptions,
   VisibilityRule,
@@ -169,6 +171,24 @@ export function putFormation(
 export function putWar(ctx: TickContext, war: War, event: Omit<GameEvent, "id" | "tick">): GameEvent {
   ctx.state.wars.push(war);
   ctx.state.wars.sort((a, b) => (a.id < b.id ? -1 : 1));
+  ctx.mutationCount += 1;
+  return emit(ctx, event);
+}
+
+export function putSite(ctx: TickContext, site: Site, event: Omit<GameEvent, "id" | "tick">): GameEvent {
+  if (!ctx.state.sites) ctx.state.sites = {};
+  ctx.state.sites[site.id] = site;
+  ctx.mutationCount += 1;
+  return emit(ctx, event);
+}
+
+export function putBuilding(
+  ctx: TickContext,
+  building: Building,
+  event: Omit<GameEvent, "id" | "tick">,
+): GameEvent {
+  if (!ctx.state.buildings) ctx.state.buildings = {};
+  ctx.state.buildings[building.id] = building;
   ctx.mutationCount += 1;
   return emit(ctx, event);
 }

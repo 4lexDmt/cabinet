@@ -10,6 +10,10 @@ const obligationSchema = z.object({
     "share_intelligence_on",
     "provide_passage",
     "pay_tribute",
+    "maintain_minimum_flow",
+    "not_construct_upstream_of",
+    "share_hydrological_data",
+    "permit_navigation",
   ]),
   target: z.string().optional(),
   params: z.record(z.string(), z.union([z.string(), z.number(), z.boolean()])).optional(),
@@ -17,7 +21,7 @@ const obligationSchema = z.object({
 
 const termsSchema = z.object({
   title: z.string(),
-  type: z.enum(["defense", "non_aggression", "trade", "passage", "tribute", "custom"]),
+  type: z.enum(["defense", "non_aggression", "trade", "passage", "tribute", "custom", "water_treaty"]),
   duration_ticks: z.number().int().optional(),
   secret: z.boolean(),
   obligations: z.array(obligationSchema),
@@ -108,7 +112,7 @@ export const scenarioSchema = z.object({
     z.object({
       id: z.string(),
       parties: z.array(z.string()).min(2),
-      type: z.enum(["defense", "non_aggression", "trade", "passage", "tribute", "custom"]),
+      type: z.enum(["defense", "non_aggression", "trade", "passage", "tribute", "custom", "water_treaty"]),
       secret: z.boolean(),
       terms: termsSchema,
       private_terms: termsSchema.optional(),
@@ -130,7 +134,49 @@ export const scenarioSchema = z.object({
     secret_pact_leak_base_chance: z.number().min(0).max(1),
     standing_penalty_on_breach: z.number().int(),
     cascade_depth_cap: z.number().int().min(1).max(8),
+    start_month: z.number().int().min(1).max(12).optional(),
+    ticks_per_month: z.number().int().positive().optional(),
   }),
+  corridors: z
+    .array(
+      z.object({
+        id: z.string(),
+        from: z.string(),
+        to: z.string(),
+        travel_ticks: z.number().int().positive(),
+        mode: z.enum(["road", "rail", "sea", "water", "canal"]),
+        capacity: z.number().int().nonnegative().optional(),
+        closed_months: z.array(z.number().int().min(1).max(12)).optional(),
+        water_id: z.string().optional(),
+      }),
+    )
+    .default([]),
+  sites: z
+    .array(
+      z.object({
+        id: z.string(),
+        kind: z.enum(["province", "city"]),
+        nationId: z.string(),
+        slots: z.number().int().nonnegative(),
+        occupied: z.number().int().nonnegative().default(0),
+        tier: z.union([z.literal(1), z.literal(2), z.literal(3)]).optional(),
+        water_ids: z.array(z.string()).default([]),
+        coastal: z.boolean().default(false),
+        economy: z.number().int().optional(),
+      }),
+    )
+    .default([]),
+  buildings: z
+    .array(
+      z.object({
+        id: z.string(),
+        siteId: z.string(),
+        kind: z.string(),
+        nationId: z.string(),
+        completed_tick: z.number().int(),
+      }),
+    )
+    .default([]),
   geo: scenarioGeoSchema.optional(),
 });
 

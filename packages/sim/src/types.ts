@@ -17,7 +17,11 @@ export type PredicateName =
   | "not_declare_war_on"
   | "share_intelligence_on"
   | "provide_passage"
-  | "pay_tribute";
+  | "pay_tribute"
+  | "maintain_minimum_flow"
+  | "not_construct_upstream_of"
+  | "share_hydrological_data"
+  | "permit_navigation";
 
 export type OrderKind =
   | "propose_pact"
@@ -29,7 +33,9 @@ export type OrderKind =
   | "economic_pressure"
   | "share_intelligence"
   | "pay_tribute"
-  | "set_posture";
+  | "set_posture"
+  | "construct"
+  | "construct_upstream";
 
 export type VisibilityRule =
   | { kind: "public" }
@@ -45,7 +51,7 @@ export interface Obligation {
 
 export interface PactTerms {
   title: string;
-  type: "defense" | "non_aggression" | "trade" | "passage" | "tribute" | "custom";
+  type: "defense" | "non_aggression" | "trade" | "passage" | "tribute" | "custom" | "water_treaty";
   duration_ticks?: number;
   secret: boolean;
   obligations: Obligation[];
@@ -81,6 +87,55 @@ export interface Formation {
   destination: string | null;
   strength: number;
   inTransit: boolean;
+  /** Remaining ticks on the current corridor hop. Absent when teleporting. */
+  ticks_remaining?: number;
+  /** Remaining location ids after the current one, destination last. */
+  path?: string[];
+}
+
+export interface Corridor {
+  id: string;
+  from: string;
+  to: string;
+  travel_ticks: number;
+  mode: "road" | "rail" | "sea" | "water" | "canal";
+  capacity?: number;
+  closed_months?: number[];
+  water_id?: string;
+}
+
+export interface Site {
+  id: string;
+  kind: "province" | "city";
+  nationId: string;
+  slots: number;
+  occupied: number;
+  tier?: 1 | 2 | 3;
+  water_ids: string[];
+  coastal: boolean;
+  /** City economic output after the tier cap. */
+  economy?: number;
+}
+
+export interface Building {
+  id: string;
+  siteId: string;
+  kind: string;
+  nationId: string;
+  completed_tick: number;
+}
+
+export interface BuildingDef {
+  id: string;
+  pillar: "economy" | "standing" | "intelligence" | "logistics";
+  slots: number;
+  economy?: number;
+  standing_internal?: number;
+  standing_external?: number;
+  intelligence_capacity?: number;
+  supply?: number;
+  requires?: "hydro" | "coast";
+  corridor_bonus?: number;
 }
 
 export interface Pact {
@@ -126,14 +181,18 @@ export interface TradeRoute {
 export interface Posture {
   nationId: string;
   engagement: "hold" | "defend" | "pressure" | "withdraw";
-  /** Delegation may never include break_pact or declare_war. */
-  delegation: Array<Exclude<OrderKind, "break_pact" | "declare_war">>;
+  /** Delegation may never include break_pact, declare_war, or construct_upstream. */
+  delegation: Array<Exclude<OrderKind, "break_pact" | "declare_war" | "construct_upstream">>;
 }
 
 export interface Tuning {
   secret_pact_leak_base_chance_mille: number;
   standing_penalty_on_breach: number;
   cascade_depth_cap: number;
+  /** Calendar month (1–12) at tick 0. Ice uses this, never the wall clock. */
+  start_month?: number;
+  /** Ticks that elapse per calendar month. */
+  ticks_per_month?: number;
 }
 
 export interface GameEvent {
@@ -172,6 +231,9 @@ export interface WorldState {
   victory: Record<string, unknown>;
   tuning: Tuning;
   lastEventSeq: number;
+  corridors?: Record<string, Corridor>;
+  sites?: Record<string, Site>;
+  buildings?: Record<string, Building>;
 }
 
 export interface TickOptions {
@@ -180,6 +242,8 @@ export interface TickOptions {
   shuffleIteration?: boolean;
   effectRules?: EffectRule[];
   advisorTemplates?: AdvisorTemplate[];
+  buildingCatalog?: BuildingDef[];
+  cityEconomyCap?: { 1: number; 2: number; 3: number };
 }
 
 export interface EffectRule {

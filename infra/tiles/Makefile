@@ -1,4 +1,4 @@
-.PHONY: all fetch record verify build tiles clean help
+.PHONY: all fetch record verify build provinces tiles clean help
 
 help:
 	@echo "Cabinet tile pipeline — an OFFLINE build step."
@@ -7,8 +7,9 @@ help:
 	@echo "  make fetch    download sources, verify sha256 against checksums.json"
 	@echo "  make record   download sources and WRITE checksums.json"
 	@echo "  make verify   re-download and check nothing upstream changed silently"
-	@echo "  make build    process sources into apps/web/public/geo/mapkit/"
-	@echo "  make tiles    tippecanoe -> PMTiles v3 (needs tippecanoe on PATH)"
+	@echo "  make build      process sources into apps/web/public/geo/mapkit/"
+	@echo "  make provinces  dissolve NE admin-1 into gazetteer provinces"
+	@echo "  make tiles      tippecanoe -> PMTiles v3 (needs tippecanoe on PATH)"
 	@echo "  make all      fetch + build"
 	@echo "  make clean    remove the download cache and tile build output"
 
@@ -28,6 +29,9 @@ verify:
 
 build:
 	python3 build.py
+
+provinces:
+	python3 dissolve_tier1_provinces.py
 
 tiles:
 	./tile.sh

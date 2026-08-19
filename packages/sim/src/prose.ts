@@ -27,6 +27,14 @@ export function obligationProse(
       const amount = Number(obligation.params?.amount ?? 0);
       return `${party} undertakes to pay tribute of ${amount} to ${target} each sitting.`;
     }
+    case "maintain_minimum_flow":
+      return `${party} undertakes to maintain minimum flow on ${target}.`;
+    case "not_construct_upstream_of":
+      return `${party} undertakes not to construct upstream of ${target}.`;
+    case "share_hydrological_data":
+      return `${party} undertakes to share hydrological data on ${target}.`;
+    case "permit_navigation":
+      return `${party} undertakes to permit navigation to ${target}.`;
     default:
       return `${party} undertakes the obligation recorded herein.`;
   }

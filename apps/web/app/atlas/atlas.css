@@ -49,6 +49,16 @@
   --cond: var(--font-sans-next), "Archivo Narrow", "Arial Narrow", sans-serif;
   --mono: var(--font-mono-next), "IBM Plex Mono", ui-monospace, monospace;
 
+  /* Google Maps label/admin ink. Province lines stay paler and thinner than
+     --ink / --w-med international boundaries. Names are sans-serif with a
+     white halo so they sit on the land the way Google Maps sits on pavement. */
+  --gmaps-admin: #9aa0a6;
+  --gmaps-city: #3c4043;
+  --gmaps-city-major: #202124;
+  --gmaps-city-minor: #5f6368;
+  --gmaps-province-label: #70757a;
+  --gmaps-halo: #ffffff;
+
   position: fixed;
   inset: 0;
   background: var(--paper-fold);
@@ -84,3 +94,41 @@
 }
 .atlas-boot b { display: block; font-weight: 500; }
 .atlas-boot small { display: block; margin-top: 8px; letter-spacing: 0.1em; color: var(--ink-4); }
+
+/* Gazetteer labels — screen-pixel type, inverse-scaled in the overlay. */
+.gazetteer-city,
+.gazetteer-province-label {
+  font-family: Roboto, "Product Sans", Arial, Helvetica, sans-serif;
+  paint-order: stroke fill;
+  stroke: var(--gmaps-halo);
+  stroke-width: 2.6px;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  pointer-events: none;
+  user-select: none;
+}
+.gazetteer-city-t3 {
+  fill: var(--gmaps-city-major);
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+.gazetteer-city-t2 {
+  fill: var(--gmaps-city);
+  font-size: 11px;
+  font-weight: 500;
+}
+.gazetteer-city-t1 {
+  fill: var(--gmaps-city-minor);
+  font-size: 10px;
+  font-weight: 400;
+}
+.gazetteer-province-label {
+  fill: var(--gmaps-province-label);
+  font-size: 9.5px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+}
+.gazetteer-province-border {
+  pointer-events: visiblePainted;
+}
