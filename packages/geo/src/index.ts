@@ -196,3 +196,57 @@ export {
   zoneLimitPath,
 } from "./maritime-field.ts";
 export type { CoastSamples, FieldOptions, MaritimeField, ZoneBandPath } from "./maritime-field.ts";
+
+export {
+  BUILD_CAPACITY,
+  ISLAND_PROVINCES,
+  PROVINCE_COUNT_BANDS,
+  SHARED_LAKE_IDS,
+  SHARED_RIVER_IDS,
+  TIER1_ISOS,
+  allProvinces,
+  bordersOf,
+  buildCapacityOf,
+  citiesOf,
+  countries,
+  countryOf,
+  gazetteer,
+  iceMonthsToClosed,
+  isoOfProvince,
+  lakesOf,
+  provinceById,
+  provincesOf,
+  riversOf,
+  sharedWaters,
+  uniqueLakes,
+  uniqueRivers,
+  waterNoteOf,
+} from "./gazetteer.ts";
+export type { Tier1Iso } from "./gazetteer.ts";
+
+export {
+  chokepointFileSchema,
+  chokepointSchema,
+  citySchema,
+  countrySchema,
+  gazetteerSchema,
+  lakeSchema,
+  provinceSchema,
+  riverSchema,
+  waterNoteSchema,
+} from "./schema.ts";
+export type {
+  Chokepoint,
+  City,
+  Country,
+  Gazetteer,
+  InternationalLane,
+  Lake,
+  Navigable,
+  Province,
+  River,
+  RoadEdge,
+  RoadNode,
+  WaterAsset,
+  WaterNote,
+} from "./schema.ts";
