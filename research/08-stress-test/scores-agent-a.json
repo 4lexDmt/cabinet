@@ -1,0 +1,997 @@
+[
+  {
+    "id": "real-estate-property-management-P2",
+    "s1": 2,
+    "s2": 3,
+    "s3": 4,
+    "s4": 4,
+    "s5": 4,
+    "s6": 2,
+    "s7": 3,
+    "flags": [],
+    "note": "Delisting deadline is real; hosts still use calendars. License fees are not spend on tracking software.",
+    "checks": [
+      {
+        "q": "free STR host license tracker vs spreadsheet",
+        "url": "https://support.granicus.com/s/article/Address-Identification-101",
+        "found": "Granicus/Host Compliance sells to cities, not hosts; hosts still on calendars/PDFs."
+      }
+    ]
+  },
+  {
+    "id": "education-P1",
+    "s1": 1,
+    "s2": 3,
+    "s3": 3,
+    "s4": 3,
+    "s5": 2,
+    "s6": 1,
+    "s7": 2,
+    "flags": ["F1", "F2"],
+    "note": "Vendors quit or wait; no one pays for a rail ClassWallet/the state still owns.",
+    "checks": []
+  },
+  {
+    "id": "it-msp-P1",
+    "s1": 2,
+    "s2": 4,
+    "s3": 3,
+    "s4": 3,
+    "s5": 3,
+    "s6": 3,
+    "s7": 4,
+    "flags": [],
+    "note": "MSPs can buy same-day; most still absorb hours. Free PDFs are not multi-portal evidence packs.",
+    "checks": [
+      {
+        "q": "free cyber insurance questionnaire evidence collection MSP",
+        "url": "https://www.thedataexperts.us/tools/cyber-insurance-evidence-checklist.html",
+        "found": "Free printable checklists exist; they do not pull MFA/EDR/backup proof from portals."
+      }
+    ]
+  },
+  {
+    "id": "manufacturing-industrial-P5",
+    "s1": 3,
+    "s2": 3,
+    "s3": 3,
+    "s4": 3,
+    "s5": 2,
+    "s6": 2,
+    "s7": 3,
+    "flags": [],
+    "note": "Shops pay consultants for CMMC, not a cert-packet app. C3PAO still gates the cliff.",
+    "checks": []
+  },
+  {
+    "id": "retail-P3",
+    "s1": 3,
+    "s2": 3,
+    "s3": 4,
+    "s4": 4,
+    "s5": 2,
+    "s6": 2,
+    "s7": 4,
+    "flags": [],
+    "note": "Brokerage is forced spend. CROSS classifies for free; a broker still files the entry.",
+    "checks": [
+      {
+        "q": "free HTS classification CBP CROSS vs paid brokerage",
+        "url": "https://www.usitc.gov/harmonized_tariff_information/frequently_asked_questions",
+        "found": "USITC HTS + CBP CROSS are free references, not auto-classifiers or entry filers."
+      }
+    ]
+  },
+  {
+    "id": "D6",
+    "s1": 1,
+    "s2": 0,
+    "s3": 1,
+    "s4": 2,
+    "s5": 2,
+    "s6": 1,
+    "s7": 0,
+    "flags": ["F6"],
+    "note": "Card admits ~$0 prevention budget. Consumers use free BBB/FMCSA once per move.",
+    "checks": []
+  },
+  {
+    "id": "auto-P6",
+    "s1": 1,
+    "s2": 4,
+    "s3": 2,
+    "s4": 3,
+    "s5": 2,
+    "s6": 2,
+    "s7": 3,
+    "flags": [],
+    "note": "Shops fight insurers with photos, not software. CCC still decides what gets paid.",
+    "checks": []
+  },
+  {
+    "id": "creative-creator-economy-P1",
+    "s1": 4,
+    "s2": 4,
+    "s3": 3,
+    "s4": 2,
+    "s5": 4,
+    "s6": 2,
+    "s7": 3,
+    "flags": [],
+    "note": "They already pay CRMs; rage-switch to cheaper paid tools, not a new category.",
+    "checks": [
+      {
+        "q": "Pixieset Studio Ninja Bonsai free alternative HoneyBook photographers",
+        "url": "https://photocrm.io/",
+        "found": "PhotoCRM claims free-forever CRM; wedding pros in-card still pay Pixieset/Studio Ninja."
+      }
+    ]
+  },
+  {
+    "id": "construction-skilled-trades-P4",
+    "s1": 3,
+    "s2": 4,
+    "s3": 2,
+    "s4": 3,
+    "s5": 3,
+    "s6": 2,
+    "s7": 3,
+    "flags": [],
+    "note": "AI receptionist spend is real. Missed-call texts are free and good enough below ~$75k.",
+    "checks": [
+      {
+        "q": "Google Voice free missed-call text vs Jobber AI receptionist",
+        "url": "https://agentzap.ai/blog/solo-contractor-on-jobber-how-to-handle-calls-while-on-the-job-site",
+        "found": "Free missed-call text-back exists; it does not qualify or book like paid AI."
+      }
+    ]
+  },
+  {
+    "id": "education-P2",
+    "s1": 3,
+    "s2": 4,
+    "s3": 2,
+    "s4": 2,
+    "s5": 4,
+    "s6": 2,
+    "s7": 2,
+    "flags": [],
+    "note": "Some pay $5–25/mo; many stay on Calendar+Venmo. Frugal segment, no forcing date.",
+    "checks": []
+  },
+  {
+    "id": "accounting-P1",
+    "s1": 3,
+    "s2": 4,
+    "s3": 3,
+    "s4": 3,
+    "s5": 3,
+    "s6": 2,
+    "s7": 4,
+    "flags": [],
+    "note": "Firms already buy portals/VAs. Clients still ignore email; free portals won't fix that.",
+    "checks": [
+      {
+        "q": "free tax client document portal vs TaxDome",
+        "url": "https://easyclientdocs.com/",
+        "found": "Easy Client Docs advertises a free-forever portal; chase still fails if clients ignore it."
+      }
+    ]
+  },
+  {
+    "id": "D5",
+    "s1": 1,
+    "s2": 0,
+    "s3": 3,
+    "s4": 3,
+    "s5": 3,
+    "s6": 1,
+    "s7": 0,
+    "flags": ["F6"],
+    "note": "Once-per-tenancy consumer fight. ChatGPT and county letters already cover demand packets.",
+    "checks": []
+  },
+  {
+    "id": "construction-skilled-trades-P6",
+    "s1": 2,
+    "s2": 3,
+    "s3": 2,
+    "s4": 3,
+    "s5": 1,
+    "s6": 2,
+    "s7": 3,
+    "flags": ["F5"],
+    "note": "Seven-month delay is municipal capacity. A checklist app cannot cut $131k of regulation.",
+    "checks": []
+  },
+  {
+    "id": "personal-services-P3",
+    "s1": 3,
+    "s2": 3,
+    "s3": 2,
+    "s4": 4,
+    "s5": 4,
+    "s6": 2,
+    "s7": 3,
+    "flags": [],
+    "note": "Empty infant seats are cash. Directors still run Excel to 2028 and already pay Brightwheel.",
+    "checks": []
+  },
+  {
+    "id": "healthcare-private-practice-P2",
+    "s1": 3,
+    "s2": 3,
+    "s3": 3,
+    "s4": 4,
+    "s5": 2,
+    "s6": 2,
+    "s7": 3,
+    "flags": [],
+    "note": "Idle-provider billings hurt. CAQH exists; payers still sit on 3–8 month clocks.",
+    "checks": []
+  },
+  {
+    "id": "hr-staffing-P5",
+    "s1": 1,
+    "s2": 2,
+    "s3": 2,
+    "s4": 2,
+    "s5": 3,
+    "s6": 2,
+    "s7": 3,
+    "flags": ["F1"],
+    "note": "Reddit drowning, no dollars. HR-of-one needs an owner to buy another HRIS.",
+    "checks": []
+  },
+  {
+    "id": "accounting-P8",
+    "s1": 2,
+    "s2": 4,
+    "s3": 2,
+    "s4": 2,
+    "s5": 3,
+    "s6": 2,
+    "s7": 4,
+    "flags": [],
+    "note": "CAS growth is firm revenue, not tool spend. QBO+email is the tolerated OS.",
+    "checks": []
+  },
+  {
+    "id": "agriculture-P6",
+    "s1": 1,
+    "s2": 3,
+    "s3": 3,
+    "s4": 3,
+    "s5": 0,
+    "s6": 2,
+    "s7": 2,
+    "flags": ["F5"],
+    "note": "AEWR is DOL policy. A planner cannot change next season's wage.",
+    "checks": []
+  },
+  {
+    "id": "manufacturing-industrial-P6",
+    "s1": 2,
+    "s2": 3,
+    "s3": 2,
+    "s4": 4,
+    "s5": 0,
+    "s6": 2,
+    "s7": 3,
+    "flags": ["F5"],
+    "note": "66% cannot hire technicians. Software does not create machinists.",
+    "checks": []
+  },
+  {
+    "id": "agriculture-P3",
+    "s1": 2,
+    "s2": 3,
+    "s3": 3,
+    "s4": 2,
+    "s5": 2,
+    "s6": 2,
+    "s7": 2,
+    "flags": ["F2"],
+    "note": "Bayer–Deere are wiring the official bridge. Paying both stacks is lock-in, not a third app.",
+    "checks": []
+  },
+  {
+    "id": "npo-solar-P1",
+    "s1": 1,
+    "s2": 1,
+    "s3": 3,
+    "s4": 3,
+    "s5": 4,
+    "s6": 2,
+    "s7": 2,
+    "flags": ["F1"],
+    "note": "Users tried systems and said ROI wasn't there. Spreadsheet is the chosen OS.",
+    "checks": []
+  },
+  {
+    "id": "D7",
+    "s1": 3,
+    "s2": 0,
+    "s3": 2,
+    "s4": 2,
+    "s5": 3,
+    "s6": 2,
+    "s7": 0,
+    "flags": [],
+    "note": "Rocket Money proves some pay $6–12. Consumer wallet, crowded, bank-link friction.",
+    "checks": []
+  },
+  {
+    "id": "logistics-trucking-P5",
+    "s1": 4,
+    "s2": 4,
+    "s3": 3,
+    "s4": 4,
+    "s5": 1,
+    "s6": 2,
+    "s7": 3,
+    "flags": ["F5"],
+    "note": "They pay 3% for cash, not a contract parser. Software cannot replace the advance.",
+    "checks": []
+  },
+  {
+    "id": "legal-P3",
+    "s1": 4,
+    "s2": 4,
+    "s3": 3,
+    "s4": 2,
+    "s5": 4,
+    "s6": 2,
+    "s7": 4,
+    "flags": [],
+    "note": "Firms already write $1.6k/user checks. They switch vendors; free desktop PM is unproven for trust accounting.",
+    "checks": [
+      {
+        "q": "free Clio alternative law practice management",
+        "url": "https://timelinedigi.com/free-law-practice-management-software",
+        "found": "Offline Timeline PM is free; cloud/trust-accounting parity with Clio is unverified."
+      }
+    ]
+  },
+  {
+    "id": "accounting-P3",
+    "s1": 4,
+    "s2": 4,
+    "s3": 3,
+    "s4": 3,
+    "s5": 2,
+    "s6": 2,
+    "s7": 4,
+    "flags": [],
+    "note": "29% already buy $950–3,500/mo seats. They pay for bodies; a QA layer is optional.",
+    "checks": [
+      {
+        "q": "free tax client document portal vs TaxDome",
+        "url": "https://easyclientdocs.com/",
+        "found": "Free portals exist for intake, not for experienced-staff capacity the $950–3,500 seats buy."
+      }
+    ]
+  },
+  {
+    "id": "hr-staffing-P1",
+    "s1": 3,
+    "s2": 3,
+    "s3": 2,
+    "s4": 3,
+    "s5": 3,
+    "s6": 2,
+    "s7": 4,
+    "flags": [],
+    "note": "VAs at $30–85/hr are the current spend. Daily pain, no dated penalty.",
+    "checks": []
+  },
+  {
+    "id": "accounting-P2",
+    "s1": 4,
+    "s2": 4,
+    "s3": 3,
+    "s4": 3,
+    "s5": 2,
+    "s6": 2,
+    "s7": 4,
+    "flags": [],
+    "note": "They pay Intuit, then hunt discounts. Switching cost is the product, not a new ledger.",
+    "checks": [
+      {
+        "q": "free tax client document portal vs TaxDome Canopy",
+        "url": "https://easyclientdocs.com/",
+        "found": "Free intake portals are not a QBO replacement; no free full ledger showed up."
+      }
+    ]
+  },
+  {
+    "id": "retail-P7",
+    "s1": 3,
+    "s2": 4,
+    "s3": 2,
+    "s4": 2,
+    "s5": 3,
+    "s6": 2,
+    "s7": 4,
+    "flags": [],
+    "note": "Merchants already pay Klaviyo. They want to spend less, not add another bill.",
+    "checks": []
+  },
+  {
+    "id": "creative-creator-economy-P7",
+    "s1": 3,
+    "s2": 4,
+    "s3": 3,
+    "s4": 2,
+    "s5": 3,
+    "s6": 2,
+    "s7": 2,
+    "flags": [],
+    "note": "Take-rate rage is real. Payhip/Skool already absorb switchers at lower cost.",
+    "checks": []
+  },
+  {
+    "id": "manufacturing-industrial-P1",
+    "s1": 3,
+    "s2": 4,
+    "s3": 2,
+    "s4": 3,
+    "s5": 3,
+    "s6": 2,
+    "s7": 3,
+    "flags": [],
+    "note": "Some shops pay $18k/yr; most still quote in Excel and trust the estimator's head.",
+    "checks": [
+      {
+        "q": "free job shop quoting spreadsheet vs Paperless Parts",
+        "url": "https://swarf.shop/tools/job-quote-calculator",
+        "found": "Free calculators/Excel packs exist; CAD-to-quote is still the paid cliff."
+      }
+    ]
+  },
+  {
+    "id": "legal-P2",
+    "s1": 3,
+    "s2": 4,
+    "s3": 2,
+    "s4": 4,
+    "s5": 3,
+    "s6": 2,
+    "s7": 4,
+    "flags": [],
+    "note": "Unbilled hours are cash. Clockify is free; narrative reconstruction is the unpaid gap.",
+    "checks": [
+      {
+        "q": "free lawyer time tracking vs Clio lost billables",
+        "url": "https://clockify.me/blog/apps-tools/clockify-vs-toggl-vs-harvest/",
+        "found": "Clockify free for 5 users tracks time; it does not auto-write client-safe narratives."
+      }
+    ]
+  },
+  {
+    "id": "auto-P8",
+    "s1": 2,
+    "s2": 3,
+    "s3": 1,
+    "s4": 2,
+    "s5": 0,
+    "s6": 2,
+    "s7": 3,
+    "flags": ["F5"],
+    "note": "Shops stall because the check is tools, insurance, and OEM software, not an app.",
+    "checks": []
+  },
+  {
+    "id": "education-P5",
+    "s1": 3,
+    "s2": 4,
+    "s3": 3,
+    "s4": 2,
+    "s5": 2,
+    "s6": 2,
+    "s7": 2,
+    "flags": ["F2"],
+    "note": "Forced hikes prove spend. Extracting students and payment plans needs the platform's export.",
+    "checks": []
+  },
+  {
+    "id": "logistics-trucking-P1",
+    "s1": 3,
+    "s2": 4,
+    "s3": 4,
+    "s4": 4,
+    "s5": 3,
+    "s6": 3,
+    "s7": 3,
+    "flags": [],
+    "note": "Fraud losses and the July 2026 bond make vetting a buy. SAFER is free and now insufficient.",
+    "checks": [
+      {
+        "q": "free FMCSA SAFER vs Highway MyCarrierPackets small broker",
+        "url": "https://safer.fmcsa.dot.gov/CompanySnapshot.aspx",
+        "found": "SAFER snapshots are free; they miss MC takeovers that paid identity tools target."
+      }
+    ]
+  },
+  {
+    "id": "insurance-P4",
+    "s1": 2,
+    "s2": 4,
+    "s3": 4,
+    "s4": 4,
+    "s5": 3,
+    "s6": 2,
+    "s7": 4,
+    "flags": [],
+    "note": "75-day clock and E&O are the whip. CDI Finder is a directory, not a remarket workflow.",
+    "checks": [
+      {
+        "q": "California CDI Home Insurance Finder FAIR Plan agent tool",
+        "url": "https://homeinsurancefinder.insurance.ca.gov/",
+        "found": "Free CDI finder lists carriers/agents; disclaimer says they may not write new business."
+      }
+    ]
+  },
+  {
+    "id": "restaurants-hospitality-P6",
+    "s1": 3,
+    "s2": 4,
+    "s3": 2,
+    "s4": 3,
+    "s5": 2,
+    "s6": 2,
+    "s7": 3,
+    "flags": [],
+    "note": "Deposits already live in OpenTable/Resy. Independents may pay; platform restaurants already have the hold.",
+    "checks": []
+  },
+  {
+    "id": "personal-services-P2",
+    "s1": 2,
+    "s2": 4,
+    "s3": 2,
+    "s4": 3,
+    "s5": 3,
+    "s6": 2,
+    "s7": 3,
+    "flags": [],
+    "note": "Empty chairs hurt. Visa-compliant deposit UX is software, but incumbents already sell deposits as add-ons.",
+    "checks": []
+  },
+  {
+    "id": "logistics-trucking-P4",
+    "s1": 2,
+    "s2": 4,
+    "s3": 2,
+    "s4": 4,
+    "s5": 2,
+    "s6": 2,
+    "s7": 3,
+    "flags": ["F2"],
+    "note": "Fleets already fail to collect. Shippers who benefit from free detention still must pay the invoice.",
+    "checks": []
+  },
+  {
+    "id": "logistics-trucking-P6",
+    "s1": 4,
+    "s2": 4,
+    "s3": 3,
+    "s4": 3,
+    "s5": 3,
+    "s6": 2,
+    "s7": 3,
+    "flags": [],
+    "note": "$1.5k/mo dispatch is revealed spend. IFTA portals are free; the 5–10% dispatch cut is the bill.",
+    "checks": [
+      {
+        "q": "free IFTA filing vs paid dispatch for owner operators",
+        "url": "https://freeiftacalculator.com/blog/free-ifta-software-spreadsheet-workflow",
+        "found": "State portals plus a spreadsheet file IFTA at $0; dispatch labor is the paid job."
+      }
+    ]
+  },
+  {
+    "id": "npo-solar-P6",
+    "s1": 2,
+    "s2": 3,
+    "s3": 4,
+    "s4": 4,
+    "s5": 1,
+    "s6": 2,
+    "s7": 3,
+    "flags": ["F5"],
+    "note": "25D is gone. A proposal engine cannot put 30% back on the homeowner slide.",
+    "checks": []
+  },
+  {
+    "id": "retail-P8",
+    "s1": 1,
+    "s2": 4,
+    "s3": 1,
+    "s4": 4,
+    "s5": 1,
+    "s6": 1,
+    "s7": 2,
+    "flags": ["F2", "F5"],
+    "note": "Etsy holds the cash. No seller tool unfreezes a platform reserve.",
+    "checks": []
+  },
+  {
+    "id": "healthcare-private-practice-P6",
+    "s1": 3,
+    "s2": 4,
+    "s3": 2,
+    "s4": 4,
+    "s5": 3,
+    "s6": 3,
+    "s7": 3,
+    "flags": [],
+    "note": "Practices already pay reminder tools that fail. Waitlist autofill is the unpaid gap, not SMS.",
+    "checks": [
+      {
+        "q": "free dental waitlist autofill vs reminder SMS",
+        "url": "https://trypronto.app/for/dental",
+        "found": "Free reminder tools exist; production waitlist autofill is paid or unfinished open-source."
+      }
+    ]
+  },
+  {
+    "id": "D1",
+    "s1": 3,
+    "s2": 0,
+    "s3": 4,
+    "s4": 4,
+    "s5": 2,
+    "s6": 0,
+    "s7": 0,
+    "flags": ["F4", "F6"],
+    "note": "Fight Health Insurance drafts appeals for $0. Sick consumers rarely buy a second letter tool.",
+    "checks": [
+      {
+        "q": "Fight Health Insurance free vs Claimable paid appeal",
+        "url": "https://www.fighthealthinsurance.com/",
+        "found": "Free AI appeal drafts; Claimable is ~$40. Free path is good enough for the letter job."
+      }
+    ]
+  },
+  {
+    "id": "hr-staffing-P3",
+    "s1": 4,
+    "s2": 4,
+    "s3": 3,
+    "s4": 4,
+    "s5": 3,
+    "s6": 2,
+    "s7": 4,
+    "flags": [],
+    "note": "Agencies already pay $250–750/user or factor payroll. Free timers are not pay-bill.",
+    "checks": [
+      {
+        "q": "free staffing agency timesheet payroll invoicing",
+        "url": "https://www.jibble.io/",
+        "found": "Jibble is free time tracking; it is not staffing pay-and-bill against net-90 clients."
+      }
+    ]
+  },
+  {
+    "id": "accounting-P7",
+    "s1": 2,
+    "s2": 4,
+    "s3": 3,
+    "s4": 3,
+    "s5": 2,
+    "s6": 1,
+    "s7": 4,
+    "flags": [],
+    "note": "Tax software will code OBBBA. Extra checklists are CPE-adjacent, not a new check.",
+    "checks": []
+  },
+  {
+    "id": "D9",
+    "s1": 4,
+    "s2": 0,
+    "s3": 4,
+    "s4": 4,
+    "s5": 2,
+    "s6": 2,
+    "s7": 0,
+    "flags": ["F6"],
+    "note": "Immigrants already pay lawyers $2.5–6k. Buyer is a consumer with a life-event CAC.",
+    "checks": []
+  },
+  {
+    "id": "insurance-P3",
+    "s1": 2,
+    "s2": 4,
+    "s3": 2,
+    "s4": 3,
+    "s5": 3,
+    "s6": 2,
+    "s7": 4,
+    "flags": [],
+    "note": "Appetite lives in lunches and a stale spreadsheet. Lost renewals hurt; no current tool check.",
+    "checks": []
+  },
+  {
+    "id": "retail-P4",
+    "s1": 3,
+    "s2": 4,
+    "s3": 2,
+    "s4": 2,
+    "s5": 2,
+    "s6": 2,
+    "s7": 4,
+    "flags": [],
+    "note": "They already rent 8–15 apps. They will not buy another subscription to audit subscriptions.",
+    "checks": []
+  },
+  {
+    "id": "agriculture-P2",
+    "s1": 2,
+    "s2": 3,
+    "s3": 3,
+    "s4": 3,
+    "s5": 1,
+    "s6": 1,
+    "s7": 2,
+    "flags": ["F5"],
+    "note": "Wait is NRCS headcount. eForms exist; software cannot staff 141 empty counties.",
+    "checks": []
+  },
+  {
+    "id": "agriculture-P1",
+    "s1": 4,
+    "s2": 3,
+    "s3": 4,
+    "s4": 4,
+    "s5": 3,
+    "s6": 2,
+    "s7": 2,
+    "flags": [],
+    "note": "Farms already pay $1.5–3.5k agents. FLAG is free filing, not a three-agency packet OS.",
+    "checks": [
+      {
+        "q": "free H-2A filing FLAG vs farm labor contractor fees",
+        "url": "https://www.farmers.gov/working-with-us/h2a-visa-program",
+        "found": "FLAG/farmers.gov is the free mandated path; farmers still hire agents for the packet."
+      }
+    ]
+  },
+  {
+    "id": "construction-skilled-trades-P2",
+    "s1": 3,
+    "s2": 4,
+    "s3": 3,
+    "s4": 4,
+    "s5": 3,
+    "s6": 2,
+    "s7": 3,
+    "flags": [],
+    "note": "Subs already pay Billd to float 56 days. Waiver Excel is free; CO-vs-waiver watch is not.",
+    "checks": [
+      {
+        "q": "free lien waiver tracker vs Levelset small sub",
+        "url": "https://www.liendone.com/blog/lien-waiver-tracking-spreadsheet",
+        "found": "Free Excel trackers exist; they fail past a few jobs and do not catch CO waiver traps."
+      }
+    ]
+  },
+  {
+    "id": "it-msp-P7",
+    "s1": 1,
+    "s2": 4,
+    "s3": 1,
+    "s4": 2,
+    "s5": 2,
+    "s6": 2,
+    "s7": 4,
+    "flags": ["F1"],
+    "note": "Kaseya survey pain, unconfirmed agency retainers. Sales collateral is a someday problem.",
+    "checks": []
+  },
+  {
+    "id": "creative-creator-economy-P4",
+    "s1": 3,
+    "s2": 4,
+    "s3": 3,
+    "s4": 3,
+    "s5": 3,
+    "s6": 2,
+    "s7": 3,
+    "flags": [],
+    "note": "HoneyBook/17hats already sell this. Ads quality is not fixed by another inbox CRM.",
+    "checks": []
+  },
+  {
+    "id": "insurance-P2",
+    "s1": 3,
+    "s2": 4,
+    "s3": 3,
+    "s4": 3,
+    "s5": 3,
+    "s6": 2,
+    "s7": 4,
+    "flags": [],
+    "note": "$187/mo processors exist. Excel still works; Applied Recon is bundling it into the AMS.",
+    "checks": [
+      {
+        "q": "insurance commission reconciliation free Excel vs Applied Recon",
+        "url": "https://commissionswizard.com/",
+        "found": "Paid AI recon from $29/mo; no verified free matcher. Excel remains the default."
+      }
+    ]
+  },
+  {
+    "id": "legal-P5",
+    "s1": 2,
+    "s2": 4,
+    "s3": 2,
+    "s4": 4,
+    "s5": 3,
+    "s6": 2,
+    "s7": 4,
+    "flags": [],
+    "note": "Lockup is cash. PM suites already invoice; auto-debit is a policy, not a new product.",
+    "checks": []
+  },
+  {
+    "id": "healthcare-private-practice-P1",
+    "s1": 4,
+    "s2": 3,
+    "s3": 3,
+    "s4": 4,
+    "s5": 2,
+    "s6": 3,
+    "s7": 3,
+    "flags": [],
+    "note": "92% hired PA staff. CoverMyMeds is free for drugs and still does not replace procedure PA labor.",
+    "checks": [
+      {
+        "q": "CoverMyMeds free prior auth vs hiring PA staff",
+        "url": "https://staffingly.com/insights/blog/covermymeds-medication-access-affordability/",
+        "found": "CoverMyMeds is free for pharmacy PA; it does not do procedure PA, follow-up, or appeals."
+      }
+    ]
+  },
+  {
+    "id": "personal-services-P1",
+    "s1": 4,
+    "s2": 4,
+    "s3": 3,
+    "s4": 4,
+    "s5": 4,
+    "s6": 2,
+    "s7": 3,
+    "flags": [],
+    "note": "$2,400/mo take-rate is a live check. Square Appointments is $0 if they will forfeit marketplace leads.",
+    "checks": [
+      {
+        "q": "Square Appointments free vs Fresha 20% marketplace",
+        "url": "https://www.fresha.com/pricing",
+        "found": "Square is $0/mo with no marketplace tax; Fresha 20% is the discovery toll they still buy."
+      }
+    ]
+  },
+  {
+    "id": "education-P7",
+    "s1": 3,
+    "s2": 0,
+    "s3": 2,
+    "s4": 2,
+    "s5": 4,
+    "s6": 2,
+    "s7": 2,
+    "flags": ["F3"],
+    "note": "District SIS is board/procurement. They renew while suing. Microschool edge is a different buyer.",
+    "checks": []
+  },
+  {
+    "id": "D3",
+    "s1": 4,
+    "s2": 0,
+    "s3": 3,
+    "s4": 4,
+    "s5": 2,
+    "s6": 2,
+    "s7": 0,
+    "flags": ["F6"],
+    "note": "Families pay attorneys $8–13k once. Consumer sandwich-generation, not a repeat SaaS seat.",
+    "checks": []
+  },
+  {
+    "id": "logistics-trucking-P2",
+    "s1": 3,
+    "s2": 4,
+    "s3": 2,
+    "s4": 3,
+    "s5": 4,
+    "s6": 3,
+    "s7": 3,
+    "flags": [],
+    "note": "Small fleets already pay $80–1k/mo. Free AscendTMS exists and is widely called unusable.",
+    "checks": [
+      {
+        "q": "AscendTMS free TMS good enough for small carriers",
+        "url": "https://bestcarriertms.com/reviews/ascendtms.php",
+        "found": "Free 2–3 user tier is real; Reddit/reviews still call UX dated and easy to misclick."
+      }
+    ]
+  },
+  {
+    "id": "creative-creator-economy-P3",
+    "s1": 2,
+    "s2": 4,
+    "s3": 2,
+    "s4": 3,
+    "s5": 2,
+    "s6": 2,
+    "s7": 2,
+    "flags": ["F1"],
+    "note": "Late-pay stats are vendor-cited. Reminders exist; leverage against client AP is not a subscription.",
+    "checks": []
+  },
+  {
+    "id": "construction-skilled-trades-P3",
+    "s1": 4,
+    "s2": 4,
+    "s3": 3,
+    "s4": 2,
+    "s5": 4,
+    "s6": 2,
+    "s7": 3,
+    "flags": [],
+    "note": "They already pay $267–325/tech. Free FSM clones exist; shops stay for the devil they know.",
+    "checks": [
+      {
+        "q": "free Jobber ServiceTitan alternative small contractor",
+        "url": "https://mykrib.app/pro",
+        "found": "Krib/Free Service Pro claim $0 FSM; incumbents still extract because switching cost is high."
+      }
+    ]
+  },
+  {
+    "id": "healthcare-private-practice-P8",
+    "s1": 4,
+    "s2": 4,
+    "s3": 3,
+    "s4": 4,
+    "s5": 3,
+    "s6": 2,
+    "s7": 3,
+    "flags": [],
+    "note": "Solos already hand 6–8% of collections to billers. OpenEMR is free; denial labor is not.",
+    "checks": [
+      {
+        "q": "free medical billing software vs percentage biller",
+        "url": "https://www.open-emr.org/",
+        "found": "OpenEMR is free; clearinghouse+denial staff still cost. Services remain 4–9% of collections."
+      }
+    ]
+  },
+  {
+    "id": "restaurants-hospitality-P1",
+    "s1": 2,
+    "s2": 4,
+    "s3": 2,
+    "s4": 3,
+    "s5": 2,
+    "s6": 2,
+    "s7": 3,
+    "flags": ["F2"],
+    "note": "Owners bought cameras. Winning still requires DoorDash's robo-deny portal to say yes.",
+    "checks": []
+  },
+  {
+    "id": "manufacturing-industrial-P3",
+    "s1": 1,
+    "s2": 2,
+    "s3": 2,
+    "s4": 3,
+    "s5": 3,
+    "s6": 2,
+    "s7": 3,
+    "flags": ["F1"],
+    "note": "Forgepoint anecdote is content marketing. Ops managers cannot swipe a card for ERP glue.",
+    "checks": []
+  }
+]

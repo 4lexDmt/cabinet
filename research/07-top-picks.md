@@ -1,5 +1,7 @@
 # Top Picks — Five High-Conviction Briefs for a Solo Builder
 
+> **Addendum (2026-09-17, after publication):** an independent blind pay-conversion stress test re-scored all 145 problems and revised these verdicts — 2 fly, 1 wounded, 2 die. Read [08-stress-test-verdict.md](08-stress-test-verdict.md) before acting on this file; its "Revised action list" supersedes the closing guidance here.
+
 - **Compiled:** 2026-09-17. Pipeline: 145 evidenced problems across 18 industries ([05](05-problem-database.md)) → 15 validated ([06](06-shortlist-validation.md)) → these 5. Every claim traces to a URL in the source files; validation-added sources are dated 2026-09-17.
 - **How to choose among the five:** all cleared the same bar (real pain, money attached, reachable buyer, solo-buildable, live catalyst, surviving whitespace). The tie-breaker is founder-channel fit — pick the one whose community you can credibly show up in every day, because in every one of these niches the channel IS the moat a solo can actually hold.
 

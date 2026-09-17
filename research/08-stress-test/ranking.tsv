@@ -1,0 +1,146 @@
+pay_rank	id	pay	tier	raters	spread	flags	consensus_flags	topq_votes	orig	orig_rank	notes
+1	legal-P1	89.3	PAY	1	0.0	-	-	1/1	39.5	6	b:Firms already pay Smith.ai/Ruby; voicemail is not a good-enough intake path.
+2	hr-staffing-P2	89.3	PAY	1	0.0	-	-	1/1	34.5	61	b:ICE fines plus existing I-9 vendors; free E-Verify is not a deadline OS.
+3	personal-services-P1	87.5	PAY	1	0.0	-	-	1/1	39.5	8	a:$2,400/mo take-rate is a live check. Square Appointments is $0 if they will forfeit marketplace leads.
+4	healthcare-private-practice-P8	83.9	PAY	1	0.0	-	-	1/1	36.0	38	a:Solos already hand 6–8% of collections to billers. OpenEMR is free; denial labor is not.
+5	legal-P4	83.9	MAYBE	1	0.0	F2x1	-	1/1	34.5	65	b:Firms pay $45-75/request, but Datavant still gates the records.
+6	retail-P2	83.9	MAYBE	1	0.0	F1x1+F2x1	-	1/1	34.5	69	c:Consultants list $495-8k, but Amazon still decides; DIY POA is free and often enough.
+7	it-msp-P2	83.9	PAY	1	0.0	-	-	1/1	36.5	29	c:MSPs already quote $100/user CMMC add-ons; award-condition is a dated forcing function.
+8	agriculture-P1	83.3	PAY	3	3.6	-	-	3/3	39.5	5	a:Farms already pay $1.5–3.5k agents. FLAG is free filing, not a three-agency packet OS. | b:Farms already pay agents $1.5-3.5k; FLAG DIY exists but most still outsource. | c:Farmers already pay $1.5-3.5k agents every season; DOL/USCIS still gate the petition.
+9	retail-P3	82.1	PAY	3	8.9	-	-	3/3	35.5	51	a:Brokerage is forced spend. CROSS classifies for free; a broker still files the entry. | b:$25-75 brokerage per parcel is forced; ACE self-file is not an Etsy path. | c:Forced $25-75 brokerage per parcel; owner pays now, but CBP/broker still gates entry.
+10	legal-P3	82.1	PAY	1	0.0	-	-	1/1	36.0	40	a:Firms already write $1.6k/user checks. They switch vendors; free desktop PM is unproven for trust accounting.
+11	logistics-trucking-P1	82.1	PAY	3	7.1	-	-	3/3	38.0	18	a:Fraud losses and the July 2026 bond make vetting a buy. SAFER is free and now insufficient. | b:$200k fraud losses plus Highway bills; SAFER misses bought clean MCs. | c:TIA losses >$200k and a $150k bond force spend; SAFER is free but documented as inadequate.
+12	hr-staffing-P3	82.1	PAY	3	5.4	-	-	3/3	32.0	98	a:Agencies already pay $250–750/user or factor payroll. Free timers are not pay-bill. | b:Agencies pay $250-750/user or factor payroll; weekly cash forces a buy. | c:Weekly payroll before client cash forces spend; agencies already pay $250-750/user suites.
+13	creative-creator-economy-P1	80.4	PAY	1	0.0	-	-	1/1	36.0	35	a:They already pay CRMs; rage-switch to cheaper paid tools, not a new category.
+14	logistics-trucking-P6	80.4	PAY	1	0.0	-	-	1/1	31.0	110	a:$1.5k/mo dispatch is revealed spend. IFTA portals are free; the 5–10% dispatch cut is the bill.
+15	construction-skilled-trades-P3	80.4	PAY	1	0.0	-	-	1/1	36.0	34	a:They already pay $267–325/tech. Free FSM clones exist; shops stay for the devil they know.
+16	insurance-P1	80.4	PAY	1	0.0	-	-	1/1	38.0	16	b:Agencies pay AMS and still rekey; free ACORD toys never hit carrier portals.
+17	legal-P6	80.4	PAY	1	0.0	-	-	1/1	31.5	102	c:Malpractice premiums price the fear; solos will pay if docketing is cheaper than one claim.
+18	healthcare-private-practice-P1	79.2	PAY	3	3.6	-	-	3/3	38.5	11	a:92% hired PA staff. CoverMyMeds is free for drugs and still does not replace procedure PA labor. | b:Practices hire PA staff; Availity is free yet they still pay FTEs. | c:Practices already hire PA FTEs and $1k/mo VAs; payer portals still own the outcome.
+19	real-estate-property-management-P2	78.6	PAY	3	5.4	-	-	3/3	37.0	26	a:Delisting deadline is real; hosts still use calendars. License fees are not spend on tracking software. | b:Delisting is a dated hammer; a calendar still works for one-city hosts. | c:Austin delist date is a hard trigger; hosts pay licenses/fines and will pay a tracker.
+20	accounting-P3	78.6	PAY	1	0.0	-	-	1/1	35.0	54	a:29% already buy $950–3,500/mo seats. They pay for bodies; a QA layer is optional.
+21	accounting-P2	78.6	PAY	3	3.6	-	-	3/3	38.0	12	a:They pay Intuit, then hunt discounts. Switching cost is the product, not a new ledger. | b:Firms already eat Intuit hikes; Wave collaborator access stopped being free. | c:Firms already absorb stacked QBO hikes; they will pay another ledger if switching cost is low.
+22	insurance-P4	78.6	PAY	1	0.0	-	-	1/1	33.5	79	a:75-day clock and E&O are the whip. CDI Finder is a directory, not a remarket workflow.
+23	healthcare-private-practice-P6	78.6	PAY	1	0.0	-	-	1/1	31.0	106	a:Practices already pay reminder tools that fail. Waitlist autofill is the unpaid gap, not SMS.
+24	construction-skilled-trades-P2	78.6	PAY	1	0.0	-	-	1/1	36.0	33	a:Subs already pay Billd to float 56 days. Waiver Excel is free; CO-vs-waiver watch is not.
+25	logistics-trucking-P2	78.6	PAY	1	0.0	-	-	1/1	34.0	71	a:Small fleets already pay $80–1k/mo. Free AscendTMS exists and is widely called unusable.
+26	it-msp-P3	78.6	PAY	1	0.0	-	-	1/1	36.0	39	b:Missed 30-day windows cost years of fees; calendars lack notice-window math.
+27	accounting-P1	76.8	PAY	3	7.1	-	-	2/3	39.5	4	a:Firms already buy portals/VAs. Clients still ignore email; free portals won't fix that. | b:TaxDome already sells organizers; IRS transcripts skip some 1099s, not client nagging. | c:Firms already buy TaxDome/Canopy/SafeSend; clients still ignore email, capping software ROI.
+28	logistics-trucking-P5	76.8	MAYBE	1	0.0	F5x1	-	1/1	32.5	97	a:They pay 3% for cash, not a contract parser. Software cannot replace the advance.
+29	legal-P2	76.8	PAY	3	7.1	-	-	2/3	37.5	19	a:Unbilled hours are cash. Clockify is free; narrative reconstruction is the unpaid gap. | b:Firms already pay Clio timers; leakage is discipline more than missing software. | c:Lost billables are priced; firms already pay Clio and will add passive capture if it works.
+30	insurance-P2	76.8	PAY	3	7.1	-	-	2/3	38.0	17	a:$187/mo processors exist. Excel still works; Applied Recon is bundling it into the AMS. | b:Paid processors start at $187/mo; Excel plus IVANS still works on small books. | c:Agencies already outsource recon at $187/mo; leaked commissions make ROI obvious.
+31	retail-P1	76.8	PAY	1	0.0	-	-	1/1	36.5	32	c:Sellers already climb a $19-999/mo P&L ladder; sheets get 70% there for the determined.
+32	it-msp-P1	75.6	PAY	3	8.9	-	-	1/3	36.5	28	a:MSPs can buy same-day; most still absorb hours. Free PDFs are not multi-portal evidence packs. | b:Free evidence checklists exist; most MSPs absorb hours instead of buying Vanta. | c:Carriers threaten double premiums; MSPs already bill $175/hr and will buy evidence packs.
+33	personal-services-P3	75.0	PAY	1	0.0	-	-	0/1	34.5	68	a:Empty infant seats are cash. Directors still run Excel to 2028 and already pay Brightwheel.
+34	legal-P5	75.0	PAY	3	5.4	-	-	2/3	34.5	66	a:Lockup is cash. PM suites already invoice; auto-debit is a policy, not a new product. | b:Uncollected fees are priced; LawPay plus evergreen retainers already sell the fix. | c:Uncollected WIP is priced fear; solos already buy LawPay/Clio and will pay for teeth.
+35	construction-skilled-trades-P1	75.0	PAY	1	0.0	-	-	1/1	39.0	9	b:Outsourced takeoff at $200-750/bid is real; free PDF measure covers the ruler.
+36	retail-P5	75.0	MAYBE	1	0.0	F1x1	-	1/1	33.5	83	c:Losses are vendor-estimated; sellers who pay already buy Signifyd/Narvar, not a new SKU.
+37	real-estate-property-management-P6	75.0	PAY	1	0.0	-	-	1/1	36.5	30	c:Agents already pay TCs $300-600/file; a cheaper tool must beat that human habit.
+38	retail-P6	75.0	MAYBE	1	0.0	F2x1	-	1/1	31.0	111	c:Feb 2026 logistics mandate is real; TikTok still shuts shops regardless of a 3PL bridge.
+39	insurance-P6	73.2	PAY	1	0.0	-	-	0/1	35.0	55	c:One E&O claim dwarfs SaaS; agencies already buy AMS and will pay for consistent workflow.
+40	real-estate-property-management-P3	73.2	PAY	1	0.0	-	-	0/1	33.5	82	c:Multifamily already funds Snappt; small landlords may still eat fraud rather than pay.
+41	it-msp-P4	73.2	MAYBE	1	0.0	F1x1	-	0/1	34.5	63	c:QBR labor is real; MSPs already hand-roll Claude/Power BI rather than buy another vCIO suite.
+42	manufacturing-industrial-P5	72.6	PAY	3	7.1	-	-	2/3	37.5	20	a:Shops pay consultants for CMMC, not a cert-packet app. C3PAO still gates the cliff. | b:CMMC consultants get paid; free AS9102 Excel still leaves packet assembly labor. | c:CMMC and cert packets already buy consultants; Phase II pause softens but does not kill spend.
+43	construction-skilled-trades-P4	71.4	PAY	1	0.0	-	-	0/1	35.5	48	a:AI receptionist spend is real. Missed-call texts are free and good enough below ~$75k.
+44	healthcare-private-practice-P2	71.4	PAY	1	0.0	-	-	0/1	36.0	37	a:Idle-provider billings hurt. CAQH exists; payers still sit on 3–8 month clocks.
+45	manufacturing-industrial-P1	71.4	PAY	3	0.0	-	-	0/3	40.5	2	a:Some shops pay $18k/yr; most still quote in Excel and trust the estimator's head. | b:Shops pay Tempus $75/mo or live in Excel; spreadsheets remain the default. | c:Owner-estimators already pay Paperless Parts or stay in Excel; ROI is legible, trigger is weak.
+46	real-estate-property-management-P4	71.4	PAY	1	0.0	-	-	0/1	34.0	75	b:Hosts already pay $45+/listing; iCal is free and still double-books.
+47	healthcare-private-practice-P7	71.4	PAY	1	0.0	-	-	0/1	29.5	124	b:Clinics already pay WebPT; switching is costly optional pain, not a deadline.
+48	restaurants-hospitality-P2	71.4	PAY	1	0.0	-	-	0/1	36.5	31	b:Some pay $300 then cancel for sheets; OCR wedge is real but price-sensitive.
+49	personal-services-P5	71.4	PAY	1	0.0	-	-	0/1	34.0	74	b:Operators already pay Skimmer; they switch to cheaper pool apps, not a new category.
+50	legal-P7	71.4	MAYBE	1	0.0	F4x1	-	0/1	32.0	99	b:CiteProve and CourtListener already catch fake cites at zero software cost.
+51	manufacturing-industrial-P2	71.4	MAYBE	1	0.0	F1x1	-	0/1	33.0	86	c:Shops pay clunky ERP or stay on QuickBooks; dollars are review snippets, no urgency.
+52	restaurants-hospitality-P5	71.4	MAYBE	1	0.0	F1x1	-	0/1	29.5	127	c:Switchers already moved to Tock/Resy; remaining OT bills are a tax they keep paying.
+53	healthcare-private-practice-P3	71.4	PAY	1	0.0	-	-	0/1	34.5	59	c:Billers already take 5-9%; practices will pay if appeals recover more than the seat.
+54	creative-creator-economy-P4	70.8	MAYBE	3	10.7	F1x1	-	0/3	38.0	14	a:HoneyBook/17hats already sell this. Ads quality is not fixed by another inbox CRM. | b:Photographers already buy HoneyBook; Google Voice covers SMS for determined solos. | c:HoneyBook/17hats already sell this; Google Ads ghosts are a media problem, not a CRM gap.
+55	education-P2	69.6	MAYBE	1	0.0	-	-	0/1	36.0	36	a:Some pay $5–25/mo; many stay on Calendar+Venmo. Frugal segment, no forcing date.
+56	retail-P7	69.6	MAYBE	1	0.0	-	-	0/1	30.5	118	a:Merchants already pay Klaviyo. They want to spend less, not add another bill.
+57	creative-creator-economy-P7	69.6	MAYBE	1	0.0	-	-	0/1	32.5	92	a:Take-rate rage is real. Payhip/Skool already absorb switchers at lower cost.
+58	restaurants-hospitality-P6	69.6	MAYBE	3	8.9	-	-	1/3	29.0	131	a:Deposits already live in OpenTable/Resy. Independents may pay; platform restaurants already have the hold. | b:Owners already use OpenTable holds; a new tool fights bundled deposits. | c:No-show cost is real; the paid remedy already lives inside OpenTable/Resy card holds.
+59	insurance-P5	69.6	MAYBE	1	0.0	-	-	0/1	30.5	115	b:Epic bills prove spend; $18-22k migrations mean most shops stay trapped.
+60	real-estate-property-management-P1	69.6	MAYBE	1	0.0	-	-	0/1	36.0	44	b:VAs at $400-2400 prove spend; AppFolio logs work orders without owner-rule triage.
+61	agriculture-P4	69.6	MAYBE	1	0.0	F2x1	-	0/1	35.5	46	c:Harvest downtime is real money, but limp-mode reset still requires Deere-licensed tools.
+62	hr-staffing-P6	69.6	MAYBE	1	0.0	F1x1	-	0/1	30.5	114	c:Agencies already pay Bullhorn; switching inertia is high and no deadline forces a buy.
+63	it-msp-P6	69.6	MAYBE	1	0.0	F1x1	-	0/1	31.0	109	c:MSPs already subscribe; migration pain is episodic and most stay put without a trigger.
+64	insurance-P3	67.9	MAYBE	1	0.0	-	-	0/1	34.5	62	a:Appetite lives in lunches and a stale spreadsheet. Lost renewals hurt; no current tool check.
+65	auto-P7	67.9	MAYBE	1	0.0	-	-	0/1	28.5	132	b:Shops already subscribe $239-499/mo; switching SMS is optional, not forced.
+66	restaurants-hospitality-P4	67.9	MAYBE	1	0.0	-	-	0/1	33.0	88	b:Toast creep is real money, but Square/SpotOn already exist as the exit.
+67	personal-services-P7	67.9	MAYBE	1	0.0	-	-	0/1	28.5	135	b:Cleaning owners already pay Jobber $200+/mo; GCal is the stubborn fallback.
+68	accounting-P6	67.9	MAYBE	1	0.0	-	-	0/1	32.5	91	b:Broken feeds cost hours; CSV upload is the workaround Intuit already ships.
+69	restaurants-hospitality-P7	67.9	MAYBE	1	0.0	-	-	0/1	28.0	138	b:Inns already pay Cloudbeds $800+/mo; support rage rarely funds a second PMS.
+70	healthcare-private-practice-P4	67.9	MAYBE	1	0.0	-	-	0/1	34.5	60	b:Solos already pay SimplePractice; a $20 hike is absorbed more than replaced.
+71	healthcare-private-practice-P5	67.9	MAYBE	1	0.0	-	-	0/1	29.5	123	b:Vets already pay $420-549/mo PIMS; IDEXX lock-in delays any replacement buy.
+72	education-P5	66.1	MAYBE	1	0.0	F2x1	-	0/1	32.5	95	a:Forced hikes prove spend. Extracting students and payment plans needs the platform's export.
+73	logistics-trucking-P4	66.1	MAYBE	1	0.0	F2x1	-	0/1	32.0	100	a:Fleets already fail to collect. Shippers who benefit from free detention still must pay the invoice.
+74	retail-P4	66.1	MAYBE	1	0.0	-	-	0/1	35.5	52	a:They already rent 8–15 apps. They will not buy another subscription to audit subscriptions.
+75	real-estate-property-management-P5	66.1	MAYBE	1	0.0	-	-	0/1	30.5	117	b:Captive AppFolio base eats fee stacks; switching cost blocks new spend.
+76	logistics-trucking-P3	66.1	MAYBE	1	0.0	-	-	0/1	33.5	80	b:CSA scores are free on FMCSA; they buy insurance and cameras, not a tracker.
+77	manufacturing-industrial-P7	66.1	MAYBE	1	0.0	-	-	0/1	36.0	41	b:Thirty estimator minutes is real; a free intake form gets most of the job.
+78	hr-staffing-P4	66.1	MAYBE	1	0.0	-	-	0/1	31.0	107	b:Solo HR asked for free; home-built Excel already tracks FMLA cases.
+79	restaurants-hospitality-P3	66.1	MAYBE	1	0.0	F1x1	-	0/1	35.5	50	c:Fee opacity is real; owners already mark up menus rather than buying a P&L tool.
+80	accounting-P4	66.1	MAYBE	1	0.0	-	-	0/1	36.5	27	c:Firms already overpay TaxDome/Canopy; regret is switching cost, not a new budget line.
+81	auto-P1	66.1	MAYBE	1	0.0	-	-	0/1	35.5	47	c:Parts hunting burns owner hours; shops already call seven vendors rather than buy a tool.
+82	hr-staffing-P1	64.9	MAYBE	3	8.9	F1x1	-	0/3	38.0	15	a:VAs at $30–85/hr are the current spend. Daily pain, no dated penalty. | b:Manual LinkedIn checks persist; identity-fraud tools are priced for enterprise ATS. | c:Fake-candidate pain is real; spend proof is unsourced VA rates, not tool invoices.
+83	personal-services-P2	64.9	MAYBE	3	3.6	F1x1	-	0/3	40.5	3	a:Empty chairs hurt. Visa-compliant deposit UX is software, but incumbents already sell deposits as add-ons. | b:Empty chairs leak cash; Visa-compliant deposits are the buy, and Square can hold. | c:Lost chairs are real; Visa still wins chargebacks, so a prettier deposit UX may not collect.
+84	npo-solar-P6	64.3	UNLIKELY	3	19.6	F5x2	F5	0/3	41.0	1	a:25D is gone. A proposal engine cannot put 30% back on the homeowner slide. | b:Dated ITC death forces proposal math, usually inside Aurora they already pay. | c:25D is gone; software cannot restore a 30% credit, only stop false ITC promises.
+85	accounting-P7	64.3	MAYBE	1	0.0	-	-	0/1	38.0	13	a:Tax software will code OBBBA. Extra checklists are CPE-adjacent, not a new check.
+86	D9	64.3	MAYBE	1	0.0	F6x1	-	0/1	35.2	53	a:Immigrants already pay lawyers $2.5–6k. Buyer is a consumer with a life-event CAC.
+87	personal-services-P4	64.3	MAYBE	1	0.0	F1x1	-	0/1	30.5	116	c:Studios already pay Mindbody; hike-driven switching is real but no dated force this quarter.
+88	restaurants-hospitality-P1	63.7	UNLIKELY	3	3.6	F1x1+F2x3	F2	0/3	37.5	21	a:Owners bought cameras. Winning still requires DoorDash's robo-deny portal to say yes. | b:DoorDash benefits from robo-denials; evidence packs still need platform cooperation. | c:Camera rigs exist; DoorDash still auto-denies, so software cannot collect the refund.
+89	accounting-P8	62.5	MAYBE	3	16.1	-	-	0/3	34.5	58	a:CAS growth is firm revenue, not tool spend. QBO+email is the tolerated OS. | b:CAS growth is a wish, not a dated buy; QBO plus Hubdoc is already 70%. | c:CAS growth is real; small firms still close on QBO+email and buy playbooks slowly.
+90	it-msp-P5	62.5	MAYBE	1	0.0	F2x1	-	0/1	34.5	64	b:ConnectWise holds decade-old tickets; the sandbox ransom is the product.
+91	creative-creator-economy-P3	60.7	UNLIKELY	3	0.0	F1x2	F1	0/3	38.5	10	a:Late-pay stats are vendor-cited. Reminders exist; leverage against client AP is not a subscription. | b:Freelancers hate late pay but already have free invoice reminders without leverage. | c:Late-pay stats are vendor-cited; freelancers rarely buy leverage tools over Wave reminders.
+92	logistics-trucking-P7	60.7	MAYBE	1	0.0	-	-	0/1	28.0	137	b:DAT is a liquidity hostage; at least one shop booked the same after cancelling.
+93	agriculture-P5	60.7	MAYBE	1	0.0	-	-	0/1	33.0	85	b:Local Line already charges $89-399; Square plus email is the farm 70% path.
+94	auto-P2	60.7	MAYBE	1	0.0	F5x1	-	0/1	37.0	23	b:Calibration needs targets, techs, and OEM software; a SaaS cannot own the KPI.
+95	accounting-P5	60.7	MAYBE	1	0.0	F1x1+F2x1	-	0/1	32.5	90	c:Firms prepaid CCH/TR; they will not pay a third party to un-break a hostile tax engine.
+96	personal-services-P8	60.7	MAYBE	1	0.0	F1x1	-	0/1	33.5	81	c:Photographers are price-shocked not unpaid; Dubsado exists and creatives remain frugal.
+97	it-msp-P8	60.7	MAYBE	1	0.0	F4x1	-	0/1	27.5	139	c:Action1 is free to 200 endpoints and MSPs already call it unbelievably good.
+98	auto-P3	60.7	MAYBE	1	0.0	-	-	0/1	30.5	113	c:Solos already split ALLDATA logins or use $60 DIY; they will not pay full shop-scale rates.
+99	insurance-P7	60.7	MAYBE	1	0.0	F2x1	-	0/1	35.5	49	c:Claim status lives in carrier portals; agencies become the human API and cannot bypass it.
+100	npo-solar-P2	58.9	MAYBE	1	0.0	F3x1	-	0/1	36.0	42	b:$35k CRM replacement needs ED, finance, and board; classic committee sale.
+101	personal-services-P6	58.9	MAYBE	1	0.0	F2x1	-	0/1	29.5	126	c:Paper chase ends when the physician signs; state EDRS mandates are the real path.
+102	hr-staffing-P7	58.9	MAYBE	1	0.0	-	-	0/1	26.5	142	c:EORs already absorb the risk; DOL fact sheets are a serviceable free classification path.
+103	D3	58.3	UNLIKELY	3	5.4	F6x3	F6	0/3	35.8	45	a:Families pay attorneys $8–13k once. Consumer sandwich-generation, not a repeat SaaS seat. | b:Families pay elder-law attorneys once; consumer episodic, not SMB software culture. | c:Families pay elder-law once per parent; consumer CAC on a one-time Medicaid packet.
+104	education-P1	57.1	UNLIKELY	3	12.5	F1x3+F2x2	F1+F2	0/3	37.0	25	a:Vendors quit or wait; no one pays for a rail ClassWallet/the state still owns. | b:Snippet-heavy dollars; providers want ClassWallet to work, not another SaaS bill. | c:ClassWallet is the state rail; providers cannot fix the queue they do not control.
+105	auto-P6	57.1	MAYBE	1	0.0	-	-	0/1	33.5	77	a:Shops fight insurers with photos, not software. CCC still decides what gets paid.
+106	agriculture-P3	57.1	MAYBE	1	0.0	F2x1	-	0/1	30.0	119	a:Bayer–Deere are wiring the official bridge. Paying both stacks is lock-in, not a third app.
+107	construction-skilled-trades-P6	55.4	MAYBE	1	0.0	F5x1	-	0/1	30.0	120	a:Seven-month delay is municipal capacity. A checklist app cannot cut $131k of regulation.
+108	manufacturing-industrial-P6	55.4	MAYBE	1	0.0	F5x1	-	0/1	28.5	134	a:66% cannot hire technicians. Software does not create machinists.
+109	education-P7	55.4	MAYBE	1	0.0	F3x1	-	0/1	28.5	133	a:District SIS is board/procurement. They renew while suing. Microschool edge is a different buyer.
+110	construction-skilled-trades-P5	55.4	MAYBE	1	0.0	F5x1	-	0/1	29.5	122	b:Craft labor shortage is structural; software cannot produce licensed workers.
+111	education-P4	55.4	MAYBE	1	0.0	F3x1	-	0/1	32.5	94	c:Turnitin is already paid; a new process-evidence tool still needs university procurement.
+112	npo-solar-P1	54.8	UNLIKELY	3	5.4	F1x2+F4x1	F1	0/3	39.5	7	a:Users tried systems and said ROI wasn't there. Spreadsheet is the chosen OS. | b:Practitioners say paid grant systems fail ROI; Excel is treated as good enough. | c:Grant shops already rejected paid systems; the spreadsheet is the product they keep.
+113	agriculture-P2	53.6	UNLIKELY	1	0.0	F5x1	-	0/1	37.0	22	a:Wait is NRCS headcount. eForms exist; software cannot staff 141 empty counties.
+114	manufacturing-industrial-P3	53.6	UNLIKELY	1	0.0	F1x1	-	0/1	34.5	67	a:Forgepoint anecdote is content marketing. Ops managers cannot swipe a card for ERP glue.
+115	D1	51.8	UNLIKELY	1	0.0	F4x1+F6x1	-	0/1	33.0	89	a:Fight Health Insurance drafts appeals for $0. Sick consumers rarely buy a second letter tool.
+116	it-msp-P7	51.8	UNLIKELY	1	0.0	F1x1	-	0/1	29.5	125	a:Kaseya survey pain, unconfirmed agency retainers. Sales collateral is a someday problem.
+117	creative-creator-economy-P5	51.8	UNLIKELY	1	0.0	F1x1	-	0/1	34.0	70	b:Every dollar leak traces to vendor landing pages with no independent survey.
+118	creative-creator-economy-P2	51.8	UNLIKELY	1	0.0	-	-	0/1	37.0	24	b:Scope creep is a habit; a $0 change-order email already trains the client.
+119	D4	51.8	UNLIKELY	1	0.0	F6x1	-	0/1	32.0	101	b:Executors pay probate attorneys once; classic one-time consumer life-admin.
+120	education-P3	51.8	UNLIKELY	1	0.0	-	-	0/1	32.5	93	c:Teachers lack budget; districts already buy IEP systems and will not add another seat easily.
+121	hr-staffing-P5	50.0	UNLIKELY	1	0.0	F1x1	-	0/1	31.0	108	a:Reddit drowning, no dollars. HR-of-one needs an owner to buy another HRIS.
+122	npo-solar-P7	50.0	UNLIKELY	1	0.0	F1x1+F5x1	-	0/1	34.0	73	c:NEM 3.0 and ITC sunset are market collapse; a closer cannot restore dead unit economics.
+123	npo-solar-P5	50.0	UNLIKELY	1	0.0	F1x1	-	0/1	35.0	57	c:Board PDFs are absorbed as normal; nonprofits will not add a third SaaS for prettier packs.
+124	agriculture-P6	48.2	UNLIKELY	1	0.0	F5x1	-	0/1	29.5	121	a:AEWR is DOL policy. A planner cannot change next season's wage.
+125	D7	48.2	UNLIKELY	1	0.0	-	-	0/1	29.2	128	a:Rocket Money proves some pay $6–12. Consumer wallet, crowded, bank-link friction.
+126	retail-P8	48.2	UNLIKELY	1	0.0	F2x1+F5x1	-	0/1	24.0	145	a:Etsy holds the cash. No seller tool unfreezes a platform reserve.
+127	auto-P4	48.2	UNLIKELY	1	0.0	F5x1	-	0/1	26.5	141	c:Cannot hire ADAS techs is a labor shortage; software does not create certified hands.
+128	manufacturing-industrial-P4	46.4	UNLIKELY	1	0.0	F1x1+F5x1	-	0/1	34.0	72	c:Tribal knowledge walks out with Dave; software cannot replace a retiring machinist.
+129	auto-P8	44.6	UNLIKELY	1	0.0	F5x1	-	0/1	25.5	143	a:Shops stall because the check is tools, insurance, and OEM software, not an app.
+130	npo-solar-P4	44.6	UNLIKELY	1	0.0	-	-	0/1	35.0	56	b:Revealed behavior is binge-and-cancel Instrumentl, not a $20/mo subscribe.
+131	D11	44.6	UNLIKELY	1	0.0	F4x1+F6x1	-	0/1	33.5	84	c:People pay credit-repair scams; the legal path is free and FTC says DIY is enough.
+132	real-estate-property-management-P7	44.6	UNLIKELY	1	0.0	F1x1	-	0/1	31.5	103	c:Volunteer treasurer explicitly rejected $100/mo PayHOA; Excel is the chosen non-payment.
+133	auto-P5	44.6	UNLIKELY	1	0.0	F2x1	-	0/1	29.0	129	c:CDK is a closed gatekeeper; dealers will not buy a shadow DMS the OEM will not feed.
+134	D5	41.1	UNLIKELY	1	0.0	F6x1	-	0/1	31.0	112	a:Once-per-tenancy consumer fight. ChatGPT and county letters already cover demand packets.
+135	D10	41.1	UNLIKELY	1	0.0	F6x1	-	0/1	27.5	140	b:Parents pay waitlist fees to centers, not tools; episodic consumer search.
+136	npo-solar-P3	41.1	UNLIKELY	1	0.0	F5x1	-	0/1	36.0	43	b:Federal grant collapse is structural; software cannot restore cancelled awards.
+137	D8	37.5	UNLIKELY	1	0.0	F6x1	-	0/1	31.2	104	c:No verified consumer payment for non-renewal help; brokers are free to the homeowner.
+138	creative-creator-economy-P6	35.7	UNLIKELY	1	0.0	F2x1	-	0/1	31.0	105	b:YouTube owns YPP eligibility; creators will not pay to guess the algorithm.
+139	education-P6	35.7	UNLIKELY	1	0.0	F2x1	-	0/1	32.5	96	b:Teachers lack budget; PowerSchool still gates the official gradebook.
+140	D12	35.7	UNLIKELY	1	0.0	F4x1+F6x1	-	0/1	28.2	136	c:Couples pay planners, not software; Knot/Zola already give a free good-enough checklist.
+141	npo-solar-P8	33.9	UNLIKELY	1	0.0	F6x1	-	0/1	33.0	87	b:One-time homeowner quote shopping; three bids beat a consumer production app.
+142	insurance-P8	33.9	UNLIKELY	1	0.0	F6x1	-	0/1	29.0	130	b:CFPB volume is consumer complaints, not a buyer with a company card.
+143	D2	32.1	UNLIKELY	1	0.0	F1x1+F6x1	-	0/1	33.8	76	c:Advocate fees are vendor blogs; most bills are self-advocated with a phone call.
+144	creative-creator-economy-P8	30.4	UNLIKELY	1	0.0	F6x1	-	0/1	33.5	78	c:Newlyweds will not subscribe post-wedding; photographers already have Pixieset delivery.
+145	D6	26.8	UNLIKELY	1	0.0	F6x1	-	0/1	25.0	144	a:Card admits ~$0 prevention budget. Consumers use free BBB/FMCSA once per move.

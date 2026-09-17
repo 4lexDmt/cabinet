@@ -1,0 +1,61 @@
+{
+ "overlap_n": 25,
+ "mean_pairwise_delta": 4.7,
+ "median_pairwise_delta": 3.6,
+ "most_contested": [
+  {
+   "id": "npo-solar-P6",
+   "max_delta": 19.6,
+   "scores": {
+    "a": 66.0,
+    "b": 73.0,
+    "c": 54.0
+   }
+  },
+  {
+   "id": "accounting-P8",
+   "max_delta": 16.1,
+   "scores": {
+    "a": 64.0,
+    "b": 54.0,
+    "c": 70.0
+   }
+  },
+  {
+   "id": "education-P1",
+   "max_delta": 12.5,
+   "scores": {
+    "a": 52.0,
+    "b": 55.0,
+    "c": 64.0
+   }
+  },
+  {
+   "id": "creative-creator-economy-P4",
+   "max_delta": 10.7,
+   "scores": {
+    "a": 75.0,
+    "b": 73.0,
+    "c": 64.0
+   }
+  },
+  {
+   "id": "restaurants-hospitality-P6",
+   "max_delta": 8.9,
+   "scores": {
+    "a": 68.0,
+    "b": 75.0,
+    "c": 66.0
+   }
+  },
+  {
+   "id": "it-msp-P1",
+   "max_delta": 8.9,
+   "scores": {
+    "a": 75.0,
+    "b": 71.0,
+    "c": 80.0
+   }
+  }
+ ]
+}
