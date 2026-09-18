@@ -1,0 +1,1003 @@
+[
+  {
+    "id": "D10",
+    "s1": 1,
+    "s2": 0,
+    "s3": 3,
+    "s4": 3,
+    "s5": 2,
+    "s6": 2,
+    "s7": 0,
+    "flags": [
+      "F6"
+    ],
+    "note": "Parents pay waitlist fees to centers, not tools; episodic consumer search.",
+    "checks": []
+  },
+  {
+    "id": "restaurants-hospitality-P6",
+    "s1": 3,
+    "s2": 4,
+    "s3": 3,
+    "s4": 4,
+    "s5": 2,
+    "s6": 2,
+    "s7": 3,
+    "flags": [],
+    "note": "Owners already use OpenTable holds; a new tool fights bundled deposits.",
+    "checks": [
+      {
+        "q": "OpenTable Resy card hold deposit bundled 2026",
+        "url": "https://help.opentable.com/s/article/What-are-cancellation-no-show-and-deposit-policies",
+        "found": "OpenTable already bundles card holds and paid deposits inside the reservation product."
+      }
+    ]
+  },
+  {
+    "id": "agriculture-P1",
+    "s1": 4,
+    "s2": 3,
+    "s3": 4,
+    "s4": 4,
+    "s5": 3,
+    "s6": 3,
+    "s7": 2,
+    "flags": [],
+    "note": "Farms already pay agents $1.5-3.5k; FLAG DIY exists but most still outsource.",
+    "checks": [
+      {
+        "q": "H-2A FLAG file without attorney",
+        "url": "https://extension.missouri.edu/media/wysiwyg/Extensiondata/Pub/pdf/agguides/agecon/g00703.pdf",
+        "found": "Missouri: only 8% of H-2A positions self-filed; 92% used paid agents/attorneys."
+      }
+    ]
+  },
+  {
+    "id": "education-P1",
+    "s1": 1,
+    "s2": 3,
+    "s3": 3,
+    "s4": 3,
+    "s5": 2,
+    "s6": 2,
+    "s7": 2,
+    "flags": [
+      "F1"
+    ],
+    "note": "Snippet-heavy dollars; providers want ClassWallet to work, not another SaaS bill.",
+    "checks": []
+  },
+  {
+    "id": "creative-creator-economy-P4",
+    "s1": 3,
+    "s2": 4,
+    "s3": 3,
+    "s4": 3,
+    "s5": 3,
+    "s6": 2,
+    "s7": 2,
+    "flags": [],
+    "note": "Photographers already buy HoneyBook; Google Voice covers SMS for determined solos.",
+    "checks": []
+  },
+  {
+    "id": "healthcare-private-practice-P1",
+    "s1": 4,
+    "s2": 3,
+    "s3": 3,
+    "s4": 4,
+    "s5": 2,
+    "s6": 3,
+    "s7": 3,
+    "flags": [],
+    "note": "Practices hire PA staff; Availity is free yet they still pay FTEs.",
+    "checks": [
+      {
+        "q": "Availity prior authorization free portal",
+        "url": "https://www.premera.com/wa/provider/availity-faq/",
+        "found": "Availity Essentials is free for sponsoring payers; practices still report dedicated PA headcount."
+      }
+    ]
+  },
+  {
+    "id": "legal-P2",
+    "s1": 3,
+    "s2": 4,
+    "s3": 2,
+    "s4": 3,
+    "s5": 3,
+    "s6": 2,
+    "s7": 4,
+    "flags": [],
+    "note": "Firms already pay Clio timers; leakage is discipline more than missing software.",
+    "checks": []
+  },
+  {
+    "id": "auto-P7",
+    "s1": 3,
+    "s2": 4,
+    "s3": 2,
+    "s4": 2,
+    "s5": 3,
+    "s6": 2,
+    "s7": 3,
+    "flags": [],
+    "note": "Shops already subscribe $239-499/mo; switching SMS is optional, not forced.",
+    "checks": []
+  },
+  {
+    "id": "D3",
+    "s1": 3,
+    "s2": 0,
+    "s3": 3,
+    "s4": 4,
+    "s5": 3,
+    "s6": 2,
+    "s7": 0,
+    "flags": [
+      "F6"
+    ],
+    "note": "Families pay elder-law attorneys once; consumer episodic, not SMB software culture.",
+    "checks": []
+  },
+  {
+    "id": "npo-solar-P2",
+    "s1": 3,
+    "s2": 1,
+    "s3": 3,
+    "s4": 2,
+    "s5": 3,
+    "s6": 2,
+    "s7": 2,
+    "flags": [
+      "F3"
+    ],
+    "note": "$35k CRM replacement needs ED, finance, and board; classic committee sale.",
+    "checks": []
+  },
+  {
+    "id": "restaurants-hospitality-P4",
+    "s1": 3,
+    "s2": 4,
+    "s3": 2,
+    "s4": 3,
+    "s5": 2,
+    "s6": 2,
+    "s7": 3,
+    "flags": [],
+    "note": "Toast creep is real money, but Square/SpotOn already exist as the exit.",
+    "checks": []
+  },
+  {
+    "id": "real-estate-property-management-P5",
+    "s1": 3,
+    "s2": 3,
+    "s3": 2,
+    "s4": 2,
+    "s5": 3,
+    "s6": 2,
+    "s7": 4,
+    "flags": [],
+    "note": "Captive AppFolio base eats fee stacks; switching cost blocks new spend.",
+    "checks": []
+  },
+  {
+    "id": "legal-P4",
+    "s1": 3,
+    "s2": 4,
+    "s3": 4,
+    "s4": 4,
+    "s5": 2,
+    "s6": 3,
+    "s7": 4,
+    "flags": [
+      "F2"
+    ],
+    "note": "Firms pay $45-75/request, but Datavant still gates the records.",
+    "checks": [
+      {
+        "q": "medical records Datavant Ciox attorney free path",
+        "url": "https://www.datavant.com/smartrequest",
+        "found": "Datavant Smart Request is the network attorneys must use; patient portals do not replace it."
+      }
+    ]
+  },
+  {
+    "id": "construction-skilled-trades-P5",
+    "s1": 2,
+    "s2": 3,
+    "s3": 2,
+    "s4": 4,
+    "s5": 0,
+    "s6": 2,
+    "s7": 3,
+    "flags": [
+      "F5"
+    ],
+    "note": "Craft labor shortage is structural; software cannot produce licensed workers.",
+    "checks": []
+  },
+  {
+    "id": "real-estate-property-management-P4",
+    "s1": 3,
+    "s2": 4,
+    "s3": 2,
+    "s4": 3,
+    "s5": 3,
+    "s6": 2,
+    "s7": 3,
+    "flags": [],
+    "note": "Hosts already pay $45+/listing; iCal is free and still double-books.",
+    "checks": []
+  },
+  {
+    "id": "legal-P1",
+    "s1": 4,
+    "s2": 4,
+    "s3": 3,
+    "s4": 4,
+    "s5": 3,
+    "s6": 3,
+    "s7": 4,
+    "flags": [],
+    "note": "Firms already pay Smith.ai/Ruby; voicemail is not a good-enough intake path.",
+    "checks": [
+      {
+        "q": "free law firm answering Google Voice vs Smith.ai 2026",
+        "url": "https://www.getnextphone.com/blog/ai-vs-human-receptionist-law-firm-cost-comparison",
+        "found": "Human intake starts ~$245-292/mo; Google Voice is calling, not legal intake."
+      }
+    ]
+  },
+  {
+    "id": "logistics-trucking-P3",
+    "s1": 2,
+    "s2": 4,
+    "s3": 3,
+    "s4": 4,
+    "s5": 2,
+    "s6": 1,
+    "s7": 3,
+    "flags": [],
+    "note": "CSA scores are free on FMCSA; they buy insurance and cameras, not a tracker.",
+    "checks": []
+  },
+  {
+    "id": "restaurants-hospitality-P1",
+    "s1": 2,
+    "s2": 4,
+    "s3": 2,
+    "s4": 4,
+    "s5": 2,
+    "s6": 2,
+    "s7": 3,
+    "flags": [
+      "F2"
+    ],
+    "note": "DoorDash benefits from robo-denials; evidence packs still need platform cooperation.",
+    "checks": []
+  },
+  {
+    "id": "insurance-P1",
+    "s1": 3,
+    "s2": 4,
+    "s3": 3,
+    "s4": 4,
+    "s5": 2,
+    "s6": 3,
+    "s7": 4,
+    "flags": [],
+    "note": "Agencies pay AMS and still rekey; free ACORD toys never hit carrier portals.",
+    "checks": [
+      {
+        "q": "free commercial ACORD submission vs EZLynx rekeying",
+        "url": "https://acordgeneratorpro.com/",
+        "found": "Free ACORD generators cap at ~1 form/month and still leave portal re-entry."
+      }
+    ]
+  },
+  {
+    "id": "npo-solar-P8",
+    "s1": 1,
+    "s2": 0,
+    "s3": 1,
+    "s4": 3,
+    "s5": 2,
+    "s6": 2,
+    "s7": 0,
+    "flags": [
+      "F6"
+    ],
+    "note": "One-time homeowner quote shopping; three bids beat a consumer production app.",
+    "checks": []
+  },
+  {
+    "id": "creative-creator-economy-P6",
+    "s1": 1,
+    "s2": 1,
+    "s3": 2,
+    "s4": 3,
+    "s5": 1,
+    "s6": 1,
+    "s7": 1,
+    "flags": [
+      "F2"
+    ],
+    "note": "YouTube owns YPP eligibility; creators will not pay to guess the algorithm.",
+    "checks": []
+  },
+  {
+    "id": "insurance-P2",
+    "s1": 3,
+    "s2": 3,
+    "s3": 3,
+    "s4": 3,
+    "s5": 3,
+    "s6": 2,
+    "s7": 4,
+    "flags": [],
+    "note": "Paid processors start at $187/mo; Excel plus IVANS still works on small books.",
+    "checks": []
+  },
+  {
+    "id": "accounting-P1",
+    "s1": 3,
+    "s2": 4,
+    "s3": 3,
+    "s4": 3,
+    "s5": 3,
+    "s6": 3,
+    "s7": 4,
+    "flags": [],
+    "note": "TaxDome already sells organizers; IRS transcripts skip some 1099s, not client nagging.",
+    "checks": [
+      {
+        "q": "IRS wage and income transcript vs TaxDome organizer",
+        "url": "https://claritytaxrelief.com/blog/irs-wage-income-transcript/",
+        "found": "Wage-and-income transcripts are free via IRS accounts but do not collect non-IRS client docs."
+      }
+    ]
+  },
+  {
+    "id": "accounting-P8",
+    "s1": 2,
+    "s2": 3,
+    "s3": 1,
+    "s4": 2,
+    "s5": 2,
+    "s6": 2,
+    "s7": 4,
+    "flags": [],
+    "note": "CAS growth is a wish, not a dated buy; QBO plus Hubdoc is already 70%.",
+    "checks": []
+  },
+  {
+    "id": "npo-solar-P6",
+    "s1": 2,
+    "s2": 3,
+    "s3": 4,
+    "s4": 4,
+    "s5": 3,
+    "s6": 2,
+    "s7": 3,
+    "flags": [],
+    "note": "Dated ITC death forces proposal math, usually inside Aurora they already pay.",
+    "checks": []
+  },
+  {
+    "id": "npo-solar-P1",
+    "s1": 1,
+    "s2": 2,
+    "s3": 3,
+    "s4": 3,
+    "s5": 4,
+    "s6": 0,
+    "s7": 2,
+    "flags": [
+      "F4"
+    ],
+    "note": "Practitioners say paid grant systems fail ROI; Excel is treated as good enough.",
+    "checks": [
+      {
+        "q": "nonprofit grant tracking Excel vs paid software ROI",
+        "url": "https://ustechautomations.com/resources/blog/automate-track-restrictedfund-spending-against-grants-2026",
+        "found": "Spreadsheets remain the default; paid tools win only after many grants and GL tagging."
+      }
+    ]
+  },
+  {
+    "id": "hr-staffing-P2",
+    "s1": 4,
+    "s2": 3,
+    "s3": 4,
+    "s4": 4,
+    "s5": 3,
+    "s6": 3,
+    "s7": 4,
+    "flags": [],
+    "note": "ICE fines plus existing I-9 vendors; free E-Verify is not a deadline OS.",
+    "checks": [
+      {
+        "q": "E-Verify free I-9 tracking vs paid",
+        "url": "https://www.e-verify.gov/about-e-verify/what-is-e-verify/e-verify-and-form-i-9",
+        "found": "E-Verify is free verification only; it does not track I-9 retention or reverification deadlines."
+      }
+    ]
+  },
+  {
+    "id": "manufacturing-industrial-P7",
+    "s1": 2,
+    "s2": 4,
+    "s3": 2,
+    "s4": 3,
+    "s5": 3,
+    "s6": 2,
+    "s7": 3,
+    "flags": [],
+    "note": "Thirty estimator minutes is real; a free intake form gets most of the job.",
+    "checks": []
+  },
+  {
+    "id": "personal-services-P7",
+    "s1": 3,
+    "s2": 4,
+    "s3": 2,
+    "s4": 2,
+    "s5": 3,
+    "s6": 2,
+    "s7": 3,
+    "flags": [],
+    "note": "Cleaning owners already pay Jobber $200+/mo; GCal is the stubborn fallback.",
+    "checks": []
+  },
+  {
+    "id": "healthcare-private-practice-P7",
+    "s1": 3,
+    "s2": 4,
+    "s3": 2,
+    "s4": 3,
+    "s5": 3,
+    "s6": 2,
+    "s7": 3,
+    "flags": [],
+    "note": "Clinics already pay WebPT; switching is costly optional pain, not a deadline.",
+    "checks": []
+  },
+  {
+    "id": "accounting-P6",
+    "s1": 2,
+    "s2": 4,
+    "s3": 3,
+    "s4": 3,
+    "s5": 2,
+    "s6": 2,
+    "s7": 4,
+    "flags": [],
+    "note": "Broken feeds cost hours; CSV upload is the workaround Intuit already ships.",
+    "checks": []
+  },
+  {
+    "id": "creative-creator-economy-P5",
+    "s1": 0,
+    "s2": 4,
+    "s3": 2,
+    "s4": 2,
+    "s5": 4,
+    "s6": 2,
+    "s7": 1,
+    "flags": [
+      "F1"
+    ],
+    "note": "Every dollar leak traces to vendor landing pages with no independent survey.",
+    "checks": []
+  },
+  {
+    "id": "restaurants-hospitality-P7",
+    "s1": 3,
+    "s2": 4,
+    "s3": 2,
+    "s4": 2,
+    "s5": 3,
+    "s6": 2,
+    "s7": 3,
+    "flags": [],
+    "note": "Inns already pay Cloudbeds $800+/mo; support rage rarely funds a second PMS.",
+    "checks": []
+  },
+  {
+    "id": "healthcare-private-practice-P4",
+    "s1": 3,
+    "s2": 4,
+    "s3": 2,
+    "s4": 2,
+    "s5": 3,
+    "s6": 2,
+    "s7": 3,
+    "flags": [],
+    "note": "Solos already pay SimplePractice; a $20 hike is absorbed more than replaced.",
+    "checks": []
+  },
+  {
+    "id": "npo-solar-P3",
+    "s1": 1,
+    "s2": 1,
+    "s3": 2,
+    "s4": 4,
+    "s5": 0,
+    "s6": 2,
+    "s7": 2,
+    "flags": [
+      "F5"
+    ],
+    "note": "Federal grant collapse is structural; software cannot restore cancelled awards.",
+    "checks": []
+  },
+  {
+    "id": "accounting-P2",
+    "s1": 3,
+    "s2": 4,
+    "s3": 3,
+    "s4": 3,
+    "s5": 3,
+    "s6": 2,
+    "s7": 4,
+    "flags": [],
+    "note": "Firms already eat Intuit hikes; Wave collaborator access stopped being free.",
+    "checks": [
+      {
+        "q": "Wave accounting free QuickBooks alternative firms 2026",
+        "url": "https://support.waveapps.com/hc/en-us/articles/26449863006612-FAQ-Plans-for-legacy-businesses",
+        "found": "June 2026: bank feeds and collaborator access moved off Wave's free Starter plan."
+      }
+    ]
+  },
+  {
+    "id": "logistics-trucking-P7",
+    "s1": 3,
+    "s2": 4,
+    "s3": 2,
+    "s4": 2,
+    "s5": 2,
+    "s6": 1,
+    "s7": 3,
+    "flags": [],
+    "note": "DAT is a liquidity hostage; at least one shop booked the same after cancelling.",
+    "checks": []
+  },
+  {
+    "id": "insurance-P5",
+    "s1": 3,
+    "s2": 3,
+    "s3": 2,
+    "s4": 2,
+    "s5": 3,
+    "s6": 3,
+    "s7": 4,
+    "flags": [],
+    "note": "Epic bills prove spend; $18-22k migrations mean most shops stay trapped.",
+    "checks": []
+  },
+  {
+    "id": "construction-skilled-trades-P1",
+    "s1": 3,
+    "s2": 4,
+    "s3": 3,
+    "s4": 3,
+    "s5": 3,
+    "s6": 2,
+    "s7": 3,
+    "flags": [],
+    "note": "Outsourced takeoff at $200-750/bid is real; free PDF measure covers the ruler.",
+    "checks": [
+      {
+        "q": "free construction PDF takeoff vs Bluebeam",
+        "url": "https://drawliner.com/",
+        "found": "Browser PDF takeoff (length/area/count to Excel) is free; assembly pricing still paid."
+      }
+    ]
+  },
+  {
+    "id": "agriculture-P5",
+    "s1": 2,
+    "s2": 3,
+    "s3": 2,
+    "s4": 3,
+    "s5": 3,
+    "s6": 2,
+    "s7": 2,
+    "flags": [],
+    "note": "Local Line already charges $89-399; Square plus email is the farm 70% path.",
+    "checks": []
+  },
+  {
+    "id": "npo-solar-P4",
+    "s1": 1,
+    "s2": 2,
+    "s3": 2,
+    "s4": 2,
+    "s5": 3,
+    "s6": 1,
+    "s7": 2,
+    "flags": [],
+    "note": "Revealed behavior is binge-and-cancel Instrumentl, not a $20/mo subscribe.",
+    "checks": []
+  },
+  {
+    "id": "manufacturing-industrial-P1",
+    "s1": 3,
+    "s2": 4,
+    "s3": 2,
+    "s4": 3,
+    "s5": 3,
+    "s6": 2,
+    "s7": 3,
+    "flags": [],
+    "note": "Shops pay Tempus $75/mo or live in Excel; spreadsheets remain the default.",
+    "checks": [
+      {
+        "q": "job shop quoting Excel vs Paperless Parts Tempus",
+        "url": "https://tempustools.com/compare/estimating-software-vs-excel",
+        "found": "Excel is bundled with M365; Tempus starts $75/mo; Paperless stays quote-only."
+      }
+    ]
+  },
+  {
+    "id": "healthcare-private-practice-P5",
+    "s1": 3,
+    "s2": 4,
+    "s3": 2,
+    "s4": 2,
+    "s5": 3,
+    "s6": 2,
+    "s7": 3,
+    "flags": [],
+    "note": "Vets already pay $420-549/mo PIMS; IDEXX lock-in delays any replacement buy.",
+    "checks": []
+  },
+  {
+    "id": "restaurants-hospitality-P2",
+    "s1": 3,
+    "s2": 4,
+    "s3": 2,
+    "s4": 3,
+    "s5": 3,
+    "s6": 2,
+    "s7": 3,
+    "flags": [],
+    "note": "Some pay $300 then cancel for sheets; OCR wedge is real but price-sensitive.",
+    "checks": []
+  },
+  {
+    "id": "education-P6",
+    "s1": 1,
+    "s2": 0,
+    "s3": 2,
+    "s4": 2,
+    "s5": 2,
+    "s6": 2,
+    "s7": 1,
+    "flags": [
+      "F2"
+    ],
+    "note": "Teachers lack budget; PowerSchool still gates the official gradebook.",
+    "checks": []
+  },
+  {
+    "id": "hr-staffing-P4",
+    "s1": 2,
+    "s2": 2,
+    "s3": 3,
+    "s4": 3,
+    "s5": 4,
+    "s6": 2,
+    "s7": 3,
+    "flags": [],
+    "note": "Solo HR asked for free; home-built Excel already tracks FMLA cases.",
+    "checks": []
+  },
+  {
+    "id": "real-estate-property-management-P2",
+    "s1": 2,
+    "s2": 4,
+    "s3": 4,
+    "s4": 4,
+    "s5": 3,
+    "s6": 2,
+    "s7": 3,
+    "flags": [],
+    "note": "Delisting is a dated hammer; a calendar still works for one-city hosts.",
+    "checks": [
+      {
+        "q": "STR host license renewal tracker vs spreadsheet",
+        "url": "https://permitguard.us/",
+        "found": "Host-side permit apps exist; spreadsheets still work for one jurisdiction and few listings."
+      }
+    ]
+  },
+  {
+    "id": "hr-staffing-P3",
+    "s1": 3,
+    "s2": 4,
+    "s3": 3,
+    "s4": 4,
+    "s5": 3,
+    "s6": 2,
+    "s7": 4,
+    "flags": [],
+    "note": "Agencies pay $250-750/user or factor payroll; weekly cash forces a buy.",
+    "checks": [
+      {
+        "q": "staffing back office spreadsheet vs Avionte Zenople",
+        "url": "https://www.reddit.com/r/recruiting/comments/1exntzx/atscrm/",
+        "found": "Aviont\u00e9 cited ~$750/user; Zenople ~$250/user; tiny shops still start on spreadsheets."
+      }
+    ]
+  },
+  {
+    "id": "it-msp-P1",
+    "s1": 2,
+    "s2": 4,
+    "s3": 3,
+    "s4": 3,
+    "s5": 3,
+    "s6": 2,
+    "s7": 4,
+    "flags": [],
+    "note": "Free evidence checklists exist; most MSPs absorb hours instead of buying Vanta.",
+    "checks": []
+  },
+  {
+    "id": "auto-P2",
+    "s1": 3,
+    "s2": 3,
+    "s3": 2,
+    "s4": 3,
+    "s5": 1,
+    "s6": 2,
+    "s7": 3,
+    "flags": [
+      "F5"
+    ],
+    "note": "Calibration needs targets, techs, and OEM software; a SaaS cannot own the KPI.",
+    "checks": []
+  },
+  {
+    "id": "personal-services-P2",
+    "s1": 2,
+    "s2": 4,
+    "s3": 2,
+    "s4": 4,
+    "s5": 2,
+    "s6": 2,
+    "s7": 3,
+    "flags": [],
+    "note": "Empty chairs leak cash; Visa-compliant deposits are the buy, and Square can hold.",
+    "checks": []
+  },
+  {
+    "id": "retail-P3",
+    "s1": 3,
+    "s2": 4,
+    "s3": 4,
+    "s4": 4,
+    "s5": 2,
+    "s6": 3,
+    "s7": 4,
+    "flags": [],
+    "note": "$25-75 brokerage per parcel is forced; ACE self-file is not an Etsy path.",
+    "checks": [
+      {
+        "q": "CBP self-file informal entry de minimis small seller",
+        "url": "https://shopappy.com/trade/tariffs-customs/entry-type-13-mail-test-september-22",
+        "found": "Self-file needs US entity, bond, and HTS; foreign micro-sellers still need a broker."
+      }
+    ]
+  },
+  {
+    "id": "personal-services-P5",
+    "s1": 3,
+    "s2": 4,
+    "s3": 3,
+    "s4": 2,
+    "s5": 3,
+    "s6": 2,
+    "s7": 3,
+    "flags": [],
+    "note": "Operators already pay Skimmer; they switch to cheaper pool apps, not a new category.",
+    "checks": []
+  },
+  {
+    "id": "it-msp-P5",
+    "s1": 3,
+    "s2": 4,
+    "s3": 1,
+    "s4": 2,
+    "s5": 2,
+    "s6": 2,
+    "s7": 4,
+    "flags": [
+      "F2"
+    ],
+    "note": "ConnectWise holds decade-old tickets; the sandbox ransom is the product.",
+    "checks": []
+  },
+  {
+    "id": "creative-creator-economy-P2",
+    "s1": 1,
+    "s2": 4,
+    "s3": 1,
+    "s4": 2,
+    "s5": 3,
+    "s6": 2,
+    "s7": 2,
+    "flags": [],
+    "note": "Scope creep is a habit; a $0 change-order email already trains the client.",
+    "checks": []
+  },
+  {
+    "id": "real-estate-property-management-P1",
+    "s1": 3,
+    "s2": 3,
+    "s3": 2,
+    "s4": 3,
+    "s5": 3,
+    "s6": 2,
+    "s7": 4,
+    "flags": [],
+    "note": "VAs at $400-2400 prove spend; AppFolio logs work orders without owner-rule triage.",
+    "checks": []
+  },
+  {
+    "id": "manufacturing-industrial-P5",
+    "s1": 3,
+    "s2": 3,
+    "s3": 3,
+    "s4": 4,
+    "s5": 3,
+    "s6": 2,
+    "s7": 3,
+    "flags": [],
+    "note": "CMMC consultants get paid; free AS9102 Excel still leaves packet assembly labor.",
+    "checks": [
+      {
+        "q": "free AS9102 FAI template small shop",
+        "url": "https://www.guthcad.com/as9102-forms-free-download.htm",
+        "found": "Unlocked AS9102 Rev C Excel forms are free; ballooning/packet assembly remains paid labor."
+      }
+    ]
+  },
+  {
+    "id": "it-msp-P3",
+    "s1": 2,
+    "s2": 4,
+    "s3": 3,
+    "s4": 4,
+    "s5": 3,
+    "s6": 3,
+    "s7": 4,
+    "flags": [],
+    "note": "Missed 30-day windows cost years of fees; calendars lack notice-window math.",
+    "checks": [
+      {
+        "q": "MSP vendor auto-renewal Google Calendar vs dedicated tracker",
+        "url": "https://www.procr.io/post/vendor-renewal-calendar",
+        "found": "A calendar ping on expiry is too late; notice windows close before the reminder."
+      }
+    ]
+  },
+  {
+    "id": "legal-P7",
+    "s1": 2,
+    "s2": 4,
+    "s3": 4,
+    "s4": 4,
+    "s5": 3,
+    "s6": 0,
+    "s7": 4,
+    "flags": [
+      "F4"
+    ],
+    "note": "CiteProve and CourtListener already catch fake cites at zero software cost.",
+    "checks": [
+      {
+        "q": "free AI citation checker CourtListener lawyers",
+        "url": "https://citeprove.com/for-lawyers",
+        "found": "CiteProve is free, no account, and checks cites against CourtListener before filing."
+      }
+    ]
+  },
+  {
+    "id": "hr-staffing-P1",
+    "s1": 2,
+    "s2": 3,
+    "s3": 2,
+    "s4": 3,
+    "s5": 2,
+    "s6": 2,
+    "s7": 4,
+    "flags": [],
+    "note": "Manual LinkedIn checks persist; identity-fraud tools are priced for enterprise ATS.",
+    "checks": []
+  },
+  {
+    "id": "D4",
+    "s1": 3,
+    "s2": 0,
+    "s3": 3,
+    "s4": 3,
+    "s5": 2,
+    "s6": 2,
+    "s7": 0,
+    "flags": [
+      "F6"
+    ],
+    "note": "Executors pay probate attorneys once; classic one-time consumer life-admin.",
+    "checks": []
+  },
+  {
+    "id": "logistics-trucking-P1",
+    "s1": 3,
+    "s2": 4,
+    "s3": 3,
+    "s4": 4,
+    "s5": 2,
+    "s6": 3,
+    "s7": 3,
+    "flags": [],
+    "note": "$200k fraud losses plus Highway bills; SAFER misses bought clean MCs.",
+    "checks": [
+      {
+        "q": "FMCSA SAFER free vs Highway MyCarrierPackets",
+        "url": "https://safer.fmcsa.dot.gov/CompanySnapshot.aspx",
+        "found": "SAFER snapshots are free and unlimited; they do not catch purchased clean MC identities."
+      }
+    ]
+  },
+  {
+    "id": "insurance-P8",
+    "s1": 1,
+    "s2": 0,
+    "s3": 3,
+    "s4": 2,
+    "s5": 2,
+    "s6": 1,
+    "s7": 0,
+    "flags": [
+      "F6"
+    ],
+    "note": "CFPB volume is consumer complaints, not a buyer with a company card.",
+    "checks": []
+  },
+  {
+    "id": "legal-P5",
+    "s1": 3,
+    "s2": 4,
+    "s3": 3,
+    "s4": 4,
+    "s5": 2,
+    "s6": 2,
+    "s7": 4,
+    "flags": [],
+    "note": "Uncollected fees are priced; LawPay plus evergreen retainers already sell the fix.",
+    "checks": [
+      {
+        "q": "law firm evergreen retainer auto-debit free alternative",
+        "url": "https://www.timesolv.com/resources/blog/how-to-cut-law-firm-dso-evergreen-retainers-auto-debit-timesolv/",
+        "found": "Auto-debit evergreen retainers are a paid PM/processor feature, not a free good-enough path."
+      }
+    ]
+  },
+  {
+    "id": "creative-creator-economy-P3",
+    "s1": 2,
+    "s2": 4,
+    "s3": 2,
+    "s4": 3,
+    "s5": 2,
+    "s6": 2,
+    "s7": 2,
+    "flags": [],
+    "note": "Freelancers hate late pay but already have free invoice reminders without leverage.",
+    "checks": []
+  }
+]
