@@ -1,5 +1,7 @@
 # Validation Operation — Running Paid-Demand Tests on the Surviving Lanes
 
+> **Addendum (2026-09-18, after the deep dives):** complete per-lane research in [10-deep-dives/](10-deep-dives/) revised this operation — Lane A is now the sole active lane (narrowed wedge, compliance-shaped spec), Lane B is parked, Lane C is killed (bolt-on technically impossible on the named stacks). The lane table and kits below are kept for reference; [10-deep-dives/00-synthesis-what-to-do.md](10-deep-dives/00-synthesis-what-to-do.md) supersedes them where they conflict.
+
 - **Created:** 2026-09-18. Purpose: convert desk conviction into paid-demand evidence for the three surviving lanes (plus one optional pre-sell probe), with the AI agent running everything delegable and the founder doing only what structurally requires a human identity.
 - **Scope lock (board is final):** the three stress-test risers were competition-scanned on 2026-09-18 and all three closed — staffing back-office (BOSS/Signature/myBasePay bundle software + payroll *funding* + EOR; a solo can't match capital-backed bundles; TempWorks/Avionté own the software tier at $15–70k/yr), de-minimis customs (spend flows to brokers/carriers/3PLs; the durable seller response is bulk consolidation, which deletes the per-parcel problem; Zonos/Passport cover DDP), and I-9 audit defense (i9 Intelligence $50/mo flat with E-Verify, WorkBright ~$79/mo, FreshVerdict already selling flat-price self-audits + $29/mo reverification monitoring). No further desk candidates remain.
 
